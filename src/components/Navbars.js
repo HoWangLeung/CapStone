@@ -44,7 +44,6 @@ class Navbars extends Component {
               <NavItem>
                 <NavLink href='/cart'>Cart</NavLink>
               </NavItem>
-              
             </Nav>
           </Collapse>
         </Navbar>

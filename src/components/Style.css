@@ -1,0 +1,16 @@
+.test{
+    max-width: 25%;
+}
+
+hr{
+    color: red !important;
+    
+};
+p {
+    color: red;
+}
+
+.bottomLine{
+    border-bottom: 1px solid #dee2e6;
+
+}
