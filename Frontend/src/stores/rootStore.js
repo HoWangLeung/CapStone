@@ -3,10 +3,12 @@ import thunk from 'redux-thunk'
 import logger from 'redux-logger' // add `redux-logger` import
 import cartReducer from './reducers/cartReducer'
 import authReducer from './reducers/authReducer'
+import modalReducer from './reducers/modalReducer'
 
 export const rootReducer = combineReducers({
     cartReducer: cartReducer,
     authReducer: authReducer,
+    modalReducer:modalReducer
   })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

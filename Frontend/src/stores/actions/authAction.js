@@ -1,4 +1,4 @@
-import * as authActionTypes from './authActionTypes'
+import * as authActionTypes from './authActionType'
 
 export const loginAction = userID => {
   return {

@@ -13,53 +13,54 @@ import {
 import { act } from 'react-dom/test-utils'
 
 const initState = {
+ 
   items: [
     {
       id: 1,
-      title: 'Winter body',
+      title: 'Cappuccino',
       desc:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.',
-      price: 110,
+      price: 30,
       img: Item1
     },
     {
       id: 2,
-      title: 'Adidas',
+      title: 'Matcha Mocha',
       desc:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.',
-      price: 80,
+      price: 40,
       img: Item2
     },
     {
       id: 3,
-      title: 'Vans',
+      title: 'Mocha',
       desc:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.',
-      price: 120,
+      price: 35,
       img: Item3
     },
     {
       id: 4,
-      title: 'White',
+      title: 'Flat White',
       desc:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.',
-      price: 260,
+      price: 40,
       img: Item4
     },
     {
       id: 5,
-      title: 'Cropped-sho',
+      title: 'Lattae',
       desc:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.',
-      price: 160,
+      price: 38,
       img: Item5
     },
     {
       id: 6,
-      title: 'Blues',
+      title: 'Espresso',
       desc:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.',
-      price: 90,
+      price: 31,
       img: Item6
     }
   ],

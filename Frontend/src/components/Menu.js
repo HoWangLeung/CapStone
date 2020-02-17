@@ -19,7 +19,8 @@ import {
 
 import item1 from '../images/item1.jpg'
 import './Style.css'
-import * as actions from '../stores/actions/cartAction'
+import * as cartActions from '../stores/actions/cartAction'
+import * as modalActions from '../stores/actions/modalAction'
 import { connect } from 'react-redux'
 import CartModal from './CartModal'
 
@@ -28,8 +29,20 @@ class Menu extends Component {
     super(props)
     this.state = {
       modal: false,
-      modalId: null
+     
     }
+
+    
+  }
+
+  showModal = (e, index) => {
+    console.log('show');
+    
+    this.setState( {
+      // modal: true
+    })
+  
+    
   }
 
   render () {
@@ -48,7 +61,10 @@ class Menu extends Component {
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
               </CardText>
-              <CartModal />
+              <Button color='danger' onClick={() => this.props.showModalDispatcher(row.id)}>
+                Add
+              </Button>
+            
             </CardBody>
           </Card>
         </>
@@ -58,8 +74,10 @@ class Menu extends Component {
 
     return (
       <Container>
-        <Row xs='3'>{listItem}</Row>
-       
+        <Row xs='3'>{listItem}
+        
+        </Row>
+        <CartModal />
       </Container>
     )
   }
@@ -67,14 +85,24 @@ class Menu extends Component {
 
 const mapStateToProps = state => {
   return {
-    items: state.cartReducer.items
+    items: state.cartReducer.items,
+    modal: state.modalReducer.modal,
+    modalid: state.modalReducer.Id
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     addToCartDispatcher: id => {
-      dispatch(actions.addQuantity(id))
-    }
+      dispatch(cartActions.addQuantity(id))
+    },
+    showModalDispatcher: id =>{
+      console.log(id)
+      dispatch(modalActions.showModal(id))
+    },
+    hideModalDispatcher: id =>{
+     
+      dispatch(modalActions.hideModal(id))
+    },
   }
 }
 
