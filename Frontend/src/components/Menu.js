@@ -51,7 +51,7 @@ class Menu extends Component {
       return (
         <>
           <Card key={row.id}>
-            <CardImg top width='100%' src={row.img} alt='Card image cap' />
+            <CardImg top width='100%' src={row.product_img} alt='Card image cap' />
             <CardBody>
               <CardTitle>
                 {row.id} : {row.title}

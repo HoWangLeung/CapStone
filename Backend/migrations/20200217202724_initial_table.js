@@ -1,6 +1,6 @@
-exports.up = function (knex) {
-  return knex.schema
-    .createTable('user', table => {
+exports.up = async function (knex) {
+  return await knex.schema
+    .createTable('users', table => {
       table.increments()
       table.string('password')
       table.timestamps(false, true)
@@ -8,7 +8,7 @@ exports.up = function (knex) {
     .createTable('customer', table => {
       table.increments()
       table.integer('user_id').unsigned()
-      table.foreign('user_id').references('user.id')
+      table.foreign('user_id').references('users.id')
       table.string('email').unique()
       table.string('phone')
       table.string('credit_card_info')
@@ -18,7 +18,7 @@ exports.up = function (knex) {
     .createTable('admin', table => {
       table.increments()
       table.integer('user_id')
-      table.foreign('user_id').references('user.id')
+      table.foreign('user_id').references('users.id')
       table.string('admin_name');
       table.string('admin_email');
 
@@ -26,5 +26,5 @@ exports.up = function (knex) {
 }
 
 exports.down = function (knex) {
-    return knex.schema.dropTable("user").dropTable("customer").dropTable("admin")
+    return knex.schema.dropTable("admin").dropTable("customer").dropTable("users")
 }

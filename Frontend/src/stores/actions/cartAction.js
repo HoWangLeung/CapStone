@@ -24,8 +24,29 @@ export const subtractQuantity = id => {
 }
 //add qt action
 export const addQuantity = id => {
-    return {
-      type: actionTypes.ADD_QUANTITY,
-      id
-    }
+  return {
+    type: actionTypes.ADD_QUANTITY,
+    id
   }
+}
+
+//get item from api
+export const getCoffeeItem = (item) => {
+  console.log('reaching getcoffeeitem() ');
+  
+  return {
+    type: actionTypes.GET_COFFEE_ITEM,
+    item:item
+  }
+}
+
+export const getCoffeeItemThunk = () => {
+  return dispatch => {
+    axios.get(`http://localhost:8080/api/product`).then(res => {
+      console.log('cartaction line 43')
+
+      console.log(res.data)
+      dispatch(getCoffeeItem(res.data))
+    })
+  }
+}

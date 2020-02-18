@@ -28,16 +28,18 @@ class CartModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      modal: false,
+      modal: false
     }
   }
 
-  toggle = (modalid) => {
-
-    this.props.hideModalDispatcher(modalid);
- 
-   
+  toggle = modalid => {
+    this.props.hideModalDispatcher(modalid)
   }
+
+  componentDidMount(){
+    this.props.getCoffeeItemDispatcher()
+  }
+
   render () {
     const modalid = this.props.modalid
     let coffeeItem = this.props.items[modalid - 1]
@@ -47,21 +49,79 @@ class CartModal extends Component {
       <div>
         <Modal
           isOpen={this.props.modal}
-          toggle={()=> this.toggle(modalid)}
+          toggle={() => this.toggle(modalid)}
           className={this.className}
           modalid={this.props.modalid}
         >
-          <ModalHeader toggle={()=> this.toggle(modalid)}>
-            {modalid} {coffeeItem === undefined ? null : coffeeItem.title}
+          <ModalHeader toggle={() => this.toggle(modalid)}>
+            {modalid} {coffeeItem === undefined ? null : coffeeItem.product_name}
           </ModalHeader>
           <ModalBody>
-            price: ${coffeeItem === undefined ? null : coffeeItem.price}
+            price: ${coffeeItem === undefined ? null : coffeeItem.product_price}
+            <hr />
+            <Form>
+              <FormGroup check>
+                <Label check>
+                  <Input type='radio' name='radio1' /> Hot
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input type='radio' name='radio1' /> Cold
+                </Label>
+              </FormGroup>
+              <hr />
+              <FormGroup check>
+                <Label check>
+                  <Input type='radio' name='radio1' /> Small
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input type='radio' name='radio1' /> Medium
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input type='radio' name='radio1' /> Large
+                </Label>
+              </FormGroup>
+              <hr />
+              <FormGroup check>
+                <Label check>
+                  <Input type='radio' name='radio1' /> Whole Milk
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input type='radio' name='radio1' /> Skimmed Milk
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input type='radio' name='radio1' /> Soy Milk
+                </Label>
+              </FormGroup>
+              <hr />
+              <FormGroup>
+                <Label for='exampleText'>Special Instruction</Label>
+                <Col>
+                  <Input type='textarea' name='text' id='exampleText' />
+                </Col>
+              </FormGroup>
+              <hr />
+              <FormGroup>
+                <i className='fas fa-minus-square' ></i>
+                <input type='number' name='quantity' min='1' max='99' />
+                <i className='fas fa-plus-square'></i>
+              </FormGroup>
+            </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color='primary' onClick={(this.toggle)}>
+            <Button color='primary' onClick={this.toggle}>
               Do Something
             </Button>{' '}
-            <Button color='secondary' onClick={()=> this.toggle(modalid)}>
+            <Button color='secondary' onClick={() => this.toggle(modalid)}>
               Cancel
             </Button>
           </ModalFooter>
@@ -90,8 +150,19 @@ const mapDispatchToProps = dispatch => {
     },
     hideModalDispatcher: id => {
       dispatch(modalActions.hideModal(id))
+    },
+    addQuantityDispatcher: id =>{
+      dispatch(cartActions.addQuantity())
+    },
+    subtractQuantityDispatcher: id=>{
+      dispatch(cartActions.subtractQuantity())
+    },
+    getCoffeeItemDispatcher: ()=>{
+      dispatch(cartActions.getCoffeeItemThunk())
     }
+
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartModal)
+// onClick={()=>this.props.subtractQuantity()}
