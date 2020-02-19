@@ -19,7 +19,9 @@ const initState = {
     
   ],
   addedItems: [],
-  total: 0
+  total: 0,
+
+  
 }
 
 const addTocartReducer = (state, action) => {
@@ -35,8 +37,13 @@ const removeItemReducer = (state, action) => {
 }
 
 const addQuantity = (state, action) => {
+  let addedItem = state.items.find(item=> item.id === action.id)
+    addedItem.quantity+=1
+
   return {
-    ...state
+    ...state,
+
+
   }
 }
 
@@ -48,12 +55,15 @@ const subQuantity = (state, action) => {
 }
 
 const getCoffeeItem = (state, action) => {
- 
+
+// let item_array = action.item
+// for(let i = 0;i < item_array.length;i++){
+//   item_array[i].quantity = 0
+// }
   
   return {
     ...state,
-    items:action.item
- 
+    items: action.item
   }
 }
 

@@ -28,16 +28,54 @@ class CartModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      modal: false
+      modal: false,
+      items: [
+        { id: 1, quantity: 0 },
+        { id: 2, quantity: 0 },
+        { id: 3, quantity: 0 },
+        { id: 4, quantity: 0 },
+        { id: 5, quantity: 0 },
+        { id: 6, quantity: 0 }
+      ],
+      count: 1
     }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleChange.bind(this)
+    this.plus = this.plus.bind(this)
+    this.minus = this.minus.bind(this)
+    console.log(this.state)
   }
 
   toggle = modalid => {
     this.props.hideModalDispatcher(modalid)
   }
 
-  componentDidMount(){
+  componentDidMount () {
     this.props.getCoffeeItemDispatcher()
+  }
+  plus () {
+    this.setState({
+      ...this.state,
+      count: this.state.count + 1
+    })
+  }
+
+  minus () {
+    if (this.state.count > 1) {
+      this.setState({
+        ...this.state,
+        count: this.state.count - 1
+      })
+    }
+  }
+
+  handleChange (event) {
+    console.log('handling')
+    console.log(event.target.value)
+    this.setState({
+      ...this.state,
+      count: event.target.value
+    })
   }
 
   render () {
@@ -54,7 +92,8 @@ class CartModal extends Component {
           modalid={this.props.modalid}
         >
           <ModalHeader toggle={() => this.toggle(modalid)}>
-            {modalid} {coffeeItem === undefined ? null : coffeeItem.product_name}
+            {modalid}{' '}
+            {coffeeItem === undefined ? null : coffeeItem.product_name}
           </ModalHeader>
           <ModalBody>
             price: ${coffeeItem === undefined ? null : coffeeItem.product_price}
@@ -73,33 +112,33 @@ class CartModal extends Component {
               <hr />
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio1' /> Small
+                  <Input type='radio' name='radio2' /> Small
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio1' /> Medium
+                  <Input type='radio' name='radio2' /> Medium
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio1' /> Large
+                  <Input type='radio' name='radio2' /> Large
                 </Label>
               </FormGroup>
               <hr />
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio1' /> Whole Milk
+                  <Input type='radio' name='radio3' /> Whole Milk
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio1' /> Skimmed Milk
+                  <Input type='radio' name='radio3' /> Skimmed Milk
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio1' /> Soy Milk
+                  <Input type='radio' name='radio3' /> Soy Milk
                 </Label>
               </FormGroup>
               <hr />
@@ -111,15 +150,22 @@ class CartModal extends Component {
               </FormGroup>
               <hr />
               <FormGroup>
-                <i className='fas fa-minus-square' ></i>
-                <input type='number' name='quantity' min='1' max='99' />
-                <i className='fas fa-plus-square'></i>
+                <i className='fas fa-minus-square' onClick={this.minus}></i>
+                <input
+                  value={this.state.count}
+                  type='number'
+                  name='quantity'
+                  min='1'
+                  max='99'
+                  onChange={this.handleChange}
+                />
+                <i className='fas fa-plus-square' onClick={this.plus}></i>
               </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>
             <Button color='primary' onClick={this.toggle}>
-              Do Something
+              Confirm
             </Button>{' '}
             <Button color='secondary' onClick={() => this.toggle(modalid)}>
               Cancel
@@ -151,18 +197,16 @@ const mapDispatchToProps = dispatch => {
     hideModalDispatcher: id => {
       dispatch(modalActions.hideModal(id))
     },
-    addQuantityDispatcher: id =>{
-      dispatch(cartActions.addQuantity())
+    addQuantityDispatcher: id => {
+      dispatch(cartActions.addQuantity(id))
     },
-    subtractQuantityDispatcher: id=>{
-      dispatch(cartActions.subtractQuantity())
+    subtractQuantityDispatcher: id => {
+      dispatch(cartActions.subtractQuantity(id))
     },
-    getCoffeeItemDispatcher: ()=>{
+    getCoffeeItemDispatcher: () => {
       dispatch(cartActions.getCoffeeItemThunk())
     }
-
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartModal)
-// onClick={()=>this.props.subtractQuantity()}

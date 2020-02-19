@@ -34,6 +34,10 @@ class Menu extends Component {
 
     
   }
+  componentDidMount () {
+    this.props.getCoffeeItemDispatcher()
+
+  }
 
   showModal = (e, index) => {
     console.log('show');
@@ -102,6 +106,9 @@ const mapDispatchToProps = dispatch => {
     hideModalDispatcher: id =>{
      
       dispatch(modalActions.hideModal(id))
+    },
+    getCoffeeItemDispatcher: () => {
+      dispatch(cartActions.getCoffeeItemThunk())
     },
   }
 }

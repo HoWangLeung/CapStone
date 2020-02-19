@@ -17,9 +17,11 @@ export const removeItem = id => {
 }
 //subtract qt action
 export const subtractQuantity = id => {
+
+  
   return {
     type: actionTypes.SUB_QUANTITY,
-    id
+    id,
   }
 }
 //add qt action
