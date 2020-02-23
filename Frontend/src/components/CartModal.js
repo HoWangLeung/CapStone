@@ -23,65 +23,115 @@ import {
 import { connect } from 'react-redux'
 import * as cartActions from '../stores/actions/cartAction'
 import * as modalActions from '../stores/actions/modalAction'
+import axios from 'axios'
 
 class CartModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
       modal: false,
-      items: [
-        { id: 1, quantity: 0 },
-        { id: 2, quantity: 0 },
-        { id: 3, quantity: 0 },
-        { id: 4, quantity: 0 },
-        { id: 5, quantity: 0 },
-        { id: 6, quantity: 0 }
-      ],
-      count: 1
+      items: [],
+      count: 1,
+      checked: false
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleChange.bind(this)
-    this.plus = this.plus.bind(this)
-    this.minus = this.minus.bind(this)
-    console.log(this.state)
+    this.changeTemperature = this.changeTemperature.bind(this)
   }
 
   toggle = modalid => {
     this.props.hideModalDispatcher(modalid)
+    let items = [...this.state.items]
+    let item = { ...items[modalid - 1] }
+    item.quantity = 0
+    items[modalid - 1] = item
+    this.setState({
+      ...this.state,
+      items: items
+    })
   }
 
   componentDidMount () {
     this.props.getCoffeeItemDispatcher()
+    axios.get('http://localhost:8000/api/product').then(res => {
+      res.data.map(rows => {
+        rows.quantity = 0
+      })
+
+      this.setState({
+        ...this.state,
+        items: res.data
+      })
+    })
   }
-  plus () {
+  plus (modalid) {
+    let items = [...this.state.items]
+    let item = { ...items[modalid - 1] }
+    item.quantity = item.quantity + 1
+    items[modalid - 1] = item
+
     this.setState({
       ...this.state,
-      count: this.state.count + 1
+      items: items
     })
   }
 
-  minus () {
-    if (this.state.count > 1) {
+  minus (modalid) {
+    let items = [...this.state.items]
+    let item = { ...items[modalid - 1] }
+    item.quantity = item.quantity - 1
+    items[modalid - 1] = item
+
+    console.log(items)
+    if (item.quantity >= 0) {
       this.setState({
         ...this.state,
-        count: this.state.count - 1
+        items: items
       })
     }
   }
 
-  handleChange (event) {
-    console.log('handling')
-    console.log(event.target.value)
+  changeQuantity (event, modalid) {
+    let items = [...this.state.items]
+
+    let item = { ...items[modalid - 1] }
+
+    item.quantity = parseInt(event.target.value)
+
+    items[modalid - 1] = item
+
     this.setState({
       ...this.state,
-      count: event.target.value
+      items: items
     })
+  }
+
+  changeTemperature (event) {
+    console.log(event.target.value)
+
+    this.setState({
+      ...this.state,
+      checked: !this.state.checked
+    })
+  }
+
+  handleSubmit (event) {
+    event.preventDefault()
+    console.log(event.target)
+
+    axios
+      .post('http://localhost:8080/api/shoppingCart/:id', {})
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 
   render () {
     const modalid = this.props.modalid
     let coffeeItem = this.props.items[modalid - 1]
-    console.log(coffeeItem)
+
+    let local_state_item = this.state.items[modalid - 1]
 
     return (
       <div>
@@ -98,47 +148,63 @@ class CartModal extends Component {
           <ModalBody>
             price: ${coffeeItem === undefined ? null : coffeeItem.product_price}
             <hr />
-            <Form>
+            <Form method='POST' id='myForm' onSubmit={this.handleSubmit}>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio1' /> Hot
+                  <Input
+                    onChange={this.changeTemperature}
+                    value='HOT'
+                    type='radio'
+                    name='radio1'
+                    checked={this.state.checked}
+                  />{' '}
+                  Hot
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio1' /> Cold
+                  <Input
+                    onChange={this.changeTemperature}
+                    value='Cold'
+                    type='radio'
+                    name='radio1'
+                    checked={!this.state.checked}
+                  />{' '}
+                  Cold
                 </Label>
               </FormGroup>
               <hr />
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio2' /> Small
+                  <Input value='Small' type='radio' name='radio2' /> Small
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio2' /> Medium
+                  <Input value='Medium' type='radio' name='radio2' /> Medium
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio2' /> Large
+                  <Input value='Large' type='radio' name='radio2' /> Large
                 </Label>
               </FormGroup>
               <hr />
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio3' /> Whole Milk
+                  <Input value='Whole Milk' type='radio' name='radio3' /> Whole
+                  Milk
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio3' /> Skimmed Milk
+                  <Input value='Skimmed Milk' type='radio' name='radio3' />{' '}
+                  Skimmed Milk
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type='radio' name='radio3' /> Soy Milk
+                  <Input value='Soy Milk' type='radio' name='radio3' /> Soy Milk
                 </Label>
               </FormGroup>
               <hr />
@@ -150,21 +216,31 @@ class CartModal extends Component {
               </FormGroup>
               <hr />
               <FormGroup>
-                <i className='fas fa-minus-square' onClick={this.minus}></i>
+                <i
+                  className='fas fa-minus-square'
+                  onClick={() => this.minus(modalid)}
+                ></i>
                 <input
-                  value={this.state.count}
+                  value={
+                    local_state_item === undefined
+                      ? 0
+                      : local_state_item.quantity
+                  }
                   type='number'
                   name='quantity'
-                  min='1'
+                  min='0'
                   max='99'
-                  onChange={this.handleChange}
+                  onChange={event => this.changeQuantity(event, modalid)}
                 />
-                <i className='fas fa-plus-square' onClick={this.plus}></i>
+                <i
+                  className='fas fa-plus-square'
+                  onClick={() => this.plus(modalid)}
+                ></i>
               </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color='primary' onClick={this.toggle}>
+            <Button form='myForm' type='submit' value='Submit' color='primary'>
               Confirm
             </Button>{' '}
             <Button color='secondary' onClick={() => this.toggle(modalid)}>

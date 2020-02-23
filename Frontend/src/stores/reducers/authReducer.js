@@ -1,35 +1,35 @@
 import * as actionTypes from '../actions/authActionType'
 
 const initialState = {
-  isLoggedIn: false,
-  userId: null
+  isLoggedIn: localStorage.getItem('token') !== null,
+  token: localStorage.getItem('token') || null
 }
 
-const loginReducer = (state, action) =>{
-    return{
-        ...state,
-        isLoggedIn:true,
-        userId:action.userId
-    }
+const loginReducer = (state, action) => {
+  return {
+    ...state,
+    isLoggedIn: true,
+    token: action.token
+  }
 }
 
-const logoutReducer = (state, action)=>{
-    return{
-        ...state,
-        isLoggedIn:false,
-        userId:null
-    }
+const logoutReducer = state => {
+  return {
+    ...state,
+    isLoggedIn: false,
+    token: null
+  }
 }
 
-const reducer = (state = initialState, action)=>{
-    switch(action.type){
-        case actionTypes.LOGIN:
-            return loginReducer(state, action);
-        case actionTypes.LOGOUT:
-            return logoutReducer(state, action);
-        default:
-            return state;
-    }
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.LOGIN:
+      return loginReducer(state, action)
+    case actionTypes.LOGOUT:
+      return logoutReducer(state)
+    default:
+      return state
+  }
 }
 
-export default reducer;
+export default reducer

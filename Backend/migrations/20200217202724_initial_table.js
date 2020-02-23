@@ -19,8 +19,8 @@ exports.up = async function (knex) {
       table.increments()
       table.integer('user_id')
       table.foreign('user_id').references('users.id')
-      table.string('admin_name');
-      table.string('admin_email');
+      table.string('name');
+      table.string('email');
 
     })
 }

@@ -4,13 +4,13 @@ class ProductService {
   }
 
   list () {
-    console.log('reached list()')
+ 
     let query = this.knex
-      .from('displayMenu')
-      .innerJoin('product', 'displayMenu.product_id', 'product.id')
+      .from('product')
+   
 
     return query.then(rows => {
-      console.log(rows,'sdf')
+  
       return rows
     })
   }

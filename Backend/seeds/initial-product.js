@@ -8,15 +8,15 @@ exports.seed = function (knex) {
     .then(() => {
       knex('product').del()
     })
+    // .then(() => {
+    //   knex('displayMenu').del()
+    // })
     .then(() => {
-      knex('displayMenu').del()
+      knex('purchase').del()
     })
-    .then(() => {
-      knex('shoppingCart').del()
-    })
-    .then(() => {
-      knex('order').del()
-    })
+    // .then(() => {
+    //   knex('order').del()
+    // })
     .then(() => {
       knex('customer').del()
     })
@@ -33,15 +33,17 @@ exports.seed = function (knex) {
         knex('users')
           .insert([
             { id: 1, password: '123' },
-            { id: 2, password: '123' }
+            { id: 2, password: '456' },
+            { id: 3, password: '789' },
+           
           ])
           .then(() => {
             return knex('admin').insert([
               {
                 id: 1,
                 user_id: 1,
-                admin_name: 'Derek',
-                admin_email: 'Derek@gmail.com'
+                name: 'Derek',
+                email: 'Derek@gmail.com'
               }
             ])
           })
@@ -50,10 +52,18 @@ exports.seed = function (knex) {
               {
                 id: 1,
                 user_id: 2,
-                email: 'a@gmail.com',
+                email: 'user1@gmail.com',
                 phone: '12345678',
                 credit_card_info: '1234 1234 1234 1234',
                 delivery_address: 'cwb'
+              },
+              {
+                id: 2,
+                user_id: 3,
+                email: 'user3@gmail.com',
+                phone: '12345678',
+                credit_card_info: '5678 5678 5678 5678',
+                delivery_address: 'Sai Ying Pun'
               }
             ])
           })
@@ -133,54 +143,77 @@ exports.seed = function (knex) {
               }
             ])
           })
+          // .then(() => {
+          //   return knex('displayMenu').insert([
+          //     {
+          //       id: 1,
+          //       product_id: 1
+          //     },
+          //     {
+          //       id: 2,
+          //       product_id: 2
+          //     },
+          //     {
+          //       id: 3,
+          //       product_id: 3
+          //     },
+          //     {
+          //       id: 4,
+          //       product_id: 4
+          //     },
+          //     {
+          //       id: 5,
+          //       product_id: 5
+          //     },
+          //     {
+          //       id: 6,
+          //       product_id: 6
+          //     }
+          //   ])
+          // })
+          // .then(() => {
+          //   return knex('order').insert([
+          //     {
+          //       id: 1,
+          //       user_id: 2,
+          //       lifecycle_status: 'Accepted'
+          //     }
+          //   ])
+          // })
           .then(() => {
-            return knex('displayMenu').insert([
-              {
-                id: 1,
-                product_id: 1
-              },
-              {
-                id: 2,
-                product_id: 2
-              },
-              {
-                id: 3,
-                product_id: 3
-              },
-              {
-                id: 4,
-                product_id: 4
-              },
-              {
-                id: 5,
-                product_id: 5
-              },
-              {
-                id: 6,
-                product_id: 6
-              }
-            ])
-          })
-          .then(() => {
-            return knex('order').insert([
+            return knex('purchase').insert([
               {
                 id: 1,
                 user_id: 2,
-                lifecycle_status: 'Accepted'
-              }
-            ])
-          })
-          .then(() => {
-            return knex('shoppingCart').insert([
-              {
-                id: 1,
-                order_id: 1,
                 product_id: 1,
                 quantity: 3,
                 product_size: 'Large',
                 product_milk: 'whole milk',
                 product_temperature: 'Hot',
-                special_instruction: 'extra milk and sugar'
+                special_instruction: 'extra milk and sugar',
+                status: 'pending'
+              },
+              {
+                id: 2,
+                user_id: 2,
+                product_id: 3,
+                quantity: 5,
+                product_size: 'Small',
+                product_milk: 'whole milk',
+                product_temperature: 'Hot',
+                special_instruction: 'extra milk, no sugar',
+                status: 'pending'
+              },
+              {
+                id: 3,
+                user_id: 3,
+                product_id: 4,
+                quantity: 8,
+                product_size: 'Medium',
+                product_milk: 'soy milk',
+                product_temperature: 'Hot',
+                special_instruction: 'extra sugar',
+                status: 'confirmed'
               }
             ])
           })

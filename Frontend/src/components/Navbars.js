@@ -13,7 +13,12 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap'
-class Navbars extends Component {
+import { connect } from 'react-redux'
+import * as authAction from '../stores/actions/authAction'
+import * as uiActions from '../stores/actions/uiAction'
+import LoginModal from './LoginModal'
+import Axios from 'axios'
+class MyNavbar extends Component {
   constructor (props) {
     super(props)
 
@@ -21,7 +26,8 @@ class Navbars extends Component {
     this.state = {
       isOpen: false,
       navCollapsed: true,
-      showNavbar: false
+      showNavbar: false,
+      
     }
   }
   toggle () {
@@ -36,19 +42,64 @@ class Navbars extends Component {
         <Navbar color='light' light expand='md'>
           <NavbarBrand href='/'>reactstrap</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
+          <Collapse isOpen={this.props.isLoginModalOpen} navbar>
             <Nav className='ml-auto' navbar>
               <NavItem>
                 <NavLink href='/'>Home</NavLink>
               </NavItem>
               <NavItem>
+                <NavLink href='/profile'>Profile</NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink href='/cart'>Cart</NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink
+                  onClick={() => {
+                    if (this.props.isLoggedIn) {
+                      this.props.logoutDispatcher()
+                    } else {
+                      this.props.showLoginModalDispatcher()
+                    }
+                  }}
+                >
+                  {this.props.isLoggedIn ? 'Logout' : 'Login'}
+                  <LoginModal />
+                </NavLink>
               </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
+     
       </div>
     )
   }
 }
-export default Navbars
+
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.authReducer.isLoggedIn,
+    user_id: state.authReducer.user_id,
+    isLoginModalOpen:state.uiReducer.isLoginModalOpen
+
+
+  }
+}
+//
+const mapDispatchToProps = dispatch => {
+  return {
+    loginDispatch: (email, password) => {
+      dispatch(authAction.loginThunk(email, password));
+    },
+    logoutDispatcher: () => {
+      dispatch(authAction.logoutAction())
+    },
+    showLoginModalDispatcher: () => {
+      
+      dispatch(uiActions.showLoginModalAction())
+    },
+    
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MyNavbar)

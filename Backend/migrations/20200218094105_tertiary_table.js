@@ -1,21 +1,21 @@
 exports.up = function (knex) {
   return knex.schema
-    .createTable('displayMenu', table => {
-      table.increments()
-      table.integer('product_id')
-      table.foreign('product_id').references('product.id')
-    })
-    .createTable('order', table => {
+    // .createTable('displayMenu', table => {
+    //   table.increments()
+    //   table.integer('product_id')
+    //   table.foreign('product_id').references('product.id')
+    // })
+    // .createTable('order', table => {
+    //   table.increments()
+    //   table.integer('user_id')
+    //   table.foreign('user_id').references('users.id')
+    //   table.string('lifecycle_status')
+    //   table.timestamps(false, true)
+    // })
+    .createTable('purchase', table => {
       table.increments()
       table.integer('user_id')
-      table.foreign('user_id').references('users.id')
-      table.string('lifecycle_status')
-      table.timestamps(false, true)
-    })
-    .createTable('shoppingCart', table => {
-      table.increments()
-      table.integer('order_id')
-      table.foreign("order_id").references("order.id")
+      table.foreign("user_id").references("users.id")
       table.integer('product_id')
       table.foreign('product_id').references('product.id')
       table.integer('quantity')
@@ -23,12 +23,13 @@ exports.up = function (knex) {
       table.string('product_milk')
       table.string('product_temperature')
       table.string('special_instruction')
+      table.string('status')
     })
 }
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTable('shoppingCart')
-    .dropTable('order')
-    .dropTable('displayMenu')
+    // .dropTable('shoppingCart')
+    // .dropTable('order')
+    .dropTable('purchase')
 }

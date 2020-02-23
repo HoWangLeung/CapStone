@@ -40,7 +40,6 @@ class Menu extends Component {
   }
 
   showModal = (e, index) => {
-    console.log('show');
     
     this.setState( {
       // modal: true
@@ -58,9 +57,9 @@ class Menu extends Component {
             <CardImg top width='100%' src={row.product_img} alt='Card image cap' />
             <CardBody>
               <CardTitle>
-                {row.id} : {row.title}
+                {row.id} : {row.product_name}
               </CardTitle>
-              <CardSubtitle>Card subtitle</CardSubtitle>
+              <CardSubtitle>${row.product_price}</CardSubtitle>
               <CardText>
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
@@ -74,14 +73,13 @@ class Menu extends Component {
         </>
       )
     })
-    console.log(listItem)
 
     return (
       <Container>
         <Row xs='3'>{listItem}
         
         </Row>
-        <CartModal />
+        <CartModal  />
       </Container>
     )
   }
