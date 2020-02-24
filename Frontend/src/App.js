@@ -10,6 +10,7 @@ import Cart from './pages/Cart'
 import Profile from './pages/Profile'
 import Home from './pages/Home'
 
+
 export default class App extends Component {
   constructor (props) {
     super(props)
@@ -17,23 +18,7 @@ export default class App extends Component {
     console.log(localStorage)
   }
   render () {
-    const PurePrivateRoute = ({ component: Component, ...rest }) => (
-      <Route
-        {...rest}
-        render={props =>
-          this.props.isLoggedIn === true ? (
-            <Component {...props} />
-          ) : (
-            // <Redirect to='/cart' /> 
-            alert('not logged in')
-          )
-        }
-      />
-    )
-
-    const PrivateRoute = connect(state => ({
-      isLoggedIn: state.authReducer.isLoggedIn
-    }))(PurePrivateRoute)
+ 
 
     return (
       <BrowserRouter>
@@ -43,10 +28,12 @@ export default class App extends Component {
             <Route exact path='/' component={Home} />
             <Route path='/coffee_menu' component={Menu} />
             <Route path='/cart' component={Cart} />
-            <PrivateRoute path='/profile' component={Profile} />
+            <Route exact path="/profile" component={Profile} />
           </Switch>
         </div>
       </BrowserRouter>
     )
   }
 }
+
+

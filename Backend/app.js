@@ -32,7 +32,8 @@ const PurchaseService = require('./service/PurchaseService')
 const PurchaseRouter = require('./router/PurchaseRouter')
 const purchaseService = new PurchaseService(knex)
 app.use(
-  '/api/purchase', authClass.authenticate(),
+  '/api/purchase',
+  authClass.authenticate(),
   new PurchaseRouter(purchaseService).router()
 )
 
@@ -59,51 +60,54 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/login', async (req, res) => {
+  console.log('received a post request line 62')
+
   let db_users = knex
     .from('customer', 'admin')
     .innerJoin('users', 'customer.user_id', 'users.id')
-    // .innerJoin('admin','admin.user_id','users.id')
-    // .leftJoin('users', 'admin.user_id', 'users.id')
-    // .innerJoin('admin','users.id','admin.user_id')
-    // .innerJoin('customer', 'users.id', 'customer.user_id')
-    .then(user_data => {
-      if (req.body.email && req.body.password) {
-        const email = req.body.email
-        const password = req.body.password
+  // .innerJoin('admin','admin.user_id','users.id')
+  // .leftJoin('users', 'admin.user_id', 'users.id')
+  // .innerJoin('admin','users.id','admin.user_id')
+  // .innerJoin('customer', 'users.id', 'customer.user_id')
+  db_users.then(user_data => {
+    if (req.body.email && req.body.password) {
+      const email = req.body.email
+      const password = req.body.password
 
-        // using array of users from './users.js'. You should use a real database
+      // using array of users from './users.js'. You should use a real database
+      console.log(user_data)
 
-        const user = user_data.find(
-          u => u.email == email && u.password == password
-        )
+      const user = user_data.find(
+        u => u.email == email && u.password == password
+      )
 
-        // console.log(user)
+      // console.log(user)
 
-        if (user) {
-          console.log('start with user')
+      if (user) {
+        console.log('start with user')
 
-          let payload = {
-            id: user.id,
-            // you can put other data in the payload
-            // in this example, we put the current time.
-            // so later if we decide we should invalidate a old token, we can.
-            tokenCreatedDate: new Date().getTime()
-          }
-
-          // sign a token and send it to browser. Browser will use it to access protected routes
-          const token = jwt.encode(payload, config.jwtSecretUsedForSigning)
-          res.json({
-            token: token
-          })
-        } else {
-          // console.log('no');
-
-          res.sendStatus(401)
+        let payload = {
+          id: user.id,
+          // you can put other data in the payload
+          // in this example, we put the current time.
+          // so later if we decide we should invalidate a old token, we can.
+          tokenCreatedDate: new Date().getTime()
         }
+
+        // sign a token and send it to browser. Browser will use it to access protected routes
+        const token = jwt.encode(payload, config.jwtSecretUsedForSigning)
+        res.json({
+          token: token
+        })
       } else {
+        // console.log('no');
+
         res.sendStatus(401)
       }
-    })
+    } else {
+      res.sendStatus(401)
+    }
+  })
 })
 
 app.get('/secret', authClass.authenticate(), (req, res) => {

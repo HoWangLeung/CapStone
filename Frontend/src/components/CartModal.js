@@ -59,7 +59,7 @@ class CartModal extends Component {
 
   componentDidMount () {
     this.props.getCoffeeItemDispatcher()
-    axios.get('http://localhost:8000/api/product').then(res => {
+    axios.get(`${process.env.REACT_APP_API_SERVER}/api/product`).then(res => {
       res.data.map(rows => {
         rows.quantity = 0
       })
@@ -242,6 +242,7 @@ class CartModal extends Component {
     // console.log(product_id);
     let targetForm = this.state.items[modalid - 1]
 
+    let product_id = modalid
     let quantity = targetForm.quantity
     let product_temperature = targetForm.product_temperature
     let product_size = targetForm.product_size
@@ -252,7 +253,6 @@ class CartModal extends Component {
     // console.log(product_size)
     // console.log(product_milk)
     // console.log(special_instruction);
-    
 
     //=============post request===========//
     let token = localStorage.token
@@ -264,12 +264,13 @@ class CartModal extends Component {
       .post(
         'http://localhost:8000/api/purchase',
         {
+          product_id,
           quantity,
           product_temperature,
           product_size,
           product_milk,
           special_instruction,
-          
+          status: 'pending'
         },
         config
       )

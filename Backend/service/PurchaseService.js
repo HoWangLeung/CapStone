@@ -5,6 +5,7 @@ class PurchaseService {
 
   list () {
     let query = this.knex.from('purchase')
+    .innerJoin('product','product.id','purchase.product_id')
 
     return query.then(rows => {
       return rows
@@ -13,6 +14,7 @@ class PurchaseService {
 
   add (user, order) {
     console.log('add()');
+    // console.log(user, 'line16');
     
     let query = this.knex
       .select('id')
@@ -22,11 +24,12 @@ class PurchaseService {
     return query.then(rows => {
       if (rows.length === 1) {
         console.log('reaching 1');
+        console.log(rows[0].id)
         console.log(order);
         
         return this.knex
           .insert({
-            user_id:order.user_id,
+            user_id:rows[0].id,
             product_id: order.product_id,
             quantity: order.quantity,
             product_size: order.product_size,

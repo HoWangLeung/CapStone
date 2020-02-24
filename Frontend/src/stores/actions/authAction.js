@@ -17,6 +17,8 @@ export const logoutAction = user_id => {
 
 export const loginThunk = (email, password) => {
   return dispatch => {
+    console.log('trying to log in user2');
+    
     console.log(email, password)
 
     
