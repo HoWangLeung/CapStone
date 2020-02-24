@@ -2,15 +2,13 @@ const express = require('express')
 const router = express.Router()
 // const authClass = require('../auth/local')()
 
-
-class PurchaseRouter
- {
+class PurchaseRouter {
   constructor (purchasService) {
     this.purchasService = purchasService
   }
   router () {
     router.get('/', this.get.bind(this))
-    router.post('/',this.post.bind(this))
+    router.post('/', this.post.bind(this))
     return router
   }
   get (req, res) {
@@ -22,14 +20,14 @@ class PurchaseRouter
   }
 
   post (req, res) {
-    // console.log(req.user);
-    
+    console.log('post ()')
+    let user = req.user
+    let order = req.body
 
-    return this.purchasService.add().then(data => {
+    return this.purchasService.add(user, order).then(data => {
       res.json(data)
     })
   }
 }
 
 module.exports = PurchaseRouter
-

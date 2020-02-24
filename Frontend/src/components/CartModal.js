@@ -32,7 +32,15 @@ class CartModal extends Component {
       modal: false,
       items: [],
       count: 1,
-      checked: false
+      hot_checked: false,
+      cold_checked: false,
+      small_checked: false,
+      medium_checked: false,
+      large_checked: false,
+      whole_milk_checked: false,
+      skimmed_milk_checked: false,
+      soy_milk_checked: false,
+      special_instruction: ''
     }
     this.changeTemperature = this.changeTemperature.bind(this)
   }
@@ -104,27 +112,174 @@ class CartModal extends Component {
     })
   }
 
-  changeTemperature (event) {
+  changeTemperature (event, modalid) {
+    let items = [...this.state.items]
+    let item = { ...items[modalid - 1] }
+    item.product_temperature = event.target.value.toLowerCase()
+    items[modalid - 1] = item
+    if (event.target.value === 'hot') {
+      this.setState({
+        ...this.state,
+        hot_checked: (this.state.hot_checked = true),
+        cold_checked: (this.state.cold_checked = false),
+        items
+      })
+    } else if (event.target.value === 'cold') {
+      this.setState({
+        ...this.state,
+        cold_checked: (this.state.cold_checked = true),
+        hot_checked: (this.state.hot_checked = false),
+        items
+      })
+    }
+  }
+
+  changeSize (event, modalid) {
     console.log(event.target.value)
+
+    let items = [...this.state.items]
+    let item = { ...items[modalid - 1] }
+    item.product_size = event.target.value.toLowerCase()
+    items[modalid - 1] = item
+
+    switch (event.target.value) {
+      case 'small':
+        this.setState({
+          ...this.state,
+          small_checked: (this.state.small_checked = true),
+          medium_checked: (this.state.medium_checked = false),
+          large_checked: (this.state.large_checked = false),
+          items
+        })
+        break
+
+      case 'medium':
+        this.setState({
+          ...this.state,
+          small_checked: (this.state.small_checked = false),
+          medium_checked: (this.state.medium_checked = true),
+          large_checked: (this.state.large_checked = false),
+          items
+        })
+        break
+      case 'large':
+        this.setState({
+          ...this.state,
+          small_checked: (this.state.small_checked = false),
+          medium_checked: (this.state.medium_checked = false),
+          large_checked: (this.state.large_checked = true),
+          items
+        })
+        break
+      default:
+        return this.state
+        break
+    }
+  }
+
+  changeMilk (event, modalid) {
+    let items = [...this.state.items]
+    let item = { ...items[modalid - 1] }
+    item.product_milk = event.target.value.toLowerCase()
+    items[modalid - 1] = item
+
+    switch (event.target.value) {
+      case 'whole_milk':
+        this.setState({
+          ...this.state,
+          whole_milk_checked: (this.state.small_checked = true),
+          skimmed_milk_checked: (this.state.medium_checked = false),
+          soy_milk_checked: (this.state.large_checked = false),
+          items
+        })
+        break
+
+      case 'skimmed_milk':
+        this.setState({
+          ...this.state,
+          whole_milk_checked: (this.state.small_checked = false),
+          skimmed_milk_checked: (this.state.medium_checked = true),
+          soy_milk_checked: (this.state.large_checked = false),
+          items
+        })
+        break
+
+      case 'soy_milk':
+        this.setState({
+          ...this.state,
+          whole_milk_checked: (this.state.small_checked = false),
+          skimmed_milk_checked: (this.state.medium_checked = false),
+          soy_milk_checked: (this.state.large_checked = true),
+          items
+        })
+        break
+
+      default:
+        break
+    }
+  }
+
+  changeInstruction (event, modalid) {
+    console.log(event.target.value)
+
+    let items = [...this.state.items]
+    let item = { ...items[modalid - 1] }
+    item.special_instruction = event.target.value
+    items[modalid - 1] = item
+
+    console.log(items)
 
     this.setState({
       ...this.state,
-      checked: !this.state.checked
+      items
     })
   }
 
-  handleSubmit (event) {
+  handleSubmit (event, modalid) {
     event.preventDefault()
-    console.log(event.target)
+    // console.log(modalid)
+    // let product_id = this.state.items[modalid-1].id
+    // console.log(product_id);
+    let targetForm = this.state.items[modalid - 1]
+
+    let quantity = targetForm.quantity
+    let product_temperature = targetForm.product_temperature
+    let product_size = targetForm.product_size
+    let product_milk = targetForm.product_milk
+    let special_instruction = targetForm.special_instruction
+    // console.log(product_temperature)
+    // console.log(quantity)
+    // console.log(product_size)
+    // console.log(product_milk)
+    // console.log(special_instruction);
+    
+
+    //=============post request===========//
+    let token = localStorage.token
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    }
 
     axios
-      .post('http://localhost:8080/api/shoppingCart/:id', {})
+      .post(
+        'http://localhost:8000/api/purchase',
+        {
+          quantity,
+          product_temperature,
+          product_size,
+          product_milk,
+          special_instruction,
+          
+        },
+        config
+      )
       .then(function (response) {
         console.log(response)
       })
       .catch(function (error) {
         console.log(error)
       })
+    //=============post request===========//
   }
 
   render () {
@@ -148,15 +303,19 @@ class CartModal extends Component {
           <ModalBody>
             price: ${coffeeItem === undefined ? null : coffeeItem.product_price}
             <hr />
-            <Form method='POST' id='myForm' onSubmit={this.handleSubmit}>
+            <Form
+              method='POST'
+              id='myForm'
+              onSubmit={event => this.handleSubmit(event, modalid)}
+            >
               <FormGroup check>
                 <Label check>
                   <Input
-                    onChange={this.changeTemperature}
-                    value='HOT'
+                    onChange={event => this.changeTemperature(event, modalid)}
+                    value='hot'
                     type='radio'
                     name='radio1'
-                    checked={this.state.checked}
+                    checked={this.state.hot_checked}
                   />{' '}
                   Hot
                 </Label>
@@ -164,11 +323,11 @@ class CartModal extends Component {
               <FormGroup check>
                 <Label check>
                   <Input
-                    onChange={this.changeTemperature}
-                    value='Cold'
+                    onChange={event => this.changeTemperature(event, modalid)}
+                    value='cold'
                     type='radio'
                     name='radio1'
-                    checked={!this.state.checked}
+                    checked={this.state.cold_checked}
                   />{' '}
                   Cold
                 </Label>
@@ -176,42 +335,92 @@ class CartModal extends Component {
               <hr />
               <FormGroup check>
                 <Label check>
-                  <Input value='Small' type='radio' name='radio2' /> Small
+                  <Input
+                    onChange={event => this.changeSize(event, modalid)}
+                    value='small'
+                    type='radio'
+                    name='radio2'
+                    checked={this.state.small_checked}
+                  />{' '}
+                  Small
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input value='Medium' type='radio' name='radio2' /> Medium
+                  <Input
+                    onChange={event => this.changeSize(event, modalid)}
+                    value='medium'
+                    type='radio'
+                    name='radio2'
+                    checked={this.state.medium_checked}
+                  />{' '}
+                  Medium
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input value='Large' type='radio' name='radio2' /> Large
+                  <Input
+                    onChange={event => this.changeSize(event, modalid)}
+                    value='large'
+                    type='radio'
+                    name='radio2'
+                    checked={this.state.large_checked}
+                  />{' '}
+                  Large
                 </Label>
               </FormGroup>
               <hr />
               <FormGroup check>
                 <Label check>
-                  <Input value='Whole Milk' type='radio' name='radio3' /> Whole
-                  Milk
+                  <Input
+                    onChange={event => this.changeMilk(event, modalid)}
+                    value='whole_milk'
+                    type='radio'
+                    name='radio3'
+                    checked={this.state.whole_milk_checked}
+                  />{' '}
+                  Whole Milk
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input value='Skimmed Milk' type='radio' name='radio3' />{' '}
+                  <Input
+                    onChange={event => this.changeMilk(event, modalid)}
+                    value='skimmed_milk'
+                    type='radio'
+                    name='radio3'
+                    checked={this.state.skimmed_milk_checked}
+                  />{' '}
                   Skimmed Milk
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input value='Soy Milk' type='radio' name='radio3' /> Soy Milk
+                  <Input
+                    onChange={event => this.changeMilk(event, modalid)}
+                    value='soy_milk'
+                    type='radio'
+                    name='radio3'
+                    checked={this.state.soy_milk_checked}
+                  />{' '}
+                  Soy Milk
                 </Label>
               </FormGroup>
               <hr />
               <FormGroup>
                 <Label for='exampleText'>Special Instruction</Label>
                 <Col>
-                  <Input type='textarea' name='text' id='exampleText' />
+                  <Input
+                    onChange={event => this.changeInstruction(event, modalid)}
+                    value={
+                      this.state.items[modalid - 1] === undefined
+                        ? null
+                        : this.state.items[modalid - 1].special_instruction
+                    }
+                    type='textarea'
+                    name='text'
+                    id='exampleText'
+                  />
                 </Col>
               </FormGroup>
               <hr />

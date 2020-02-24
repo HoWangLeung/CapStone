@@ -25,8 +25,8 @@ export class LoginModal extends React.Component {
     }
   }
   emailInputChange (event) {
-    console.log('changing');
-    
+    console.log('changing')
+
     const val = event.currentTarget.value
     this.setState({ email: val })
   }
@@ -41,6 +41,7 @@ export class LoginModal extends React.Component {
     console.log(event)
     event.preventDefault()
     this.props.loginDispatch(this.state.email, this.state.password)
+    this.props.hideLoginModalDispatcher()
   }
 
   // closeModal(){
@@ -49,11 +50,14 @@ export class LoginModal extends React.Component {
 
   render () {
     if (this.props.isLoggedIn) {
-      return <Redirect to='/' />
+      // return <Redirect to='/' />
     }
     return (
       <div>
-        <Modal isOpen={this.props.isLoginModalOpen} toggle={this.props.hideLoginModalDispatcher}>
+        <Modal
+          isOpen={this.props.isLoginModalOpen}
+          toggle={this.props.hideLoginModalDispatcher}
+        >
           <ModalHeader>Log in</ModalHeader>
           <ModalBody>
             <Form>
@@ -67,7 +71,7 @@ export class LoginModal extends React.Component {
                   id='exampleEmail'
                   placeholder='Email'
                   value={this.state.email}
-                  onChange={(event)=>this.emailInputChange(event)}
+                  onChange={event => this.emailInputChange(event)}
                 />
               </FormGroup>{' '}
               <FormGroup>
@@ -80,7 +84,7 @@ export class LoginModal extends React.Component {
                   id='examplePassword'
                   placeholder='Password'
                   value={this.state.password}
-                  onChange={(event)=>this.passwordInputChange(event)}
+                  onChange={event => this.passwordInputChange(event)}
                 />
               </FormGroup>{' '}
             </Form>
@@ -89,7 +93,10 @@ export class LoginModal extends React.Component {
             <Button color='primary' onClick={event => this.login(event)}>
               Log in
             </Button>{' '}
-            <Button color='secondary' onClick={this.props.hideLoginModalDispatcher}>
+            <Button
+              color='secondary'
+              onClick={this.props.hideLoginModalDispatcher}
+            >
               Cancel
             </Button>
           </ModalFooter>
@@ -106,7 +113,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loginDispatch: (email, password) => {
-    
     dispatch(authActions.loginThunk(email, password))
   },
 

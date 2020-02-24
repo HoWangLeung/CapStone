@@ -1,7 +1,6 @@
 const passport = require('passport')
 const passportJWT = require('passport-jwt')
 const config = require('../../config')
-const users = require('../../users')
 
 module.exports = (knex) => {
   // const knexConfig = require('../../knexfile').development
@@ -27,7 +26,7 @@ module.exports = (knex) => {
 
       query.then(users => {
 
-        console.log(users)
+        // console.log(users)
 
         // check if the user exists in the local memory (imported from ./users)
         // you should use a real database instead. and hash the passwords

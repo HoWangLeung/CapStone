@@ -41,11 +41,14 @@ class MyNavbar extends Component {
       <div>
         <Navbar color='light' light expand='md'>
           <NavbarBrand href='/'>reactstrap</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
+          <NavbarToggler onClick={this.props.isLoginModalOpen} />
           <Collapse isOpen={this.props.isLoginModalOpen} navbar>
             <Nav className='ml-auto' navbar>
               <NavItem>
                 <NavLink href='/'>Home</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href='/coffee_menu'>Menu</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href='/profile'>Profile</NavLink>

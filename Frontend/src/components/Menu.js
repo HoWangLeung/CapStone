@@ -28,24 +28,17 @@ class Menu extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      modal: false,
-     
+      modal: false
     }
-
-    
   }
   componentDidMount () {
     this.props.getCoffeeItemDispatcher()
-
   }
 
   showModal = (e, index) => {
-    
-    this.setState( {
+    this.setState({
       // modal: true
     })
-  
-    
   }
 
   render () {
@@ -54,7 +47,12 @@ class Menu extends Component {
       return (
         <>
           <Card key={row.id}>
-            <CardImg top width='100%' src={row.product_img} alt='Card image cap' />
+            <CardImg
+              top
+              width='100%'
+              src={row.product_img}
+              alt='Card image cap'
+            />
             <CardBody>
               <CardTitle>
                 {row.id} : {row.product_name}
@@ -64,10 +62,12 @@ class Menu extends Component {
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
               </CardText>
-              <Button color='danger' onClick={() => this.props.showModalDispatcher(row.id)}>
+              <Button
+                color='danger'
+                onClick={() => this.props.showModalDispatcher(row.id)}
+              >
                 Add
               </Button>
-            
             </CardBody>
           </Card>
         </>
@@ -76,10 +76,8 @@ class Menu extends Component {
 
     return (
       <Container>
-        <Row xs='3'>{listItem}
-        
-        </Row>
-        <CartModal  />
+        <Row xs='3'>{listItem}</Row>
+        <CartModal />
       </Container>
     )
   }
@@ -97,17 +95,16 @@ const mapDispatchToProps = dispatch => {
     addToCartDispatcher: id => {
       dispatch(cartActions.addQuantity(id))
     },
-    showModalDispatcher: id =>{
+    showModalDispatcher: id => {
       console.log(id)
       dispatch(modalActions.showModal(id))
     },
-    hideModalDispatcher: id =>{
-     
+    hideModalDispatcher: id => {
       dispatch(modalActions.hideModal(id))
     },
     getCoffeeItemDispatcher: () => {
       dispatch(cartActions.getCoffeeItemThunk())
-    },
+    }
   }
 }
 
