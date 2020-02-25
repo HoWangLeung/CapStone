@@ -149,8 +149,7 @@ exports.seed = function (knex) {
             //       id: 2,
             //       user_id: 3,
             //       status: 'pending'
-            //     },
-
+            //     }
             //   ])
             // })
             // .then(() => {
@@ -188,7 +187,17 @@ exports.seed = function (knex) {
             //       special_instruction: 'order_id_1',
             //       price: null
             //     },
-
+            //     {
+            //       id: 4,
+            //       product_id: 4,
+            //       order_id: 2,
+            //       quantity: 56,
+            //       product_size: 'small',
+            //       product_milk: 'soy_milk',
+            //       product_temperature: 'cold',
+            //       special_instruction: 'order_id_1',
+            //       price: null
+            //     }
             //   ])
             // })
 

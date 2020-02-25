@@ -33,11 +33,10 @@ class OrderedItemRouter {
     let order_content = req.body
     // let order_id = req.params.order_id
 
-    
+    return this.orderedItemService.add(user, order_content).then(response => {
+      console.log(' reaching .then in router--------->>>>><<<<<<')
 
-
-    return this.orderedItemService.add(user, order_content).then(data => {
-      res.json(data)
+      res.json(response)
     })
   }
 
