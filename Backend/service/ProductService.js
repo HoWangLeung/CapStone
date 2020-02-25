@@ -4,13 +4,9 @@ class ProductService {
   }
 
   list () {
- 
-    let query = this.knex
-      .from('product')
-   
+    let query = this.knex.from('product')
 
     return query.then(rows => {
-  
       return rows
     })
   }

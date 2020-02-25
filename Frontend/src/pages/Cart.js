@@ -43,6 +43,11 @@ export default class Cart extends Component {
       })
       .catch(error => console.log('error:', error))
   }
+
+  handleChange(event){
+    console.log(event.target.value);
+    
+  }
   render () {
     let items = this.state.items
 
@@ -50,19 +55,49 @@ export default class Cart extends Component {
       console.log(rows)
 
       return (
-        <Container>
-          <Row>
-            <div>{rows.product_name}</div>
-          </Row>
-          <Row>
-            <div>${rows.product_price}</div>
-          </Row>
-
-
-
-        </Container>
+        <>
+          <Container className='cart-item-container'>
+            <Row>
+              <Col xs='5' sm='3' md='3'>
+                <img className='cart-item-img' src={rows.product_img}></img>
+              </Col>
+              <Col xs='5' sm='3' md='3'>
+                <div>
+                  {rows.product_name}
+                  <br />${rows.product_price}
+                </div>
+              </Col>
+              <Col xs='5' sm='3' md='3'>
+                <input
+                  onChange={event => this.handleChange(event)}
+                  type='number'
+                  id='quantity'
+                  name='quantity'
+                  min='1'
+                  max='99'
+                  value={rows.quantity}
+                ></input>
+              </Col>
+              <Col xs='5' sm='3' md='3'>
+                <button>Delete</button>
+              </Col>
+            </Row>
+          </Container>
+        </>
       )
     })
-    return <>{inCartItems}</>
+    return (
+      <>
+        {inCartItems}
+        <Container className='Container'>
+          <Row>
+            <div>SubTotal:</div>
+          </Row>
+          <Row>
+            <div>GrandTotal:</div>
+          </Row>
+        </Container>
+      </>
+    )
   }
 }

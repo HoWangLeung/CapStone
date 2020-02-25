@@ -13,17 +13,17 @@ exports.seed = function (knex) {
       //   knex('displayMenu').del()
       // })
       .then(() => {
-        knex('purchase').del()
+        knex('ordered_item').del()
+      })
+      .then(() => {
+        knex('order').del()
+      })
+      .then(() => {
+        knex('customer_info').del()
       })
       // .then(() => {
-      //   knex('order').del()
+      //   knex('admin').del()
       // })
-      .then(() => {
-        knex('customer').del()
-      })
-      .then(() => {
-        knex('admin').del()
-      })
       .then(() => {
         knex('users').del()
       })
@@ -33,37 +33,32 @@ exports.seed = function (knex) {
         return Promise.all([
           knex('users')
             .insert([
-              { id: 1, password: '123' },
-              { id: 2, password: '456' },
-              { id: 3, password: '789' }
+              { id: 1, email: 'admin@gmail.com', password: '1' },
+              { id: 2, email: 'user1@gmail.com', password: '1' },
+              { id: 3, email: 'user2@gmail.com', password: '1' }
             ])
             .then(() => {
-              return knex('admin').insert([
+              return knex('customer_info').insert([
                 {
                   id: 1,
                   user_id: 1,
-                  admin_name: 'Derek',
-                  admin_email: 'Derek@gmail.com'
-                }
-              ])
-            })
-            .then(() => {
-              return knex('customer').insert([
+                  phone: '1234 5678',
+                  credit_card_info: null,
+                  delivery_address: null
+                },
                 {
-                  id: 1,
+                  id: 2,
                   user_id: 2,
-                  email: 'user1@gmail.com',
-                  phone: '12345678',
+                  phone: '2468 1357',
                   credit_card_info: '1234 1234 1234 1234',
                   delivery_address: 'cwb'
                 },
                 {
-                  id: 2,
+                  id: 3,
                   user_id: 3,
-                  email: 'user3@gmail.com',
-                  phone: '12345678',
-                  credit_card_info: '5678 5678 5678 5678',
-                  delivery_address: 'Sai Ying Pun'
+                  phone: '3456 5432',
+                  credit_card_info: '2234 3234 4234 5234',
+                  delivery_address: 'cwb'
                 }
               ])
             })
@@ -144,79 +139,58 @@ exports.seed = function (knex) {
               ])
             })
             // .then(() => {
-            //   return knex('displayMenu').insert([
-            //     {
-            //       id: 1,
-            //       product_id: 1
-            //     },
-            //     {
-            //       id: 2,
-            //       product_id: 2
-            //     },
-            //     {
-            //       id: 3,
-            //       product_id: 3
-            //     },
-            //     {
-            //       id: 4,
-            //       product_id: 4
-            //     },
-            //     {
-            //       id: 5,
-            //       product_id: 5
-            //     },
-            //     {
-            //       id: 6,
-            //       product_id: 6
-            //     }
-            //   ])
-            // })
-            // .then(() => {
             //   return knex('order').insert([
             //     {
             //       id: 1,
             //       user_id: 2,
-            //       lifecycle_status: 'Accepted'
-            //     }
+            //       status: 'pending'
+            //     },
+            //     {
+            //       id: 2,
+            //       user_id: 3,
+            //       status: 'pending'
+            //     },
+
             //   ])
             // })
-            .then(() => {
-              return knex('purchase').insert([
-                {
-                  id: 1,
-                  user_id: 2,
-                  product_id: 1,
-                  quantity: 3,
-                  product_size: 'large',
-                  product_milk: 'whole_milk',
-                  product_temperature: 'hot',
-                  special_instruction: 'extra milk and sugar',
-                  status: 'pending'
-                },
-                {
-                  id: 2,
-                  user_id: 2,
-                  product_id: 3,
-                  quantity: 5,
-                  product_size: 'small',
-                  product_milk: 'whole_milk',
-                  product_temperature: 'hot',
-                  special_instruction: 'extra milk, no sugar',
-                  status: 'pending'
-                },
-                {
-                  id: 3,
-                  user_id: 3,
-                  product_id: 4,
-                  quantity: 8,
-                  product_size: 'Medium',
-                  product_milk: 'soy milk',
-                  product_temperature: 'Hot',
-                  special_instruction: 'extra sugar',
-                  status: 'confirmed'
-                }
-              ])
-            })
+            // .then(() => {
+            //   return knex('ordered_item').insert([
+            //     {
+            //       id: 1,
+            //       product_id: 1,
+            //       order_id: 1,
+            //       quantity: 20,
+            //       product_size: 'small',
+            //       product_milk: 'whole_milk',
+            //       product_temperature: 'hot',
+            //       special_instruction: 'order_id_1',
+            //       price: null
+            //     },
+            //     {
+            //       id: 2,
+            //       product_id: 2,
+            //       order_id: 1,
+            //       quantity: 60,
+            //       product_size: 'small',
+            //       product_milk: 'soy_milk',
+            //       product_temperature: 'cold',
+            //       special_instruction: 'order_id_1',
+            //       price: null
+            //     },
+            //     {
+            //       id: 3,
+            //       product_id: 3,
+            //       order_id: 2,
+            //       quantity: 33,
+            //       product_size: 'small',
+            //       product_milk: 'soy_milk',
+            //       product_temperature: 'cold',
+            //       special_instruction: 'order_id_1',
+            //       price: null
+            //     },
+
+            //   ])
+            // })
 
             .catch(error => console.log(`Error seeding data: ${error}`))
         ])

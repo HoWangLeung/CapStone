@@ -28,13 +28,13 @@ app.use('/api/product', new ProductRouter(productService).router())
 //======================================productROUTERS================//
 
 //======================================shoppingCartROUTERS================//
-const PurchaseService = require('./service/PurchaseService')
-const PurchaseRouter = require('./router/PurchaseRouter')
-const purchaseService = new PurchaseService(knex)
+const OrderedItemService = require('./service/OrderedItemService')
+const PurchaseRouter = require('./router/OrderedItemRouter')
+const orderedItemService = new OrderedItemService(knex)
 app.use(
-  '/api/purchase',
+  '/api/orderedItem',
   authClass.authenticate(),
-  new PurchaseRouter(purchaseService).router()
+  new PurchaseRouter(orderedItemService).router()
 )
 
 //======================================shoppingCartROUTERS================//
@@ -62,9 +62,8 @@ app.get('/', (req, res) => {
 app.post('/api/login', async (req, res) => {
   console.log('received a post request line 62')
 
-  let db_users = knex
-    .from('customer', 'admin')
-    .innerJoin('users', 'customer.user_id', 'users.id')
+  let db_users = knex.from('users')
+  // .innerJoin('users', 'customer.user_id', 'users.id')
   // .innerJoin('admin','admin.user_id','users.id')
   // .leftJoin('users', 'admin.user_id', 'users.id')
   // .innerJoin('admin','users.id','admin.user_id')
