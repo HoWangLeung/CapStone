@@ -6,22 +6,20 @@ const initState = {
 }
 
 const showModalReducer = (state, action) => {
-    console.log('reached modalReducer.js');
-    console.log(action);
-    
-    
+  console.log('reached modalReducer.js')
+  console.log(action)
+
   return {
     ...state,
-    modal:true,
+    modal: true,
     id: action.id
   }
 }
 
 const hideModalReducer = (state, action) => {
-    
   return {
     ...state,
-    modal: false,
+    modal: false
   }
 }
 

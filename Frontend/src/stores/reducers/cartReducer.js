@@ -19,14 +19,28 @@ const initState = {
     
   ],
   addedItems: [],
-  total: 0,
+  sub_total: 0,
+  grand_total: 0,
 
   
 }
 
-const addTocartReducer = (state, action) => {
+const addToCartReducer = (state, action) => {
+  console.log('in addtocartreducer');
+  console.log(action.item_total);
+  let item_total = action.item_total
+  let index = action.id - 1
+  let items = state.items
+  console.log(items[index]);
+  console.log(items[index].quantity);
+  console.log(items[index].product_price);
+  console.log(action.id-1);
+  
+  
   return {
-    ...state
+    ...state,
+    grand_total: state.grand_total + item_total
+    
   }
 }
 
@@ -70,7 +84,7 @@ const getCoffeeItem = (state, action) => {
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      return addTocartReducer(state, action);
+      return addToCartReducer(state, action);
     case REMOVE_ITEM:
         return removeItemReducer(state, action);
     case ADD_QUANTITY:

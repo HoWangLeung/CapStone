@@ -30,6 +30,7 @@ class CartModal extends Component {
     super(props)
     this.state = {
       modal: false,
+      grand_total: 0,
       items: [],
       count: 1,
       hot_checked: false,
@@ -61,7 +62,7 @@ class CartModal extends Component {
     this.props.getCoffeeItemDispatcher()
     axios.get(`${process.env.REACT_APP_API_SERVER}/api/product`).then(res => {
       res.data.map(rows => {
-        rows.quantity = 0
+        rows.quantity = 1
       })
 
       this.setState({
@@ -237,9 +238,6 @@ class CartModal extends Component {
 
   handleSubmit (event, modalid) {
     event.preventDefault()
-    // console.log(modalid)
-    // let product_id = this.state.items[modalid-1].id
-    // console.log(product_id);
     let targetForm = this.state.items[modalid - 1]
 
     let product_id = modalid
@@ -248,12 +246,6 @@ class CartModal extends Component {
     let product_size = targetForm.product_size
     let product_milk = targetForm.product_milk
     let special_instruction = targetForm.special_instruction
-    // console.log(product_temperature)
-    // console.log(quantity)
-    // console.log(product_size)
-    // console.log(product_milk)
-    // console.log(special_instruction);
-
     //=============post request===========//
     let token = localStorage.token
     const config = {
@@ -262,7 +254,7 @@ class CartModal extends Component {
 
     axios
       .post(
-        'http://localhost:8000/api/purchase',
+        'http://localhost:8000/api/orderedItem',
         {
           product_id,
           quantity,
@@ -281,6 +273,30 @@ class CartModal extends Component {
         console.log(error)
       })
     //=============post request===========//
+    this.props.hideModalDispatcher(modalid)
+
+    this.calculateGrandTotal(modalid)
+  }
+
+  calculateGrandTotal (modalid) {
+    console.log(modalid)
+    let index = modalid - 1
+    let items = this.props.items
+    let item_price = items[index].product_price
+    let item_quantity = this.state.items[index].quantity
+    console.log(item_quantity)
+
+    let item_total = item_price * item_quantity
+
+    console.log(item_total)
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        grand_total: prevState.grand_total + item_total
+      }
+    })
+
+    this.props.addToCartDispatcher(modalid, item_total)
   }
 
   render () {
@@ -433,12 +449,12 @@ class CartModal extends Component {
                 <input
                   value={
                     local_state_item === undefined
-                      ? 0
+                      ? 1
                       : local_state_item.quantity
                   }
                   type='number'
                   name='quantity'
-                  min='0'
+                  min='1'
                   max='99'
                   onChange={event => this.changeQuantity(event, modalid)}
                 />
@@ -473,8 +489,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addToCartDispatcher: id => {
-      dispatch(cartActions.addQuantity(id))
+    addToCartDispatcher: (id, item_total) => {
+      dispatch(cartActions.addToCart(id, item_total))
     },
     showModalDispatcher: id => {
       console.log(id)

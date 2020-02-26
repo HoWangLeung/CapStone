@@ -18,6 +18,7 @@ import * as authAction from '../stores/actions/authAction'
 import * as uiActions from '../stores/actions/uiAction'
 import LoginModal from './LoginModal'
 import Axios from 'axios'
+
 class MyNavbar extends Component {
   constructor (props) {
     super(props)
@@ -26,8 +27,7 @@ class MyNavbar extends Component {
     this.state = {
       isOpen: false,
       navCollapsed: true,
-      showNavbar: false,
-      
+      showNavbar: false
     }
   }
   toggle () {
@@ -47,15 +47,23 @@ class MyNavbar extends Component {
               <NavItem>
                 <NavLink href='/'>Home</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href='/coffee_menu'>Menu</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href='/profile'>Profile</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href='/cart'>Cart</NavLink>
-              </NavItem>
+              <Link to='/coffee_menu'>
+                <NavItem>
+                  <NavLink>Menu</NavLink>
+                </NavItem>
+              </Link>
+
+              {this.props.isLoggedIn ? (
+                <NavItem>
+                  <NavLink href='/profile'>Profile</NavLink>
+                </NavItem>
+              ) : null}
+              <Link to='/cart'>
+                {' '}
+                <NavItem>
+                  <NavLink>Cart</NavLink>
+                </NavItem>
+              </Link>
 
               <NavItem>
                 <NavLink
@@ -74,7 +82,6 @@ class MyNavbar extends Component {
             </Nav>
           </Collapse>
         </Navbar>
-     
       </div>
     )
   }
@@ -84,25 +91,21 @@ const mapStateToProps = state => {
   return {
     isLoggedIn: state.authReducer.isLoggedIn,
     user_id: state.authReducer.user_id,
-    isLoginModalOpen:state.uiReducer.isLoginModalOpen
-
-
+    isLoginModalOpen: state.uiReducer.isLoginModalOpen
   }
 }
 //
 const mapDispatchToProps = dispatch => {
   return {
     loginDispatch: (email, password) => {
-      dispatch(authAction.loginThunk(email, password));
+      dispatch(authAction.loginThunk(email, password))
     },
     logoutDispatcher: () => {
       dispatch(authAction.logoutAction())
     },
     showLoginModalDispatcher: () => {
-      
       dispatch(uiActions.showLoginModalAction())
-    },
-    
+    }
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MyNavbar)

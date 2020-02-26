@@ -10,6 +10,7 @@ import Cart from './pages/Cart'
 import Profile from './pages/Profile'
 import Home from './pages/Home'
 
+import Checkout from './pages/Checkout'
 
 export default class App extends Component {
   constructor (props) {
@@ -18,8 +19,6 @@ export default class App extends Component {
     console.log(localStorage)
   }
   render () {
- 
-
     return (
       <BrowserRouter>
         <div className='App'>
@@ -28,12 +27,12 @@ export default class App extends Component {
             <Route exact path='/' component={Home} />
             <Route path='/coffee_menu' component={Menu} />
             <Route path='/cart' component={Cart} />
-            <Route exact path="/profile" component={Profile} />
+            <Route path='/profile' component={Profile} />
+
+            <Route path='/checkout' component={Checkout} />
           </Switch>
         </div>
       </BrowserRouter>
     )
   }
 }
-
-

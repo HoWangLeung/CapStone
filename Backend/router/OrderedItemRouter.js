@@ -24,7 +24,11 @@ class OrderedItemRouter {
   }
 
   getForAdmin (req, res) {
-    return this.orderedItemService.listForAdmin().then(data => res.json(data))
+    console.log(req.params.id);
+    let id = req.params.id
+
+    
+    return this.orderedItemService.listForAdmin(id).then(data => res.json(data))
   }
 
   post (req, res) {

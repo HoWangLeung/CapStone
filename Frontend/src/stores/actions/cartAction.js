@@ -2,10 +2,11 @@ import * as actionTypes from './cartActionType'
 import axios from 'axios'
 
 //add cart action
-export const addToCart = id => {
+export const addToCart = (id,item_total) => {
   return {
     type: actionTypes.ADD_TO_CART,
-    id
+    id,
+    item_total
   }
 }
 //remove item action

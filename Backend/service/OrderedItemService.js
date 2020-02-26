@@ -3,6 +3,43 @@ class OrderedItemService {
     this.knex = knex
   }
 
+  listForAdmin (id) {
+    console.log('listforadmin line8')
+    console.log(id)
+
+    let query = this.knex
+      .select(
+        'order.id as orderID',
+        'order.user_id',
+        'order.status',
+        'ordered_item.id as orderItemID',
+        'ordered_item.product_id',
+        'ordered_item.quantity',
+        'ordered_item.product_size',
+        'ordered_item.product_milk',
+        'ordered_item.product_temperature',
+        'ordered_item.special_instruction',
+        'product.genre_id',
+        'product.product_name',
+        'product.product_img',
+        'product.product_cost',
+        'product.product_price',
+        'available_period'
+      )
+      .from('order')
+      .where('order.status', 'pending')
+      .where('order.id', id)
+      .innerJoin('ordered_item', 'ordered_item.order_id', 'order.id')
+      .innerJoin('product', 'product.id', 'ordered_item.product_id')
+      .orderBy('order.id', 'asc')
+
+    return query.then(rows => {
+      console.log(rows)
+
+      return rows
+    })
+  }
+
   listForUser (user) {
     let query = this.knex
       .select(
