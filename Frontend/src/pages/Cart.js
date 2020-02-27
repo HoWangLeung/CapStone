@@ -200,9 +200,9 @@ class Cart extends Component {
           <Row>
             <div>GrandTotal:{this.state.grand_total}</div>
           </Row>
-          <Link to='/checkout'>
+          <Link to='/reviewOrder'>
             <Row>
-              <button>CheckOut</button>
+              <button>Confirm</button>
             </Row>
           </Link>
         </Container>

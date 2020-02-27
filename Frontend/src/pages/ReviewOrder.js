@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
 import {
   Card,
   CardImg,
@@ -18,16 +20,13 @@ import {
   ListGroupItem,
   ListGroup
 } from 'reactstrap'
+import CardSection from '../components/CardSection'
 
-import axios from 'axios'
-
-import CheckOutForm from './CheckoutForm'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 
-const stripePromise = loadStripe('pk_test_oHDsyL0Wxhko6HIFRMrm7QXS00h1og1ziG')
-
-export default class Checkout extends Component {
+import axios from 'axios'
+export default class ReviewOrder extends Component {
   constructor (props) {
     super(props)
 
@@ -59,6 +58,12 @@ export default class Checkout extends Component {
       })
       .catch(error => console.log('error:', error))
   }
+
+  handleSubmit (event) {
+    event.preventDefault()
+    console.log(event.target)
+  }
+
   render () {
     let items = this.state.items
 
@@ -73,9 +78,7 @@ export default class Checkout extends Component {
     return (
       <>
         <div>
-          {/* {inCheckoutItems} */}
-
-          {/* <Form>
+          <Form id='checkoutForm' onSubmit={event => this.handleSubmit(event)}>
             <p>Checkout page</p>
             <FormGroup>
               <Label for='exampleAddress'>Delivery Address</Label>
@@ -86,19 +89,21 @@ export default class Checkout extends Component {
                 placeholder='1234 Main St'
               />
             </FormGroup>
-            {/* <button>Pay</button> */}
+            <Link to='/checkout'>
+              <Button
+                form='checkoutForm'
+                type='submit'
+                value='Submit'
+                color='danger'
+              >
+                Confirm
+              </Button>
+            </Link>
 
-          {/* <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-            <ListGroupItem>Morbi leo risus</ListGroupItem>
-            <ListGroupItem>Porta ac consectetur ac</ListGroupItem>
-            <ListGroupItem>Vestibulum at eros</ListGroupItem> */}
-
-          <h3>Grand_total:{this.state.grand_total}</h3>
-          {/* </Form> */}
-
-          <Elements stripe={stripePromise}>
-            <CheckOutForm />
-          </Elements>
+            <p>Your order</p>
+            {inCheckoutItems}
+            <h3>Grand_total:{this.state.grand_total}</h3>
+          </Form>
         </div>
       </>
     )

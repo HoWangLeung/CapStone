@@ -1,44 +1,74 @@
 import React from 'react'
 import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js'
-
+import axios from 'axios'
 import CardSection from './CardSection'
 
 class CheckoutForm extends React.Component {
   handleSubmit = async event => {
+    let token = localStorage.token
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    }
+
     // We don't want to let default form submission happen here,
     // which would refresh the page.
     event.preventDefault()
-
     const { stripe, elements } = this.props
 
     if (!stripe || !elements) {
+      alert('no')
       // Stripe.js has not yet loaded.
       // Make  sure to disable form submission until Stripe.js has loaded.
       return
     }
 
-    const result = await stripe.confirmCardPayment('{CLIENT_SECRET}', {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: 'Jenny Rosen'
-        }
-      }
-    })
+    axios
+      .post(
+        `${process.env.REACT_APP_API_SERVER}/v1/charges/create-payment-intent`,
+        {},
+        config
+      )
+      .then(data => {
+        console.log(data)
 
-    if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message)
-    } else {
-      // The payment has been processed!
-      if (result.paymentIntent.status === 'succeeded') {
-        // Show a success message to your customer
-        // There's a risk of the customer closing the window before callback
-        // execution. Set up a webhook or plugin to listen for the
-        // payment_intent.succeeded event that handles any business critical
-        // post-payment actions.
-      }
-    }
+        console.log(data.data)
+        let client_secret = data.data
+
+        const result = stripe.confirmCardPayment(client_secret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: {
+              name: 'Jenny Rosen'
+            }
+          }
+        })
+
+        result.then(result => {
+          console.log(result.paymentIntent)
+
+          if (result.error) {
+            // Show error to your customer (e.g., insufficient funds)
+            console.log(result.error.message)
+          } else {
+            // The payment has been processed!
+            if (result.paymentIntent.status === 'succeeded') {
+              console.log(config)
+
+              console.log('posting')
+
+              axios
+                .post(
+                  `${process.env.REACT_APP_API_SERVER}/v1/charges/webhook`,
+                  {result},
+                  config
+                )
+                .then(res => {
+                  console.log(res)
+                })
+            }
+          }
+        })
+      })
   }
 
   render () {

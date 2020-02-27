@@ -20,6 +20,18 @@ app.use(bodyParser.json())
 app.use(cors({ origin: true }))
 //======================================App.use================//
 
+//======================================paymentROUTERS================//
+const PaymentService = require('./service/PaymentService')
+const PaymentRouter = require('./router/PaymentRouter')
+const paymentService = new PaymentService(knex)
+app.use(
+  '/v1/charges',
+  authClass.authenticate(),
+  new PaymentRouter(paymentService).router()
+)
+
+//======================================paymentROUTERS================//
+
 //======================================productROUTERS================//
 const ProductService = require('./service/ProductService')
 const ProductRouter = require('./router/ProductRouter')
