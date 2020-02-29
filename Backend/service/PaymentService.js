@@ -35,54 +35,36 @@ class PaymentService {
       .orderBy('order.id', 'asc')
 
     return query.then(data => {
-      let grand_total = 0
+      let grand_total = 0.0
       data.forEach(item => {
         let row_total = item.quantity * item.product_price
         grand_total += row_total
       })
       console.log(grand_total)
+      console.log(data)
 
       console.log("i'm trying to create a paymentIntent")
 
       return stripe.paymentIntents.create({
-        amount: grand_total,
+        amount: grand_total * 100,
         currency: 'hkd',
         payment_method_types: ['card']
       })
     })
   }
 
-  async confirmPayment (req_body) {
-    let event
-    // console.log(req.headers,'header');
-
-    try {
-      event = req_body.result.paymentIntent
-    } catch (err) {
-      res.status(400).send(`Webhook Error: ${err.message}`)
-    }
-
-    console.log(event, 'event=================>')
-
-    switch (event.status) {
-      case 'succeeded':
-        const paymentIntent = event
-        console.log('PaymentIntent was successful!', event.id)
-        console.log('running')
-        const intent = await stripe.paymentIntents.retrieve(event.id)
-        const charges = intent.charges.data
-        console.log(charges, '<<<<<<<<<<<<<<<<============charges')
-        break
-      case 'payment_failed':
-        const paymentMethod = event.data.object
-        console.log('PaymentMethod was attached to a Customer!')
-        break
-      // ... handle other event types
-      default:
-        // Unexpected event type
-        return res.status(400).end()
-    }
+  changeStatus (content, order_id) {
+    console.log('editing status')
+    return this.knex
+      .select('order.status', 'pending')
+      .from('order')
+      .where('order.id', order_id)
+      .update({
+        status: 'paid'
+      })
   }
+
+  getOrderID () {}
 }
 
 module.exports = PaymentService

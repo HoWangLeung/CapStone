@@ -49,9 +49,9 @@ class CartModal extends Component {
   toggle = modalid => {
     this.props.hideModalDispatcher(modalid)
     let items = [...this.state.items]
-    let item = { ...items[modalid - 1] }
+    let item = { ...items[modalid] }
     item.quantity = 0
-    items[modalid - 1] = item
+    items[modalid] = item
     this.setState({
       ...this.state,
       items: items
@@ -73,9 +73,9 @@ class CartModal extends Component {
   }
   plus (modalid) {
     let items = [...this.state.items]
-    let item = { ...items[modalid - 1] }
+    let item = { ...items[modalid] }
     item.quantity = item.quantity + 1
-    items[modalid - 1] = item
+    items[modalid] = item
 
     this.setState({
       ...this.state,
@@ -85,9 +85,9 @@ class CartModal extends Component {
 
   minus (modalid) {
     let items = [...this.state.items]
-    let item = { ...items[modalid - 1] }
+    let item = { ...items[modalid] }
     item.quantity = item.quantity - 1
-    items[modalid - 1] = item
+    items[modalid] = item
 
     console.log(items)
     if (item.quantity >= 0) {
@@ -101,11 +101,11 @@ class CartModal extends Component {
   changeQuantity (event, modalid) {
     let items = [...this.state.items]
 
-    let item = { ...items[modalid - 1] }
+    let item = { ...items[modalid] }
 
     item.quantity = parseInt(event.target.value)
 
-    items[modalid - 1] = item
+    items[modalid] = item
 
     this.setState({
       ...this.state,
@@ -115,9 +115,9 @@ class CartModal extends Component {
 
   changeTemperature (event, modalid) {
     let items = [...this.state.items]
-    let item = { ...items[modalid - 1] }
+    let item = { ...items[modalid] }
     item.product_temperature = event.target.value.toLowerCase()
-    items[modalid - 1] = item
+    items[modalid] = item
     if (event.target.value === 'hot') {
       this.setState({
         ...this.state,
@@ -139,9 +139,9 @@ class CartModal extends Component {
     console.log(event.target.value)
 
     let items = [...this.state.items]
-    let item = { ...items[modalid - 1] }
+    let item = { ...items[modalid] }
     item.product_size = event.target.value.toLowerCase()
-    items[modalid - 1] = item
+    items[modalid] = item
 
     switch (event.target.value) {
       case 'small':
@@ -180,9 +180,9 @@ class CartModal extends Component {
 
   changeMilk (event, modalid) {
     let items = [...this.state.items]
-    let item = { ...items[modalid - 1] }
+    let item = { ...items[modalid] }
     item.product_milk = event.target.value.toLowerCase()
-    items[modalid - 1] = item
+    items[modalid] = item
 
     switch (event.target.value) {
       case 'whole_milk':
@@ -224,9 +224,9 @@ class CartModal extends Component {
     console.log(event.target.value)
 
     let items = [...this.state.items]
-    let item = { ...items[modalid - 1] }
+    let item = { ...items[modalid] }
     item.special_instruction = event.target.value
-    items[modalid - 1] = item
+    items[modalid] = item
 
     console.log(items)
 
@@ -238,9 +238,9 @@ class CartModal extends Component {
 
   handleSubmit (event, modalid) {
     event.preventDefault()
-    let targetForm = this.state.items[modalid - 1]
+    let targetForm = this.state.items[modalid]
 
-    let product_id = modalid
+    let product_id = targetForm.id
     let quantity = targetForm.quantity
     let product_temperature = targetForm.product_temperature
     let product_size = targetForm.product_size
@@ -280,7 +280,7 @@ class CartModal extends Component {
 
   calculateGrandTotal (modalid) {
     console.log(modalid)
-    let index = modalid - 1
+    let index = modalid
     let items = this.props.items
     let item_price = items[index].product_price
     let item_quantity = this.state.items[index].quantity
@@ -301,9 +301,9 @@ class CartModal extends Component {
 
   render () {
     const modalid = this.props.modalid
-    let coffeeItem = this.props.items[modalid - 1]
+    let coffeeItem = this.props.items[modalid]
 
-    let local_state_item = this.state.items[modalid - 1]
+    let local_state_item = this.state.items[modalid]
 
     return (
       <div>
@@ -430,9 +430,9 @@ class CartModal extends Component {
                   <Input
                     onChange={event => this.changeInstruction(event, modalid)}
                     value={
-                      this.state.items[modalid - 1] === undefined
+                      this.state.items[modalid] === undefined
                         ? null
-                        : this.state.items[modalid - 1].special_instruction
+                        : this.state.items[modalid].special_instruction
                     }
                     type='textarea'
                     name='text'

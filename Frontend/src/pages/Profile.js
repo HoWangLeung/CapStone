@@ -9,7 +9,8 @@ class Profile extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      secretMessage: ''
+      secretMessage: '',
+      is_admin: ''
     }
   }
   componentDidMount () {
@@ -20,7 +21,12 @@ class Profile extends React.Component {
         })
         .then(response => response.data)
         .then(data => {
-          this.setState({ secretMessage: data.message })
+          console.log(data)
+
+          this.setState({
+            secretMessage: data.message,
+       
+          })
         })
     }
   }
@@ -32,6 +38,8 @@ class Profile extends React.Component {
           {this.props.token}.
           <br />
           The secret message is "{this.state.secretMessage}".
+          <br />
+          are you admin? "{this.state.is_admin}".
           <br /> click
           <button onClick={this.props.logoutDispatch}>here</button> to log out.
         </div>

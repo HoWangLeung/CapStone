@@ -17,7 +17,6 @@ import {
   FormText
 } from 'reactstrap'
 
-import item1 from '../images/item1.jpg'
 import './Style.css'
 import * as cartActions from '../stores/actions/cartAction'
 import * as modalActions from '../stores/actions/modalAction'
@@ -43,10 +42,10 @@ class Menu extends Component {
 
   render () {
     let item_arr = this.props.items
-    const listItem = item_arr.map(row => {
+    const listItem = item_arr.map((row, index) => {
       return (
         <>
-          <Card key={row.id}>
+          <Card key={index}>
             <CardImg
               top
               width='100%'
@@ -55,7 +54,7 @@ class Menu extends Component {
             />
             <CardBody>
               <CardTitle>
-                {row.id} : {row.product_name}
+                {index} : {row.product_name}
               </CardTitle>
               <CardSubtitle>${row.product_price}</CardSubtitle>
               <CardText>
@@ -64,7 +63,7 @@ class Menu extends Component {
               </CardText>
               <Button
                 color='danger'
-                onClick={() => this.props.showModalDispatcher(row.id)}
+                onClick={() => this.props.showModalDispatcher(index)}
               >
                 Add
               </Button>

@@ -2,7 +2,7 @@ const passport = require('passport')
 const passportJWT = require('passport-jwt')
 const config = require('../../config')
 
-module.exports = (knex) => {
+module.exports = knex => {
   // const knexConfig = require('../../knexfile').development
   // const knex = require('knex')(knexConfig)
 
@@ -19,20 +19,26 @@ module.exports = (knex) => {
     // after it verified the token is valid
     // passport will execute this function by supplying the decoded jwt payload
     async (payload, done) => {
-      // console.log(payload);
-      
+      console.log(payload)
+
       let query = knex.from('users')
-     
 
       query.then(users => {
+        // console.log(users);
+        
 
         // console.log(users)
 
         // check if the user exists in the local memory (imported from ./users)
         // you should use a real database instead. and hash the passwords
-        const user = users.find(u => u.id === payload.id)
-        
+        const user = users.find(u => u.id === payload.id && u.is_admin === payload.is_admin)
+
         if (user) {
+          console.log(payload);
+          
+          console.log('=======================')
+          console.log(user);
+          
           // console.log(user,'sdffsfdfsd')
 
           return done(null, user)

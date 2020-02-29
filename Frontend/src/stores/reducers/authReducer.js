@@ -2,14 +2,18 @@ import * as actionTypes from '../actions/authActionType'
 
 const initialState = {
   isLoggedIn: localStorage.getItem('token') !== null,
-  token: localStorage.getItem('token') || null
+  token: localStorage.getItem('token') || null,
+  is_admin: JSON.parse(localStorage.getItem('is_admin')) || false
 }
 
 const loginReducer = (state, action) => {
+  console.log(action);
+  
   return {
     ...state,
     isLoggedIn: true,
-    token: action.token
+    token: action.token,
+    is_admin:action.is_admin
   }
 }
 

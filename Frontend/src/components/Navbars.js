@@ -40,45 +40,62 @@ class MyNavbar extends Component {
     return (
       <div>
         <Navbar color='light' light expand='md'>
-          <NavbarBrand href='/'>reactstrap</NavbarBrand>
+          <NavbarBrand href='/'>Coffee</NavbarBrand>
           <NavbarToggler onClick={this.props.isLoginModalOpen} />
           <Collapse isOpen={this.props.isLoginModalOpen} navbar>
             <Nav className='ml-auto' navbar>
-              <NavItem>
-                <NavLink href='/'>Home</NavLink>
-              </NavItem>
+              <Link to='/'>
+                <NavItem>
+                  <NavLink>Home</NavLink>
+                </NavItem>
+              </Link>
               <Link to='/coffee_menu'>
                 <NavItem>
                   <NavLink>Menu</NavLink>
                 </NavItem>
               </Link>
 
-              {this.props.isLoggedIn ? (
-                <NavItem>
-                  <NavLink href='/profile'>Profile</NavLink>
-                </NavItem>
+              {this.props.isLoggedIn && this.props.is_admin === false ? (
+                <Link to='/profile'>
+                  <NavItem>
+                    <NavLink>Profile</NavLink>
+                  </NavItem>
+                </Link>
               ) : null}
-              <Link to='/cart'>
-                {' '}
+
+              {this.props.isLoggedIn && this.props.is_admin === true ? (
+                <Link to='/dashboard'>
+                  <NavItem>
+                    <NavLink>Dashboard</NavLink>
+                  </NavItem>
+                </Link>
+              ) : null}
+
+              {this.props.isLoggedIn && this.props.is_admin === false ? (
+                <Link to='/cart'>
+                  {' '}
+                  <NavItem>
+                    <NavLink>Cart</NavLink>
+                  </NavItem>
+                </Link>
+              ) : null}
+
+              <Link>
                 <NavItem>
-                  <NavLink>Cart</NavLink>
+                  <NavLink
+                    onClick={() => {
+                      if (this.props.isLoggedIn) {
+                        this.props.logoutDispatcher()
+                      } else {
+                        this.props.showLoginModalDispatcher()
+                      }
+                    }}
+                  >
+                    {this.props.isLoggedIn ? 'Logout' : 'Login'}
+                    <LoginModal />
+                  </NavLink>
                 </NavItem>
               </Link>
-
-              <NavItem>
-                <NavLink
-                  onClick={() => {
-                    if (this.props.isLoggedIn) {
-                      this.props.logoutDispatcher()
-                    } else {
-                      this.props.showLoginModalDispatcher()
-                    }
-                  }}
-                >
-                  {this.props.isLoggedIn ? 'Logout' : 'Login'}
-                  <LoginModal />
-                </NavLink>
-              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
@@ -90,6 +107,7 @@ class MyNavbar extends Component {
 const mapStateToProps = state => {
   return {
     isLoggedIn: state.authReducer.isLoggedIn,
+    is_admin: state.authReducer.is_admin,
     user_id: state.authReducer.user_id,
     isLoginModalOpen: state.uiReducer.isLoginModalOpen
   }

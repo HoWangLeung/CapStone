@@ -4,6 +4,31 @@ import axios from 'axios'
 import CardSection from './CardSection'
 
 class CheckoutForm extends React.Component {
+  constructor (props) {
+    super(props)
+    console.log(this.props)
+    this.state = {
+      items: []
+    }
+  }
+
+  componentDidMount () {
+    console.log('sdfsf')
+
+    let token = localStorage.token
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    }
+    axios
+      .get(`${process.env.REACT_APP_API_SERVER}/api/orderedItem`, config)
+      .then(data => {
+        console.log(data)
+        this.setState({
+          items: data
+        })
+      })
+  }
+
   handleSubmit = async event => {
     let token = localStorage.token
     const config = {
@@ -24,7 +49,7 @@ class CheckoutForm extends React.Component {
 
     axios
       .post(
-        `${process.env.REACT_APP_API_SERVER}/v1/charges/create-payment-intent`,
+        `${process.env.REACT_APP_API_SERVER}/api/stripe/create-payment-intent`,
         {},
         config
       )
@@ -52,19 +77,24 @@ class CheckoutForm extends React.Component {
           } else {
             // The payment has been processed!
             if (result.paymentIntent.status === 'succeeded') {
-              console.log(config)
+              alert('successful pay intent')
+              console.log(result)
 
-              console.log('posting')
+              let token = localStorage.token
+              const config = {
+                headers: { Authorization: `Bearer ${token}` }
+              }
+
+              let order_id = this.state.items.data[0].orderID
+              console.log(order_id);
+              
 
               axios
-                .post(
-                  `${process.env.REACT_APP_API_SERVER}/v1/charges/webhook`,
-                  {result},
-                  config
-                )
-                .then(res => {
-                  console.log(res)
-                })
+              .put(
+                `${process.env.REACT_APP_API_SERVER}/api/stripe/order/${order_id}`,
+                {},
+                config
+              )
             }
           }
         })

@@ -33,9 +33,24 @@ exports.seed = function (knex) {
         return Promise.all([
           knex('users')
             .insert([
-              { id: 1, email: 'admin@gmail.com', password: '1' },
-              { id: 2, email: 'user1@gmail.com', password: '1' },
-              { id: 3, email: 'user2@gmail.com', password: '1' }
+              {
+                id: 1,
+                email: 'admin@gmail.com',
+                password: '1',
+                is_admin: true
+              },
+              {
+                id: 2,
+                email: 'user1@gmail.com',
+                password: '1',
+                is_admin: false
+              },
+              {
+                id: 3,
+                email: 'user2@gmail.com',
+                password: '1',
+                is_admin: false
+              }
             ])
             .then(() => {
               return knex('customer_info').insert([

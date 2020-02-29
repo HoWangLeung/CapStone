@@ -135,62 +135,6 @@ class OrderedItemService {
       }
     })
   }
-  // return query.then(user => {
-  //   console.log(user, '<=================user')
-
-  //   if (user.length === 1) {
-  //     let order_query = this.knex
-  //       .select('order.id', 'order.status')
-  //       .from('order')
-  //       .where('status', 'pending')
-
-  //     order_query.then(order_rows => {
-  //       if (order_rows.length > 0) {
-  //         console.log(order_rows, 'line 68===')
-  //         console.log('after first insert ,can only insert one pending')
-
-  //         return this.knex
-  //           .insert({
-  //             product_id: order_content.product_id,
-  //             order_id: order_rows[0].id,
-  //             quantity: order_content.quantity,
-  //             product_size: order_content.product_size,
-  //             product_milk: order_content.product_milk,
-  //             product_temperature: order_content.product_temperature,
-  //             special_instruction: order_content.special_instruction
-  //           })
-  //           .into('ordered_item')
-  //       } else {
-  //         console.log('first insert')
-  //         console.log(order_rows, 'line94========')
-  //         return this.knex
-  //           .insert({
-  //             user_id: user[0].users_id,
-  //             status: 'pending'
-  //           })
-  //           .returning('id')
-  //           .into('order')
-  //           .then(id => {
-  //             console.log(id, 'line91')
-
-  //             return this.knex
-  //               .insert({
-  // product_id: order_content.product_id,
-  // order_id: id[0],
-  // quantity: order_content.quantity,
-  // product_size: order_content.product_size,
-  // product_milk: order_content.product_milk,
-  // product_temperature: order_content.product_temperature,
-  // special_instruction: order_content.special_instruction
-  //               })
-  //               .into('ordered_item')
-  //           })
-  //       }
-  //     })
-  //   } else {
-  //     throw new Error('Cannot add an order to a user that doesnt exist')
-  //   }
-  // })
 
   update (user, change, ordered_item_id) {
     console.log(ordered_item_id, 'sfsdfsdfsdfsdfsfsfsdfsdsfsdfsdfsdfsdfds')
@@ -219,6 +163,10 @@ class OrderedItemService {
     return this.knex('ordered_item')
       .where('ordered_item.id', order_item_id)
       .del()
+  }
+
+  changeStatus(content){
+    
   }
 }
 module.exports = OrderedItemService

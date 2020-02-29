@@ -20,15 +20,34 @@ app.use(bodyParser.json())
 app.use(cors({ origin: true }))
 //======================================App.use================//
 
+//======================================adminROUTERS================//
+const AdminService = require('./service/AdminService')
+const AdminRouter = require('./router/AdminRouter')
+const adminService = new AdminService(knex)
+app.use(
+  '/api/admin',
+  authClass.authenticate(),
+  new AdminRouter(adminService).router()
+)
+
+//======================================adminROUTERS================//
+
 //======================================paymentROUTERS================//
 const PaymentService = require('./service/PaymentService')
 const PaymentRouter = require('./router/PaymentRouter')
 const paymentService = new PaymentService(knex)
 app.use(
-  '/v1/charges',
+  '/api/stripe',
   authClass.authenticate(),
   new PaymentRouter(paymentService).router()
 )
+//=========webhookROUTERS=========//
+const WebhookService = require('./service/WebhookService')
+const WebhookRouter = require('./router/WebhookRouter')
+const webhookService = new WebhookService(knex)
+app.use('/stripe-webhook', new WebhookRouter(webhookService).router())
+
+//=========webhookROUTERS=========//
 
 //======================================paymentROUTERS================//
 
@@ -43,6 +62,7 @@ app.use('/api/product', new ProductRouter(productService).router())
 const OrderedItemService = require('./service/OrderedItemService')
 const PurchaseRouter = require('./router/OrderedItemRouter')
 const orderedItemService = new OrderedItemService(knex)
+
 app.use(
   '/api/orderedItem',
   authClass.authenticate(),
@@ -95,10 +115,11 @@ app.post('/api/login', async (req, res) => {
       // console.log(user)
 
       if (user) {
-        console.log('start with user')
+        console.log('start with user', user.is_admin)
 
         let payload = {
           id: user.id,
+          is_admin: user.is_admin,
           // you can put other data in the payload
           // in this example, we put the current time.
           // so later if we decide we should invalidate a old token, we can.

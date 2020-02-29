@@ -6,7 +6,7 @@ const createPaymentIntent = options => {
   }
   return axios
     .post(
-      `${process.env.REACT_APP_API_SERVER}/v1/charges/create-payment-intent`,
+      `${process.env.REACT_APP_API_SERVER}/api/stripe/create-payment-intent`,
       {},
       config
     )

@@ -11,11 +11,7 @@ class PaymentRouter {
   router () {
     router.get('/public-key', this.get.bind(this))
     router.post('/create-payment-intent', this.post.bind(this))
-    router.post(
-      '/webhook',
-      bodyParser.raw({ type: 'application/json' }),
-      this.postToWebHook.bind(this)
-    )
+    router.put('/order/:id', this.put.bind(this))
     return router
   }
 
@@ -34,22 +30,20 @@ class PaymentRouter {
     return this.paymentService
       .createPayment(user)
       .then(paymentIntentResponse => {
-        console.log('paymentIntent confirmed')
+        console.log('payment_intent Created')
+        console.log(paymentIntentResponse)
+
         console.log(paymentIntentResponse.client_secret)
         let client_secret = paymentIntentResponse.client_secret
-
         res.send(client_secret)
       })
   }
-
-  async postToWebHook (req, res) {
-
-    let req_body = req.body
-    return this.paymentService.confirmPayment(req_body).then(() => {
-      res.sendStatus(200)
+  put (req, res) {
+    let order_ID = req.params.id
+    let content = req.body
+    return this.paymentService.changeStatus(content, order_ID).then(data => {
+      res.json(data)
     })
-
-  
   }
 }
 

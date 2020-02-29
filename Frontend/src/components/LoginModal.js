@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import * as authActions from '../stores/actions/authAction'
 import * as uiActions from '../stores/actions/uiAction'
@@ -86,6 +87,7 @@ export class LoginModal extends React.Component {
                   value={this.state.password}
                   onChange={event => this.passwordInputChange(event)}
                 />
+              <p>Don't have an account yet? Sign up here !</p>
               </FormGroup>{' '}
             </Form>
           </ModalBody>
