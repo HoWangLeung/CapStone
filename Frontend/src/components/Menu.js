@@ -17,7 +17,7 @@ import {
   FormText
 } from 'reactstrap'
 
-import './Style.css'
+import '../components/CSS/Menu.css'
 import * as cartActions from '../stores/actions/cartAction'
 import * as modalActions from '../stores/actions/modalAction'
 import { connect } from 'react-redux'
@@ -54,7 +54,7 @@ class Menu extends Component {
             />
             <CardBody>
               <CardTitle>
-                {index} : {row.product_name}
+                {row.product_name}
               </CardTitle>
               <CardSubtitle>${row.product_price}</CardSubtitle>
               <CardText>

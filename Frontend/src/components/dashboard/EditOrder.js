@@ -1,12 +1,10 @@
-
-
 import React, { Component } from 'react'
-export default class Home extends Component {
+
+export default class EditOrder extends Component {
     render() {
         return (
             <div>
-                <p>Home Page</p>
-
+                sdfsdfsdfsfsdfsdfsfdsdfsdfsdfdsfsd
             </div>
         )
     }

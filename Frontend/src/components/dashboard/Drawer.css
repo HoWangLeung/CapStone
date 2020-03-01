@@ -1,0 +1,9 @@
+.link{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.link:hover{
+    color: aliceblue;
+    text-decoration: none;
+}

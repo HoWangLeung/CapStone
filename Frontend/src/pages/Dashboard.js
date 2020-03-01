@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
 import * as authActions from '../stores/actions/authAction'
 import { connect } from 'react-redux'
-import MaterialTable_Edit_Menu from '../components/dashboard/EditMenu'
+import MaterialTable_Edit_Menu from '../components/dashboard/MaterialTable_Edit_Menu'
 import { Redirect } from 'react-router-dom'
+import SalesAnalysis from '../components/dashboard/SalesAnalysis'
+import Dash from '../components/dashboard/Dash'
+import PermanentDrawerLeft from '../components/dashboard/Drawer'
 
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 
 class Dashboard extends Component {
   constructor (props) {
@@ -14,7 +20,8 @@ class Dashboard extends Component {
     if (this.props.isLoggedIn === true && this.props.is_admin === true) {
       return (
         <div>
-          <MaterialTable_Edit_Menu />
+  
+          <PermanentDrawerLeft />
         </div>
       )
     } else {

@@ -46,6 +46,9 @@ class Cart extends Component {
           grand_total += item.quantity * item.product_price
         })
 
+        console.log(items);
+        
+
         this.setState({
           items: res.data,
           grand_total

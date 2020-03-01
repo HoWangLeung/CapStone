@@ -68,7 +68,7 @@ class OrderedItemService {
       .orderBy('order.id', 'asc')
 
     return query.then(rows => {
-      // console.log(rows)
+      console.log(rows)
 
       return rows
     })
@@ -89,7 +89,7 @@ class OrderedItemService {
         '----------------------==================================='
       )
       console.log(user.id)
-      console.log(data.length, 'datalength')
+      console.log(data.length, 'datalength=======================')
 
       if (data.length === 0) {
         return this.knex
@@ -120,10 +120,12 @@ class OrderedItemService {
         let query = this.knex('order').where('order.user_id', user.id)
 
         query.then(data => {
+          console.log(data,'line123 orderitem service');
+          
           return this.knex
             .insert({
               product_id: order_content.product_id,
-              order_id: data[0].id,
+              order_id: data.slice(-1)[0].id,
               quantity: order_content.quantity,
               product_size: order_content.product_size,
               product_milk: order_content.product_milk,
@@ -165,8 +167,6 @@ class OrderedItemService {
       .del()
   }
 
-  changeStatus(content){
-    
-  }
+  changeStatus (content) {}
 }
 module.exports = OrderedItemService
