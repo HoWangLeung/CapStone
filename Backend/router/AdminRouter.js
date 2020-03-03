@@ -16,13 +16,30 @@ class AdminRouter {
         next()
       }
     }
-
+    //================product=========================================//
     router.get('/product', is_admin, this.get.bind(this))
-
     router.post('/product', is_admin, this.post.bind(this))
     router.put('/product/:id', is_admin, this.put.bind(this))
     router.delete('/product/:id', is_admin, this.delete.bind(this))
+    //================product=========================================//
+    router.get(
+      '/product/chartDataDay',
+      is_admin,
+      this.getChartDataDay.bind(this)
+    )
+
     return router
+  }
+
+  getChartDataDay (req, res) {
+    return this.adminService.getChartDataDay()
+    .then((data)=>{
+   
+      
+      res.json(data)
+    })
+
+
   }
 
   get (req, res) {
@@ -43,7 +60,7 @@ class AdminRouter {
       .then(data => {
         console.log('admin successfully added, sending back')
 
-        res.json(data)
+        res.send(data)
       })
       .catch(err => res.status(500).json(err))
   }

@@ -11,6 +11,7 @@ class OrderedItemRouter {
     router.get('/:id', this.getForAdmin.bind(this))
     router.post('/', this.post.bind(this))
     router.put('/:id', this.put.bind(this))
+    router.put('/changeStatus/:id', this.changeStatus.bind(this))
     router.delete('/:id', this.delete.bind(this))
     return router
   }
@@ -68,6 +69,14 @@ class OrderedItemRouter {
         res.json(data)
       })
       .catch(error => console.log(error))
+  }
+
+  changeStatus (req, res) {
+    let content = req.body
+    return this.orderedItemService.changeStatus(content)
+    .then((data)=>{
+      res.json(data)
+    })
   }
 }
 

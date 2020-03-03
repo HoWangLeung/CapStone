@@ -13,10 +13,12 @@ import ListItemText from '@material-ui/core/ListItemText'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import MaterialTable_Edit_Menu from './MaterialTable_Edit_Menu'
-import SalesAnalysis from './SalesAnalysis'
+import SalesAnalysis from './SalesAnalysis_Day'
 import { Link } from 'react-router-dom'
 import './Drawer.css'
 import color from '@material-ui/core/colors/amber'
+import LineChart_month from './LineChart_month'
+import Grid from '@material-ui/core/Grid'
 
 const drawerWidth = 240
 
@@ -53,7 +55,9 @@ export default function PermanentDrawerLeft () {
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
           <Typography variant='h6' noWrap>
-            <Link className='link' to='/'>Control Panel</Link>
+            <Link className='link' to='/'>
+              Control Panel
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -73,9 +77,8 @@ export default function PermanentDrawerLeft () {
               <ListItemIcon>
                 {index % 2 === 0 ? <EqualizerIcon /> : <ShoppingCartIcon />}
               </ListItemIcon>
-              
-              <ListItemText primary={text} />
 
+              <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
@@ -89,9 +92,15 @@ export default function PermanentDrawerLeft () {
           ))}
         </List> */}
       </Drawer>
+
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <SalesAnalysis />
+
+        <Grid container item xs={12} direction='row' spacing={3}>
+          <SalesAnalysis />
+          <LineChart_month />
+        </Grid>
+
         <br />
         <br />
         <MaterialTable_Edit_Menu />

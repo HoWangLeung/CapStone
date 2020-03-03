@@ -87,7 +87,12 @@ export class LoginModal extends React.Component {
                   value={this.state.password}
                   onChange={event => this.passwordInputChange(event)}
                 />
-              <p>Don't have an account yet? Sign up here !</p>
+                <Link
+                  to='/signup'
+                  onClick={this.props.hideLoginModalDispatcher}
+                >
+                  <p>Don't have an account yet? Sign up here !</p>
+                </Link>
               </FormGroup>{' '}
             </Form>
           </ModalBody>

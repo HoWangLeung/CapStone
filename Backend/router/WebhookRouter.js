@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-
 class WebhookRouter {
-  constructor (webhookService, ) {
+  constructor (webhookService) {
     this.webhookService = webhookService
   }
   router () {
@@ -16,7 +15,6 @@ class WebhookRouter {
 
   post (req, res) {
     console.log('post received')
-    console.log(req.body, 'bodyreq<===============')
 
     let event
     try {
@@ -25,9 +23,6 @@ class WebhookRouter {
       res.status(400).send(`Webhook Error: ${err.message}`)
     }
 
-    console.log(event)
-
-    // Handle the event
     switch (event.type) {
       case 'payment_intent.succeeded':
         const paymentIntent = event.data.object
@@ -35,11 +30,22 @@ class WebhookRouter {
         break
       case 'charge.succeeded':
         // const paymentIntent = event.data.object
+        console.log(
+          '<<<<<<<<<<<<<<<================================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+        )
+        console.log(event, 'line36 webhook router')
         console.log('charge succeed was successful!!!!!!')
-      
-    
-      
-        return this.webhookService.changeStatus()
+
+        console.log(event.data.object.payment_intent)
+        let paymentIntent_id = event.data.object.payment_intent
+        return this.webhookService.changeStatus(paymentIntent_id).then(data => {
+          console.log('line41 webhook router')
+
+          
+
+          res.json(data)
+        })
+
         break
       case 'payment_intent.created':
         // const paymentIntent = event.data.object

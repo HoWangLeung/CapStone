@@ -3,7 +3,7 @@ import * as authActions from '../stores/actions/authAction'
 import { connect } from 'react-redux'
 import MaterialTable_Edit_Menu from '../components/dashboard/MaterialTable_Edit_Menu'
 import { Redirect } from 'react-router-dom'
-import SalesAnalysis from '../components/dashboard/SalesAnalysis'
+import SalesAnalysis from '../components/dashboard/SalesAnalysis_Day'
 import Dash from '../components/dashboard/Dash'
 import PermanentDrawerLeft from '../components/dashboard/Drawer'
 

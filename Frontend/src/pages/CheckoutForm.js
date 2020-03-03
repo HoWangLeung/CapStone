@@ -77,7 +77,7 @@ class CheckoutForm extends React.Component {
           } else {
             // The payment has been processed!
             if (result.paymentIntent.status === 'succeeded') {
-              alert('successful pay intent')
+              console.log('successful pay intent')
               console.log(result)
 
               let token = localStorage.token
@@ -86,15 +86,18 @@ class CheckoutForm extends React.Component {
               }
 
               let order_id = this.state.items.data[0].orderID
-              console.log(order_id);
-              
+              console.log(order_id)
 
               axios
-              .put(
-                `${process.env.REACT_APP_API_SERVER}/api/stripe/order/${order_id}`,
-                {},
-                config
-              )
+                .post(
+                  `${process.env.REACT_APP_API_SERVER}/api/stripe/order/${order_id}`,
+                  result,
+                  config
+                )
+                .then(res => {
+                  console.log(res)
+                })
+                .catch(error => console.log(error))
             }
           }
         })

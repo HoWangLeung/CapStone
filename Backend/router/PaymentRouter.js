@@ -11,6 +11,7 @@ class PaymentRouter {
   router () {
     router.get('/public-key', this.get.bind(this))
     router.post('/create-payment-intent', this.post.bind(this))
+    router.post('/order/:id', this.post_to_insert_payment_ID.bind(this))
     router.put('/order/:id', this.put.bind(this))
     return router
   }
@@ -23,21 +24,28 @@ class PaymentRouter {
     })
   }
   post (req, res) {
-    console.log(req.body, 'dsfsdfsdfsdfsdf')
-    console.log(req.user, 'user')
     let user = req.user
 
     return this.paymentService
       .createPayment(user)
       .then(paymentIntentResponse => {
-        console.log('payment_intent Created')
-        console.log(paymentIntentResponse)
-
         console.log(paymentIntentResponse.client_secret)
         let client_secret = paymentIntentResponse.client_secret
         res.send(client_secret)
       })
   }
+  post_to_insert_payment_ID (req, res) {
+    let order_id = req.params.id
+    let content = req.body
+    let user = req.user
+
+    return this.paymentService
+      .insert_payment_ID(order_id, content,user)
+      .then(data => {
+        res.json(data)
+      })
+  }
+
   put (req, res) {
     let order_ID = req.params.id
     let content = req.body

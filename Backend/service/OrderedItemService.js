@@ -78,7 +78,6 @@ class OrderedItemService {
     let query = this.knex
       .select('users.id as users_id', 'order.id as order_id', 'order.status')
       .from('users')
-
       .where('users.id', user.id)
       .innerJoin('order', 'order.user_id', 'users.id')
       .where('order.status', 'pending')
@@ -120,8 +119,8 @@ class OrderedItemService {
         let query = this.knex('order').where('order.user_id', user.id)
 
         query.then(data => {
-          console.log(data,'line123 orderitem service');
-          
+          console.log(data, 'line123 orderitem service')
+
           return this.knex
             .insert({
               product_id: order_content.product_id,

@@ -14,8 +14,7 @@ import ReviewOrder from './pages/ReviewOrder'
 import CheckoutForm from './pages/CheckoutForm'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
-
-
+import SignUp from './components/SignUp'
 const stripePromise = loadStripe('pk_test_oHDsyL0Wxhko6HIFRMrm7QXS00h1og1ziG')
 // import api from './api'
 // const stripePromise = api.getPublicStripeKey().then(key =>{
@@ -39,6 +38,7 @@ export default class App extends Component {
               <Route path='/profile' component={Profile} />
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/reviewOrder' component={ReviewOrder} />
+              <Route path='/signup' component={SignUp} />
               <Elements stripe={stripePromise}>
                 <Route path='/checkout' component={CheckoutForm} />
               </Elements>

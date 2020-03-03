@@ -43,7 +43,9 @@ class PaymentService {
       console.log(grand_total)
       console.log(data)
 
-      console.log("i'm trying to create a paymentIntent")
+      console.log(
+        "i'm trying to create a paymentIntent========================!!!!!!!!!!!!!!!!!!!!!!!!!"
+      )
 
       return stripe.paymentIntents.create({
         amount: grand_total * 100,
@@ -52,16 +54,39 @@ class PaymentService {
       })
     })
   }
+  insert_payment_ID (order_id, content, user) {
+    // console.log(order_id, 'liine56 payment service')
+    // console.log(content.paymentIntent.id, 'line59 paymentService')
+    console.log(content,'line60-----------------------------paymentservice');
+    
+    let paymentIntent_id = content.paymentIntent.id
 
-  changeStatus (content, order_id) {
-    console.log('editing status')
-    return this.knex
-      .select('order.status', 'pending')
+    let query = this.knex('order').where('order.id', order_id)
+
+    return query.then(data => {
+      console.log(data,'line67 paymentservice');
+      
+      return this.knex
+      .select('order.paymentIntent_id')
       .from('order')
       .where('order.id', order_id)
       .update({
-        status: 'paid'
+        paymentIntent_id: paymentIntent_id
       })
+     
+  
+    })
+  }
+
+  changeStatus (order_id) {
+    console.log('editing status')
+    // return this.knex
+    //   .select('order.status', 'pending')
+    //   .from('order')
+    //   .where('order.id', order_id)
+    //   .update({
+    //     status: 'paid'
+    //   })
   }
 
   getOrderID () {}

@@ -6,6 +6,8 @@ exports.up = function (knex) {
       table.integer('user_id')
       table.foreign('user_id').references('users.id')
       table.string('status')
+      table.string('paymentIntent_id')
+      table.timestamps(false, true)
     })
 
     .createTable('ordered_item', table => {
@@ -20,6 +22,7 @@ exports.up = function (knex) {
       table.string('product_temperature')
       table.string('special_instruction')
       table.integer('price')
+      table.timestamps(false, true)
     })
 }
 

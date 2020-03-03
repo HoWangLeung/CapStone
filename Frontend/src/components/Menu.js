@@ -53,9 +53,7 @@ class Menu extends Component {
               alt='Card image cap'
             />
             <CardBody>
-              <CardTitle>
-                {row.product_name}
-              </CardTitle>
+              <CardTitle>{row.product_name}</CardTitle>
               <CardSubtitle>${row.product_price}</CardSubtitle>
               <CardText>
                 Some quick example text to build on the card title and make up
