@@ -27,6 +27,34 @@ class AdminService {
       })
       .into('product')
   }
+  changeDate (content) {
+    console.log('changing date')
+    console.log(content.new_date,'line32')
+    let selected_date = content.new_date
+
+    let query = this.knex
+      .select(
+        'product.id as product_id',
+        'product.product_name',
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
+        // this.knex.datePart()
+        // 'ordered_item.created_at'
+      )
+      .from('ordered_item')
+      .where(this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),content.new_date)
+      .sum('ordered_item.quantity as total_ordered_quantity')
+      .innerJoin('product', 'product.id', 'ordered_item.product_id')
+      .groupBy('product.id', 'product.product_name')
+      .groupByRaw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
+      .orderBy('product.id')
+
+    return query.then(data => {
+   console.log(data);
+   
+      
+      return data
+    })
+  }
 
   getChartDataDay () {
     console.log('getting chart data day line32 admin service')
@@ -35,7 +63,7 @@ class AdminService {
       .select(
         'product.id as product_id',
         'product.product_name',
-        this.knex.raw("date_trunc('day', ordered_item.created_at)"),
+        this.knex.raw("date_trunc('day', ordered_item.created_at)")
         // 'ordered_item.created_at'
       )
       .from('ordered_item')

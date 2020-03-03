@@ -22,24 +22,35 @@ class AdminRouter {
     router.put('/product/:id', is_admin, this.put.bind(this))
     router.delete('/product/:id', is_admin, this.delete.bind(this))
     //================product=========================================//
+
+    //================Chart=========================================//
     router.get(
       '/product/chartDataDay',
       is_admin,
       this.getChartDataDay.bind(this)
     )
 
+    router.post(
+      '/product/chartDataDay',
+      is_admin,
+      this.post_to_change_date.bind(this)
+    )
+    //================Chart=========================================//
+
     return router
   }
 
   getChartDataDay (req, res) {
-    return this.adminService.getChartDataDay()
-    .then((data)=>{
-   
-      
+    return this.adminService.getChartDataDay().then(data => {
       res.json(data)
     })
+  }
 
-
+  post_to_change_date (req, res) {
+    let content = req.body
+    return this.adminService.changeDate(content).then(data => {
+      res.json(data)
+    })
   }
 
   get (req, res) {

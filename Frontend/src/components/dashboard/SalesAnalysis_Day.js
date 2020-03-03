@@ -9,7 +9,9 @@ export default class SalesAnalysis extends Component {
     super(props)
     this.state = {
       data_by_day: []
-    }
+	}
+	
+	this.pickDate = this.pickDate.bind(this)
   }
 
   componentDidMount () {
@@ -30,13 +32,12 @@ export default class SalesAnalysis extends Component {
           let date = new Date(rows.date_trunc).toLocaleDateString('en-US')
           console.log(date)
 
-          data_by_day.map(data=>{
-			data.date_trunc =  date
-		  })
-		})
-		
-		console.log(data_by_day);
-		
+          data_by_day.map(data => {
+            data.date_trunc = date
+          })
+        })
+
+        console.log(data_by_day)
 
         // let items = [...this.state.items]
         // let item = { ...items[modalid] }
@@ -50,25 +51,40 @@ export default class SalesAnalysis extends Component {
       .catch(error => console.log(error))
   }
 
-  render () {
-	let labels_arr = []
-	let datasets_arr = []
-	this.state.data_by_day.forEach((rows)=>{
-		labels_arr.push(rows.product_name)
-		datasets_arr.push(rows.total_ordered_quantity)
+  pickDate (data_by_selected_date) {
+	console.log(data_by_selected_date)
+	 this.setState({
+		data_by_day:data_by_selected_date
 	})
-  const data = {
-	labels: labels_arr,
-	datasets: [
-	  {
-		data: datasets_arr ,
-		backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56','#bfff00','#c547ff','#b05d21','#0ee6c2'],
-	  }
-	]
   }
+
+  render () {
+    let labels_arr = []
+    let datasets_arr = []
+    this.state.data_by_day.forEach(rows => {
+      labels_arr.push(rows.product_name)
+      datasets_arr.push(rows.total_ordered_quantity)
+    })
+    const data = {
+      labels: labels_arr,
+      datasets: [
+        {
+          data: datasets_arr,
+          backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#bfff00',
+            '#c547ff',
+            '#b05d21',
+            '#0ee6c2'
+          ]
+        }
+      ]
+    }
     return (
       <div className='donaught'>
-        <DatePicker_day className='DatePicker_day' />
+        <DatePicker_day className='DatePicker_day' pickDate={this.pickDate} />
         <h2>Sales Record</h2>
 
         <Doughnut width={700} height={700} data={data} />
