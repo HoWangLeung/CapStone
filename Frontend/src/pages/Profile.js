@@ -1,64 +1,15 @@
-import React from 'react'
-import axios from 'axios'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import React, { useState } from 'react';
 
-import * as authActions from '../stores/actions/authAction'
+export default function Profile() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
 
-class Profile extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      secretMessage: '',
-      is_admin: ''
-    }
-  }
-  componentDidMount () {
-    if (this.props.isLoggedIn) {
-      axios
-        .get(`${process.env.REACT_APP_API_SERVER}/secret`, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
-        })
-        .then(response => response.data)
-        .then(data => {
-          console.log(data)
-
-          this.setState({
-            secretMessage: data.message,
-       
-          })
-        })
-    }
-  }
-  render () {
-    if (this.props.isLoggedIn) {
-      return (
-        <div>
-          The user is logged in. You can access the token like this:{' '}
-          {this.props.token}.
-          <br />
-          The secret message is "{this.state.secretMessage}".
-          <br />
-          are you admin? "{this.state.is_admin}".
-          <br /> click
-          <button onClick={this.props.logoutDispatch}>here</button> to log out.
-        </div>
-      )
-    } else {
-      return <Redirect to='/coffee_menu' />
-    }
-  }
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
 }
-
-const mapStateToProps = state => ({
-  isLoggedIn: state.authReducer.isLoggedIn,
-  token: state.authReducer.token
-})
-
-const mapDispatchToProps = dispatch => ({
-  logoutDispatch: () => {
-    dispatch(authActions.logoutAction())
-  }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)

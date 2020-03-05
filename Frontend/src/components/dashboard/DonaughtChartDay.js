@@ -2,16 +2,16 @@ import { Doughnut } from 'react-chartjs-2'
 
 import React, { Component } from 'react'
 import DatePicker_day from './DatePicker_day'
-import './SalesAnalysis.css'
+import '../CSS/DonaughtChartDay.css'
 import axios from 'axios'
-export default class SalesAnalysis extends Component {
+export default class DonaughtChartDay extends Component {
   constructor (props) {
     super(props)
     this.state = {
       data_by_day: []
-	}
-	
-	this.pickDate = this.pickDate.bind(this)
+    }
+
+    this.pickDate = this.pickDate.bind(this)
   }
 
   componentDidMount () {
@@ -52,10 +52,10 @@ export default class SalesAnalysis extends Component {
   }
 
   pickDate (data_by_selected_date) {
-	console.log(data_by_selected_date)
-	 this.setState({
-		data_by_day:data_by_selected_date
-	})
+    console.log(data_by_selected_date)
+    this.setState({
+      data_by_day: data_by_selected_date
+    })
   }
 
   render () {
@@ -71,12 +71,12 @@ export default class SalesAnalysis extends Component {
         {
           data: datasets_arr,
           backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
+            '#2e4c7d',
+            '#316363',
             '#FFCE56',
             '#bfff00',
-            '#c547ff',
-            '#b05d21',
+            '#49a690',
+            '#ff6969',
             '#0ee6c2'
           ]
         }
@@ -87,8 +87,15 @@ export default class SalesAnalysis extends Component {
         <DatePicker_day className='DatePicker_day' pickDate={this.pickDate} />
         <h2>Sales Record</h2>
 
-        <Doughnut width={700} height={700} data={data} />
+        <Doughnut
+          options={{
+            responsive: true,
+            maintainAspectRatio: true
+          }}
+          data={data}
+        />
       </div>
     )
   }
 }
+// cutoutPercentage: 70

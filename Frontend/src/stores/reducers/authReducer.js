@@ -7,13 +7,13 @@ const initialState = {
 }
 
 const loginReducer = (state, action) => {
-  console.log(action);
-  
+  console.log(action)
+
   return {
     ...state,
     isLoggedIn: true,
     token: action.token,
-    is_admin:action.is_admin
+    is_admin: action.is_admin
   }
 }
 

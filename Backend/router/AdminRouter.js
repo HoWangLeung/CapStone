@@ -35,6 +35,13 @@ class AdminRouter {
       is_admin,
       this.post_to_change_date.bind(this)
     )
+
+    router.post(
+      '/product/chartDataYear',
+      is_admin,
+      this.post_to_change_year.bind(this)
+    )
+
     //================Chart=========================================//
 
     return router
@@ -49,6 +56,13 @@ class AdminRouter {
   post_to_change_date (req, res) {
     let content = req.body
     return this.adminService.changeDate(content).then(data => {
+      res.json(data)
+    })
+  }
+
+  post_to_change_year (req, res) {
+    let content = req.body
+    return this.adminService.changeYear(content).then(data => {
       res.json(data)
     })
   }

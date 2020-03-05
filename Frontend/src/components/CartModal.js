@@ -239,13 +239,17 @@ class CartModal extends Component {
   handleSubmit (event, modalid) {
     event.preventDefault()
     let targetForm = this.state.items[modalid]
-
+    console.log(targetForm);
+    
     let product_id = targetForm.id
     let quantity = targetForm.quantity
     let product_temperature = targetForm.product_temperature
     let product_size = targetForm.product_size
     let product_milk = targetForm.product_milk
     let special_instruction = targetForm.special_instruction
+    const product_price = targetForm.product_price
+    console.log(product_price);
+    
     //=============post request===========//
     let token = localStorage.token
     const config = {
@@ -262,7 +266,8 @@ class CartModal extends Component {
           product_size,
           product_milk,
           special_instruction,
-          status: 'pending'
+          status: 'pending',
+          product_price
         },
         config
       )

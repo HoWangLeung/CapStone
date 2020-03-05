@@ -64,7 +64,7 @@ class MyNavbar extends Component {
               ) : null}
 
               {this.props.isLoggedIn && this.props.is_admin === true ? (
-                <Link to='/dashboard'>
+                <Link to='/dashboard/statistic'>
                   <NavItem>
                     <NavLink>Dashboard</NavLink>
                   </NavItem>

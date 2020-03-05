@@ -1,7 +1,7 @@
 import React from 'react'
 import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js'
 import axios from 'axios'
-import CardSection from '../components/checkout/CardSection'
+// import CardSection from './CardSection'
 
 class CheckoutForm extends React.Component {
   constructor (props) {
@@ -107,7 +107,7 @@ class CheckoutForm extends React.Component {
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
-        <CardSection />
+        {/* <CardSection /> */}
         <button disabled={!this.props.stripe}>Confirm order</button>
       </form>
     )

@@ -27,50 +27,104 @@ class AdminService {
       })
       .into('product')
   }
+  changeYear (content) {
+    console.log('changing year')
+    console.log(content.year)
+    let selected_year = content.year
+
+    // let selected_year = content.year
+    let query = this.knex
+      .select(
+        this.knex.raw("to_char(ordered_item.created_at, 'MM/YYYY')"),
+        'order.status'
+      )
+      .from('ordered_item')
+      .where(
+        this.knex.raw("to_char(ordered_item.created_at, 'YYYY')"),
+        selected_year
+      )
+      .sum('ordered_item.quantity as total_ordered_quantity')
+      .innerJoin('order', 'order.id', 'ordered_item.order_id')
+      .where('order.status', 'paid')
+      .groupBy('order.status')
+      .groupByRaw("to_char(ordered_item.created_at, 'MM/YYYY')")
+
+    return query.then(data => {
+      console.log(data)
+      return data
+    })
+  }
+
   changeDate (content) {
     console.log('changing date')
-    console.log(content.new_date,'line32')
+    console.log(content.new_date, 'line32')
     let selected_date = content.new_date
 
     let query = this.knex
       .select(
         'product.id as product_id',
         'product.product_name',
-        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),
+        'order.status'
         // this.knex.datePart()
         // 'ordered_item.created_at'
       )
       .from('ordered_item')
-      .where(this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),content.new_date)
+      .where(
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),
+        selected_date
+      )
       .sum('ordered_item.quantity as total_ordered_quantity')
       .innerJoin('product', 'product.id', 'ordered_item.product_id')
-      .groupBy('product.id', 'product.product_name')
+      .innerJoin('order', 'order.id', 'ordered_item.order_id')
+      .where('order.status', 'paid')
+      .groupBy('product.id', 'product.product_name', 'order.status')
       .groupByRaw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
       .orderBy('product.id')
 
     return query.then(data => {
-   console.log(data);
-   
-      
+      console.log(data)
+
       return data
     })
   }
 
   getChartDataDay () {
     console.log('getting chart data day line32 admin service')
+    let date = new Date()
+
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+    if (day < 10) {
+      day = '0' + day
+    }
+    if (month < 10) {
+      month = '0' + month
+    }
+
+    let today = day + '/' + month + '/' + year
+    console.log(today)
 
     let query = this.knex
       .select(
         'product.id as product_id',
         'product.product_name',
-        this.knex.raw("date_trunc('day', ordered_item.created_at)")
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),
+        'order.status'
         // 'ordered_item.created_at'
       )
       .from('ordered_item')
+      .where(
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),
+        today
+      )
       .sum('ordered_item.quantity as total_ordered_quantity')
       .innerJoin('product', 'product.id', 'ordered_item.product_id')
-      .groupBy('product.id', 'product.product_name')
-      .groupByRaw("date_trunc('day', ordered_item.created_at )")
+      .innerJoin('order', 'order.id', 'ordered_item.order_id')
+      .where('order.status', 'paid')
+      .groupBy('product.id', 'product.product_name', 'order.status')
+      .groupByRaw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
       .orderBy('product.id')
 
     // .select('product.product_name', 'ordered_item.quantity')
@@ -78,14 +132,6 @@ class AdminService {
     // .innerJoin('product', 'product.id', 'ordered_item.product_id')
 
     return query.then(data => {
-      console.log(data)
-
-      // console.log(new Date(data[0].date_trunc));
-      console.log(data[0].created_at, '<=================')
-
-      let date = new Date(data[0].created_at)
-      console.log(date, 'date')
-
       return data
     })
   }

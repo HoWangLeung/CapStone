@@ -53,6 +53,7 @@ class OrderedItemService {
         'ordered_item.product_milk',
         'ordered_item.product_temperature',
         'ordered_item.special_instruction',
+        'ordered_item.price',
         'product.genre_id',
         'product.product_name',
         'product.product_img',
@@ -75,6 +76,8 @@ class OrderedItemService {
   }
 
   add (user, order_content) {
+    console.log(order_content,'========================order_content');
+    
     let query = this.knex
       .select('users.id as users_id', 'order.id as order_id', 'order.status')
       .from('users')
@@ -110,7 +113,8 @@ class OrderedItemService {
                 product_size: order_content.product_size,
                 product_milk: order_content.product_milk,
                 product_temperature: order_content.product_temperature,
-                special_instruction: order_content.special_instruction
+                special_instruction: order_content.special_instruction,
+                price:order_content.product_price
               })
               .into('ordered_item')
           })
@@ -129,7 +133,8 @@ class OrderedItemService {
               product_size: order_content.product_size,
               product_milk: order_content.product_milk,
               product_temperature: order_content.product_temperature,
-              special_instruction: order_content.special_instruction
+              special_instruction: order_content.special_instruction,
+              price:order_content.product_price
             })
             .into('ordered_item')
         })
@@ -160,10 +165,35 @@ class OrderedItemService {
   delete (order_item_id, remove) {
     console.log(order_item_id)
     console.log(remove)
+    console.log('removing')
 
-    return this.knex('ordered_item')
-      .where('ordered_item.id', order_item_id)
-      .del()
+    let query = this.knex
+      .select(
+        'order.id as orderID',
+        'ordered_item.id as ordered_item_id',
+        'order.status'
+      )
+      .from('ordered_item')
+      // .where('ordered_item.id', order_item_id)
+      .innerJoin('order', 'order.id', 'ordered_item.order_id')
+      .where('order.status', 'pending')
+    return query.then(data => {
+      if (data.length > 1) {
+        return this.knex('ordered_item')
+          .where('ordered_item.id', order_item_id)
+          .del()
+      } else if (data.length === 1) {
+        console.log('attempting to delete the last item in cart <=====================')
+        return this.knex('ordered_item')
+          .where('ordered_item.id', order_item_id)
+          .del()
+          .then(() => {
+            return this.knex('order')
+              .where('order.status', 'pending')
+              .del()
+          })
+      }
+    })
   }
 
   changeStatus (content) {}

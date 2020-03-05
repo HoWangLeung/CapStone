@@ -20,6 +20,17 @@ app.use(bodyParser.json())
 app.use(cors({ origin: true }))
 //======================================App.use================//
 
+//======================================customerInfoROUTERS================//
+const CustomerInfoService = require('./service/CustomerInfoService')
+const CustomerInfoRouter = require('./router/CustomerInfoRouter')
+const customerInfoService = new CustomerInfoService(knex)
+app.use(
+  '/api/customerInfo',
+  authClass.authenticate(),
+  new CustomerInfoRouter(customerInfoService).router()
+)
+//======================================customerInfoROUTERS================//
+
 //======================================adminROUTERS================//
 const AdminService = require('./service/AdminService')
 const AdminRouter = require('./router/AdminRouter')

@@ -58,22 +58,18 @@ exports.seed = function (knex) {
                   id: 1,
                   user_id: 1,
                   phone: '1234 5678',
-                  credit_card_info: null,
-                  delivery_address: null
+               
                 },
                 {
                   id: 2,
                   user_id: 2,
                   phone: '2468 1357',
-                  credit_card_info: '1234 1234 1234 1234',
-                  delivery_address: 'cwb'
+              
                 },
                 {
                   id: 3,
                   user_id: 3,
                   phone: '3456 5432',
-                  credit_card_info: '2234 3234 4234 5234',
-                  delivery_address: 'cwb'
                 }
               ])
             })

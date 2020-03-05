@@ -3,11 +3,29 @@
 
 }
 
+/* .ShoppingCartIcon{
+  color: #7a7e85;
+} */
+
 #quantity{
     
 }
 
-.cart-item-img{
-    height: 150px;
-    width: 150px;
+.cart_img{
+    height: 100px;
+    width: 100px;
+    border-radius: 20px;
+}
+
+.myTable{
+    width: 30px;
+  
+}
+
+.icon{
+    cursor: pointer;
+}
+
+.myLink:hover{
+    text-decoration: none;
 }

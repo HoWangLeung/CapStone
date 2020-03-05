@@ -59,12 +59,17 @@ class Menu extends Component {
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
               </CardText>
-              <Button
+            {this.props.isLoggedIn === true && this.props.is_admin === true? (<Button
+                color='danger'
+                // onClick={() => this.props.showModalDispatcher(index)}
+              >
+                Add
+              </Button>):(  <Button
                 color='danger'
                 onClick={() => this.props.showModalDispatcher(index)}
               >
                 Add
-              </Button>
+              </Button>)}
             </CardBody>
           </Card>
         </>
@@ -82,9 +87,11 @@ class Menu extends Component {
 
 const mapStateToProps = state => {
   return {
+    isLoggedIn: state.authReducer.isLoggedIn,
+    is_admin: state.authReducer.is_admin,
     items: state.cartReducer.items,
     modal: state.modalReducer.modal,
-    modalid: state.modalReducer.Id
+    modalid: state.modalReducer.Id,
   }
 }
 const mapDispatchToProps = dispatch => {

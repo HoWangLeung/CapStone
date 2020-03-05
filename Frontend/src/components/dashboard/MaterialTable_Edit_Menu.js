@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import MaterialTable from 'material-table'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import DrawerLeft from './Drawer'
 
 export default function MaterialTable_Edit_Menu () {
   const [state, setState] = React.useState({
@@ -53,110 +54,113 @@ export default function MaterialTable_Edit_Menu () {
   }, [])
 
   return (
-    <MaterialTable
-      title='Current Products'
-      columns={state.columns}
-      data={state.data}
-      editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            let token = localStorage.token
-            const config = {
-              headers: { Authorization: `Bearer ${token}` }
-            }
-            console.log(newData)
+    <>
+      <DrawerLeft />
+      <MaterialTable
+        title='Current Products'
+        columns={state.columns}
+        data={state.data}
+        editable={{
+          onRowAdd: newData =>
+            new Promise(resolve => {
+              let token = localStorage.token
+              const config = {
+                headers: { Authorization: `Bearer ${token}` }
+              }
+              console.log(newData)
 
-            axios
-              .post(
-                `${process.env.REACT_APP_API_SERVER}/api/admin/product`,
-                newData,
-                config
-              )
-              .then(result => {
-                console.log('<<======================================')
-                let data = result.data
-                console.log(data)
-              })
-              .catch(error => {
-                console.log(error)
-              })
+              axios
+                .post(
+                  `${process.env.REACT_APP_API_SERVER}/api/admin/product`,
+                  newData,
+                  config
+                )
+                .then(result => {
+                  console.log('<<======================================')
+                  let data = result.data
+                  console.log(data)
+                })
+                .catch(error => {
+                  console.log(error)
+                })
 
-            setTimeout(() => {
-              resolve()
-              setState(prevState => {
-                const data = [...prevState.data]
-                data.push(newData)
-                return { ...prevState, data }
-              })
-            }, 600)
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            let token = localStorage.token
-            const config = {
-              headers: { Authorization: `Bearer ${token}` }
-            }
-
-            axios
-              .put(
-                `${process.env.REACT_APP_API_SERVER}/api/admin/product/${oldData.id}`,
-                newData,
-                config
-              )
-              .then(result => {
-                console.log('<<======================================')
-                let data = result.data
-                console.log(data)
-              })
-              .catch(error => {
-                console.log(error)
-              })
-            setTimeout(() => {
-              resolve()
-              if (oldData) {
-                console.log(newData)
-
+              setTimeout(() => {
+                resolve()
                 setState(prevState => {
                   const data = [...prevState.data]
-                  data[data.indexOf(oldData)] = newData
+                  data.push(newData)
                   return { ...prevState, data }
                 })
+              }, 600)
+            }),
+          onRowUpdate: (newData, oldData) =>
+            new Promise(resolve => {
+              let token = localStorage.token
+              const config = {
+                headers: { Authorization: `Bearer ${token}` }
               }
-            }, 600)
-          }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
-            let token = localStorage.token
-            const config = {
-              headers: { Authorization: `Bearer ${token}` }
-            }
 
-            axios
-              .delete(
-                `${process.env.REACT_APP_API_SERVER}/api/admin/product/${oldData.id}`,
-                config
-              )
-              .then(result => {
-                console.log('<<======================================')
-                let data = result.data
-                console.log(data)
-              })
-              .catch(error => {
-                console.log(error)
-              })
+              axios
+                .put(
+                  `${process.env.REACT_APP_API_SERVER}/api/admin/product/${oldData.id}`,
+                  newData,
+                  config
+                )
+                .then(result => {
+                  console.log('<<======================================')
+                  let data = result.data
+                  console.log(data)
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+              setTimeout(() => {
+                resolve()
+                if (oldData) {
+                  console.log(newData)
 
-            console.log(oldData)
+                  setState(prevState => {
+                    const data = [...prevState.data]
+                    data[data.indexOf(oldData)] = newData
+                    return { ...prevState, data }
+                  })
+                }
+              }, 600)
+            }),
+          onRowDelete: oldData =>
+            new Promise(resolve => {
+              let token = localStorage.token
+              const config = {
+                headers: { Authorization: `Bearer ${token}` }
+              }
 
-            setTimeout(() => {
-              resolve()
-              setState(prevState => {
-                const data = [...prevState.data]
-                data.splice(data.indexOf(oldData), 1)
-                return { ...prevState, data }
-              })
-            }, 600)
-          })
-      }}
-    />
+              axios
+                .delete(
+                  `${process.env.REACT_APP_API_SERVER}/api/admin/product/${oldData.id}`,
+                  config
+                )
+                .then(result => {
+                  console.log('<<======================================')
+                  let data = result.data
+                  console.log(data)
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+
+              console.log(oldData)
+
+              setTimeout(() => {
+                resolve()
+                setState(prevState => {
+                  const data = [...prevState.data]
+                  data.splice(data.indexOf(oldData), 1)
+                  return { ...prevState, data }
+                })
+              }, 600)
+            })
+        }}
+      />
+    </>
   )
 }
