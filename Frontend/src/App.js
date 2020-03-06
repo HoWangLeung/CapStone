@@ -18,12 +18,8 @@ import { loadStripe } from '@stripe/stripe-js'
 import SignUp from './components/SignUp'
 import MaterialTable_Edit_Menu from './components/dashboard/MaterialTable_Edit_Menu'
 import Statistic from './components/dashboard/Statistic'
-
+import OrderControl from './components/dashboard/OrderControl/OrderControl'
 const stripePromise = loadStripe('pk_test_oHDsyL0Wxhko6HIFRMrm7QXS00h1og1ziG')
-// import api from './api'
-// const stripePromise = api.getPublicStripeKey().then(key =>{
-//     console.log(key)
-//   loadStripe(key)});
 
 export default class App extends Component {
   constructor (props) {
@@ -45,7 +41,7 @@ export default class App extends Component {
                 path='/dashboard/product Control'
                 render={() => <MaterialTable_Edit_Menu />}
               />
-              <Route path='/dashboard/orderControl' component={SignUp} />
+              <Route path='/dashboard/Order Control' component={OrderControl} />
 
               <Route path='/signup' component={SignUp} />
 

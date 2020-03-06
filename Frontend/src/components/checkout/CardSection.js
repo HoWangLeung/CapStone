@@ -3,7 +3,7 @@
 */
 import React from 'react';
 import {CardElement} from '@stripe/react-stripe-js';
-import './CardSection.css'
+import '../CSS/CardSection.css'
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -25,10 +25,10 @@ const CARD_ELEMENT_OPTIONS = {
 
 function CardSection() {
   return (
-    <label>
-      Card details
-      <CardElement options={CARD_ELEMENT_OPTIONS} />
-    </label>
+  
+    
+      <CardElement className="card-input" />
+
   );
 };
 

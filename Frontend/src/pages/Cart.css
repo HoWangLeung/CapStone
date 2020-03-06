@@ -1,3 +1,16 @@
+/* .MuiTable-root{
+    width: 80%;
+    display: table;
+    border-spacing: 0;
+    border-collapse: collapse;
+} */
+.myTable{
+  
+    border-top: 5px black solid;
+
+  
+}
+
 .cart-item-container{
         border: 1px solid black;
 
@@ -16,11 +29,11 @@
     width: 100px;
     border-radius: 20px;
 }
-
+/* 
 .myTable{
     width: 30px;
   
-}
+} */
 
 .icon{
     cursor: pointer;
@@ -28,4 +41,34 @@
 
 .myLink:hover{
     text-decoration: none;
+}
+
+
+.cart-card{
+    width: 100%;
+    height: 100px;
+  
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+ 
+}
+
+.confirm-btn{
+    position: relative;
+    right: 100px;
+}
+
+.preference{
+    padding: 5px ;
+    border: tomato 1px solid ;
+    border-radius: 20px;
+    background-color: tomato;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.preference-box{
+    width: 10px;
+  
 }

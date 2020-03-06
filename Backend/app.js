@@ -12,6 +12,8 @@ const config = require('./config')
 // const users = require('./users')
 const bearerToken = require('express-bearer-token')
 const authClass = require('./auth/local')(knex)
+const stripe = require('stripe')('sk_test_VSPqZxwGfLXAyFZcc0HaAK8600zztVGOji')
+
 //======================================Require================//
 
 //======================================App.use================//
@@ -151,6 +153,49 @@ app.post('/api/login', async (req, res) => {
       res.sendStatus(401)
     }
   })
+})
+
+app.post('/api/signup', async (req, res) => {
+  console.log('received a  signup request')
+  let content = req.body
+  console.log(content)
+  return knex
+    .insert({
+      email: content.inputs.email,
+      password: content.inputs.password1,
+      is_admin: false
+    })
+    .into('users')
+    .returning('id')
+    .then(id => {
+      console.log(id)
+
+      let query = knex('users').where('users.id', parseInt(id))
+
+      query.then(data => {
+        stripe.customers
+          .create({
+            description: 'My First Test Customer (created for API docs)',
+            email: content.inputs.email
+          })
+          .then(stripeData => {
+            console.log(stripeData.id)
+            console.log(data[0].id)
+
+            return knex
+              .select('users.stripe_user_id')
+              .from('users')
+              .where('users.id', data[0].id)
+              .update({
+                stripe_customer_id: stripeData.id
+              })
+          })
+          .then(resData => {
+            res.json(resData)
+          })
+      })
+    })
+    .catch(error => console.log(error))
 })
 
 app.get('/secret', authClass.authenticate(), (req, res) => {

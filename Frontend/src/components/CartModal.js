@@ -24,7 +24,6 @@ import { connect } from 'react-redux'
 import * as cartActions from '../stores/actions/cartAction'
 import * as modalActions from '../stores/actions/modalAction'
 import axios from 'axios'
-
 class CartModal extends Component {
   constructor (props) {
     super(props)
@@ -357,6 +356,7 @@ class CartModal extends Component {
               <hr />
               <FormGroup check>
                 <Label check>
+
                   <Input
                     onChange={event => this.changeSize(event, modalid)}
                     value='small'

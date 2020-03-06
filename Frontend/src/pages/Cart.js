@@ -32,6 +32,9 @@ import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 class Cart extends Component {
   constructor (props) {
     super(props)
@@ -167,6 +170,22 @@ class Cart extends Component {
           <img className='cart_img' src={row.product_img}></img>{' '}
         </TableCell>
         <TableCell align='left'>{row.product_name}</TableCell>
+        <TableCell className='preference-box'>
+          <div align='center' className='preference'>
+            {' '}
+            {row.product_size}
+          </div>
+
+          <br />
+          <div align='center' className='preference'>
+            {row.product_temperature}
+          </div>
+
+          <br />
+          <div align='center' className='preference'>
+            {row.product_milk}
+          </div>
+        </TableCell>
         <TableCell align='left'>
           {' '}
           <input
@@ -181,59 +200,69 @@ class Cart extends Component {
         </TableCell>
         <TableCell align='left'>{this.ccyFormat(row.price)}</TableCell>
         <TableCell align='left'>
-          {' '}
-          <HighlightOffIcon
-            className='icon'
-            key={row.orderItemID}
-            onClick={event => this.handleDelete(event, row.orderItemID)}
-          />
+          <Grid
+            container
+            direction='row'
+            justify='space-around'
+            alignItems='center'
+          >
+            <EditOutlinedIcon align='left' />{' '}
+            <HighlightOffIcon
+              className='icon'
+              key={row.orderItemID}
+              onClick={event => this.handleDelete(event, row.orderItemID)}
+              align='right'
+            />
+          </Grid>
         </TableCell>
       </TableRow>
     ))
 
     return (
-      <TableContainer component={Paper}>
-        <Table className='myTable' aria-label='spanning table'>
-          <TableHead>
-           
-          </TableHead>
-          <TableBody>
-            {listItems.length === 0 ? (
-              <>
-                <img src='https://cdn.dribbble.com/users/204955/screenshots/4930541/emptycart.png'></img>
-                <h2>Cart is empty!</h2>
-                <h5>Looks like you have nothing in your cart</h5>
-                <h5>
-                  Click <Link to='/coffee_menu'>here </Link> to continue
-                  shopping
-                </h5>
-              </>
-            ) : (
-              <>
-               <TableRow>
-              <TableCell align='left'>Product</TableCell>
-              <TableCell align='left'>Product</TableCell>
-              <TableCell align='left'>Qty.</TableCell>
-              <TableCell align='left'>Unit Price($)</TableCell>
-            </TableRow>
-                {listItems}
-
-                <TableRow>
-                  <TableCell colSpan={2}>Total</TableCell>
-                  <TableCell align='left'>${this.state.grand_total}</TableCell>
-                  <TableCell align='left'>
-                    <Link className='myLink' to='/checkout'>
-                      <Button variant='contained' color='secondary'>
-                        Confirm
-                      </Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              </>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <>
+        <h3>My Shopping Cart</h3>
+        <TableContainer component={Paper}>
+          <Table className='myTable' aria-label='spanning table'>
+            <TableHead></TableHead>
+            <TableBody>
+              {listItems.length === 0 ? (
+                <>
+                  <img src='https://cdn.dribbble.com/users/204955/screenshots/4930541/emptycart.png'></img>
+                  <h2>Cart is empty!</h2>
+                  <h5>Looks like you have nothing in your cart</h5>
+                  <h5>
+                    Click <Link to='/coffee_menu'>here </Link> to continue
+                    shopping
+                  </h5>
+                </>
+              ) : (
+                <>
+                  <TableRow>
+                    <TableCell align='left'>Product</TableCell>
+                    <TableCell align='left'>Item</TableCell>
+                    <TableCell align='left'>Item</TableCell>
+                    <TableCell align='left'>quantity</TableCell>
+                    <TableCell align='left'>Unit Price($)</TableCell>
+                    <TableCell align='left'></TableCell>
+                  </TableRow>
+                  {listItems}
+                </>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Card className='cart-card'>
+          <Link className='myLink' to='/checkout'>
+            <Button
+              className='confirm-btn'
+              variant='contained'
+              color='secondary'
+            >
+              Confirm
+            </Button>
+          </Link>
+        </Card>
+      </>
     )
   }
 }

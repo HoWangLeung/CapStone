@@ -1,7 +1,13 @@
 .root{
-    max-Width: 1200px;
-    max-height: 620px;
+    max-Width: 1000px;
+    max-height: 920px;
     border: black solid 1px;
-   margin-left: 120px;
-   margin-bottom: 10px;
+
+}
+.shortInput{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-around;
+   
 }

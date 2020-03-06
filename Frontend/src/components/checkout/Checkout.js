@@ -35,12 +35,11 @@ const styles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
-    
+
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    
+      padding: theme.spacing(3)
     }
   },
   stepper: {
@@ -118,9 +117,14 @@ class Checkout extends Component {
           },
           config
         )
-
+        this.setState({
+          step: step + 1
+        })
         break
       case 1:
+        this.setState({
+          step: step + 1
+        })
         return
         break
       case 2:
@@ -129,10 +133,6 @@ class Checkout extends Component {
       default:
         throw new Error('Unknown step')
     }
-
-    this.setState({
-      step: step + 1
-    })
   }
 
   prevStep = () => {
@@ -151,19 +151,23 @@ class Checkout extends Component {
   getStepContent (step) {
     switch (step) {
       case 0:
-        return <AddressForm handleChange={this.handleChange}
-       nextStep={this.nextStep} />
+        return (
+          <AddressForm
+            handleChange={this.handleChange}
+            nextStep={this.nextStep}
+          />
+        )
       case 1:
-        return <PaymentForm />
+        return <Review nextStep={this.nextStep} />
       case 2:
-        return <Review />
+        return <PaymentForm />
       default:
         throw new Error('Unknown step')
     }
   }
 
   render () {
-    const steps = ['Shipping address', 'Payment details', 'Review your order'];
+    const steps = ['Shipping address', 'Payment details', 'Review your order']
     const { classes } = this.props
     const { step } = this.state
     const {
@@ -180,20 +184,20 @@ class Checkout extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-      
+
         <main className={classes.layout}>
           <Paper className={classes.paper}>
             <Typography component='h1' variant='h4' align='center'>
               Checkout
             </Typography>
-            <Stepper  className={classes.stepper}>
+            <Stepper activeStep={this.state.step} className={classes.stepper}>
               {steps.map(label => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               ))}
             </Stepper>
-                {this.getStepContent(this.state.step)}
+            {this.getStepContent(this.state.step)}
 
             <React.Fragment>
               {this.state.step === steps.length ? (
@@ -207,26 +211,26 @@ class Checkout extends Component {
                     has shipped.
                   </Typography>
                 </React.Fragment>
-              ) : (null
-                // <React.Fragment>
-                //   {this.getStepContent(this.state.step)}
-                //   <div className={classes.buttons}>
-                //     {this.state.step !== 0 && (
-                //       <Button onClick={handleBack} className={classes.button}>
-                //         Back
-                //       </Button>
-                //     )}
-                //     <Button
-                //       variant='contained'
-                //       color='primary'
-                //       onClick={handleNext}
-                //       className={classes.button}
-                //     >
-                //       {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                //     </Button>
-                //   </div>
-                // </React.Fragment>
-              )}
+              ) : null
+              // <React.Fragment>
+              //   {this.getStepContent(this.state.step)}
+              //   <div className={classes.buttons}>
+              //     {this.state.step !== 0 && (
+              //       <Button onClick={handleBack} className={classes.button}>
+              //         Back
+              //       </Button>
+              //     )}
+              //     <Button
+              //       variant='contained'
+              //       color='primary'
+              //       onClick={handleNext}
+              //       className={classes.button}
+              //     >
+              //       {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+              //     </Button>
+              //   </div>
+              // </React.Fragment>
+              }
             </React.Fragment>
           </Paper>
           {/* <Copyright /> */}

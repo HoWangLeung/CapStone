@@ -1,0 +1,12 @@
+.card-input{
+    width: 300px;
+    border: solid 1px black;
+}
+
+.myForm{
+    width: 800px;
+   
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

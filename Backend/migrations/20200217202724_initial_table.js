@@ -5,6 +5,7 @@ exports.up = async function (knex) {
       table.string('email').unique()
       table.string('password')
       table.boolean('is_admin')
+      table.string('stripe_customer_id')
       table.timestamps(false, true)
     })
     .createTable('customer_info', table => {

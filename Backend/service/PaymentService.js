@@ -57,24 +57,22 @@ class PaymentService {
   insert_payment_ID (order_id, content, user) {
     // console.log(order_id, 'liine56 payment service')
     // console.log(content.paymentIntent.id, 'line59 paymentService')
-    console.log(content,'line60-----------------------------paymentservice');
-    
+    console.log(content, 'line60-----------------------------paymentservice')
+
     let paymentIntent_id = content.paymentIntent.id
 
     let query = this.knex('order').where('order.id', order_id)
 
     return query.then(data => {
-      console.log(data,'line67 paymentservice');
-      
+      console.log(data, 'line67 paymentservice')
+
       return this.knex
-      .select('order.paymentIntent_id')
-      .from('order')
-      .where('order.id', order_id)
-      .update({
-        paymentIntent_id: paymentIntent_id
-      })
-     
-  
+        .select('order.paymentIntent_id')
+        .from('order')
+        .where('order.id', order_id)
+        .update({
+          paymentIntent_id: paymentIntent_id
+        })
     })
   }
 
