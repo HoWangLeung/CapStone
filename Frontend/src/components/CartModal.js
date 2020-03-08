@@ -24,6 +24,7 @@ import { connect } from 'react-redux'
 import * as cartActions from '../stores/actions/cartAction'
 import * as modalActions from '../stores/actions/modalAction'
 import axios from 'axios'
+
 class CartModal extends Component {
   constructor (props) {
     super(props)

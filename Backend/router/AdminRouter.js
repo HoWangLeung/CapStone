@@ -44,7 +44,14 @@ class AdminRouter {
 
     //================Chart=========================================//
 
+    //================Order Control=========================================//
+    router.get('/order', is_admin, this.getOrder.bind(this))
+    //================Order Control=========================================//
     return router
+  }
+
+  getOrder (req, res) {
+    return this.adminService.getOrder().then(data => res.json(data))
   }
 
   getChartDataDay (req, res) {

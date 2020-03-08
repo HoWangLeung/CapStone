@@ -1,5 +1,5 @@
 import { Doughnut } from 'react-chartjs-2'
-
+import Grid from '@material-ui/core/Grid'
 import React, { Component } from 'react'
 import DatePicker_day from './DatePicker_day'
 import '../CSS/DonaughtChartDay.css'
@@ -65,6 +65,8 @@ export default class DonaughtChartDay extends Component {
       labels_arr.push(rows.product_name)
       datasets_arr.push(rows.total_ordered_quantity)
     })
+    let empty_img
+
     const data = {
       labels: labels_arr,
       datasets: [
@@ -82,20 +84,35 @@ export default class DonaughtChartDay extends Component {
         }
       ]
     }
-    return (
-      <div className='donaught'>
-        <DatePicker_day className='DatePicker_day' pickDate={this.pickDate} />
-        <h2>Sales Record</h2>
 
-        <Doughnut
-          options={{
-            responsive: true,
-            maintainAspectRatio: true
-          }}
-          data={data}
-        />
-      </div>
-    )
+    if (labels_arr.length !== 0) {
+      return (
+        <div className='donaught'>
+          <DatePicker_day className='DatePicker_day' pickDate={this.pickDate} />
+          <h2>Sales Record</h2>
+
+          <Doughnut
+            options={{
+              responsive: true,
+              maintainAspectRatio: true
+            }}
+            data={data}
+          />
+        </div>
+      )
+    } else {
+      return (
+        <Grid container direction='row' justify='center' alignItems='center'>
+          <DatePicker_day className='DatePicker_day' pickDate={this.pickDate} />
+          <img src='https://img.icons8.com/dotty/80/000000/nothing-found.png'></img>
+          <br />
+          <h1 style={{ fontFamily: 'Amatic SC', fontSize: '48px' }}>
+            Data Not Found <br />
+            Try another date
+          </h1>
+        </Grid>
+      )
+    }
   }
 }
 // cutoutPercentage: 70

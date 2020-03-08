@@ -17,6 +17,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import axios from 'axios'
 import { Redirect } from 'react-router'
+
 function Copyright () {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
@@ -91,9 +92,8 @@ export default function SignUp (props) {
           .then(res => {
             console.log(res)
             if ((res.status = 200)) {
-             console.log(props);
-             props.history.push(`${process.env.REACT_APP_API_SERVER}`)
-            
+              console.log(props)
+              props.history.push(`signUpSuccess`)
             }
           })
       }

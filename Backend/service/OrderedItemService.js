@@ -66,7 +66,7 @@ class OrderedItemService {
       .where('order.status', 'pending')
       .innerJoin('ordered_item', 'ordered_item.order_id', 'order.id')
       .innerJoin('product', 'product.id', 'ordered_item.product_id')
-      .orderBy('order.id', 'asc')
+      .orderBy('ordered_item.id', 'asc')
 
     return query.then(rows => {
       console.log(rows)
@@ -76,8 +76,8 @@ class OrderedItemService {
   }
 
   add (user, order_content) {
-    console.log(order_content,'========================order_content');
-    
+    console.log(order_content, '========================order_content')
+
     let query = this.knex
       .select('users.id as users_id', 'order.id as order_id', 'order.status')
       .from('users')
@@ -114,7 +114,7 @@ class OrderedItemService {
                 product_milk: order_content.product_milk,
                 product_temperature: order_content.product_temperature,
                 special_instruction: order_content.special_instruction,
-                price:order_content.product_price
+                price: order_content.product_price
               })
               .into('ordered_item')
           })
@@ -134,7 +134,7 @@ class OrderedItemService {
               product_milk: order_content.product_milk,
               product_temperature: order_content.product_temperature,
               special_instruction: order_content.special_instruction,
-              price:order_content.product_price
+              price: order_content.product_price
             })
             .into('ordered_item')
         })
@@ -144,6 +144,7 @@ class OrderedItemService {
 
   update (user, change, ordered_item_id) {
     console.log(ordered_item_id, 'sfsdfsdfsdfsdfsfsfsdfsdsfsdfsdfsdfsdfds')
+    console.log(change)
 
     return this.knex
       .select(
@@ -158,8 +159,13 @@ class OrderedItemService {
       .from('ordered_item')
       .where('ordered_item.id', ordered_item_id)
       .update({
-        quantity: change.quantity
+        quantity: change.quantity,
+        product_temperature: change.product_temperature,
+        product_milk: change.product_temperature,
+        product_size:change.product_size,
+        special_instruction: change.special_instruction
       })
+      
   }
 
   delete (order_item_id, remove) {
@@ -183,7 +189,9 @@ class OrderedItemService {
           .where('ordered_item.id', order_item_id)
           .del()
       } else if (data.length === 1) {
-        console.log('attempting to delete the last item in cart <=====================')
+        console.log(
+          'attempting to delete the last item in cart <====================='
+        )
         return this.knex('ordered_item')
           .where('ordered_item.id', order_item_id)
           .del()

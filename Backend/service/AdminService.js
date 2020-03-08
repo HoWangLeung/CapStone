@@ -167,6 +167,21 @@ class AdminService {
       .where('product.id', product_id)
       .del()
   }
+
+  getOrder () {
+    console.log('getting order')
+    let query = this.knex('ordered_item')
+    .innerJoin('order','ordered_item.order_id','order.id')
+    .innerJoin('users', 'users.id','order.user_id')
+    .innerJoin('customer_info','customer_info.user_id','users.id')
+    .innerJoin('product','product.id','ordered_item.product_id')
+
+    return query.then(data => {
+      console.log(data);
+      
+      return data
+    })
+  }
 }
 
 module.exports = AdminService

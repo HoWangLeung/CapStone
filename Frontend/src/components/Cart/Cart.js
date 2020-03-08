@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import './Cart.css'
+import './CSS/Cart.css'
 // import {
 //   Card,
 //   CardImg,
@@ -34,14 +34,37 @@ import { connect } from 'react-redux'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import EditModal from './EditModal'
+import { withStyles } from '@material-ui/styles'
+import { useTransition, animated } from 'react-spring'
+
+const styles = {
+  root: {
+    background: 'linear-gradient(45deg, #82f573 30%, #c4fc4c 90%)', 
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)'
+  },
+  link: {
+    '&:hover': { textDecoration: 'none' },
+    '&:visited': { textDecoration: 'none' },
+    '&:link': { textDecoration: 'none' },
+    '&:active': { textDecoration: 'none' },
+    '&:focus': { textDecoration: 'none' }
+  }
+}
+
 class Cart extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
       items: [],
-      grand_total: 0
+      grand_total: 0,
+
     }
   }
 
@@ -158,10 +181,15 @@ class Cart extends Component {
       .catch(error => console.log('error:', error))
   }
 
+  handleEdit = input => e => {
+    console.log(e.target.getAttribute('data-index'))
+  }
+
   ccyFormat (num) {
     return `${num.toFixed(2)}`
   }
   render () {
+    const { classes } = this.props
     let items = this.state.items
     const listItems = items.map((row, index) => (
       <TableRow key={row.desc}>
@@ -185,6 +213,13 @@ class Cart extends Component {
           <div align='center' className='preference'>
             {row.product_milk}
           </div>
+          <br />
+
+          {row.special_instruction === '' ? null : (
+            <div align='center' className='preference'>
+              {row.special_instruction}
+            </div>
+          )}
         </TableCell>
         <TableCell align='left'>
           {' '}
@@ -206,7 +241,7 @@ class Cart extends Component {
             justify='space-around'
             alignItems='center'
           >
-            <EditOutlinedIcon align='left' />{' '}
+            <EditModal index={index} />
             <HighlightOffIcon
               className='icon'
               key={row.orderItemID}
@@ -227,13 +262,21 @@ class Cart extends Component {
             <TableBody>
               {listItems.length === 0 ? (
                 <>
-                  <img src='https://cdn.dribbble.com/users/204955/screenshots/4930541/emptycart.png'></img>
-                  <h2>Cart is empty!</h2>
-                  <h5>Looks like you have nothing in your cart</h5>
-                  <h5>
-                    Click <Link to='/coffee_menu'>here </Link> to continue
-                    shopping
-                  </h5>
+                  <Grid
+                    container
+                    direction='column'
+                    justify='space-around'
+                    alignItems='center'
+                  >
+                    <img src='http://alhindmart.com/assets/front-end/img/empty-cart-icon.png'></img>
+                    <h2>Cart is empty!</h2>
+                    <h5>Looks like you have nothing in your cart</h5>
+                    <Link className={classes.link} to='/coffee_menu'>
+                      <Button className={classes.root}>
+                        Continue Shopping
+                      </Button>
+                    </Link>
+                  </Grid>
                 </>
               ) : (
                 <>
@@ -251,7 +294,7 @@ class Cart extends Component {
             </TableBody>
           </Table>
         </TableContainer>
-        <Card className='cart-card'>
+        <Grid container direction='row' justify='flex-end' alignItems='center'>
           <Link className='myLink' to='/checkout'>
             <Button
               className='confirm-btn'
@@ -261,7 +304,7 @@ class Cart extends Component {
               Confirm
             </Button>
           </Link>
-        </Card>
+        </Grid>
       </>
     )
   }
@@ -274,6 +317,8 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Cart)
+export default withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps)(Cart)
+)
 
 //===
