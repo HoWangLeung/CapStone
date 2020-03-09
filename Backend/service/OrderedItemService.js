@@ -161,7 +161,7 @@ class OrderedItemService {
       .update({
         quantity: change.quantity,
         product_temperature: change.product_temperature,
-        product_milk: change.product_temperature,
+        product_milk: change.product_milk,
         product_size:change.product_size,
         special_instruction: change.special_instruction
       })

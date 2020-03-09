@@ -48,6 +48,10 @@ console.log(state);
           },
           config
         )
+        .then((data)=>{
+            toggle()
+            window.location.reload(true);
+        })
       })
   }
 

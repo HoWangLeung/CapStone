@@ -41,20 +41,6 @@ class Menu extends Component {
   }
 
   render () {
-    // let item_arr = this.props.items
-    // const listItem = item_arr.map((row, index) => {
-    //   return<div>
-    //   <Card>
-    //     <CardImg top width="100%" src={row.product_img} alt="Card image cap" />
-    //     <CardBody>
-    //       <CardTitle>Card title</CardTitle>
-    //       <CardSubtitle>Card subtitle</CardSubtitle>
-    //       <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-    //       <Button>Button</Button>
-    //     </CardBody>
-    //   </Card>
-    // </div>
-    // })
 
     return (
       <div>
@@ -94,11 +80,6 @@ class Menu extends Component {
                       <CardTitle>
                         {item.product_name} ${item.product_price}
                       </CardTitle>
-                      {/* <CardSubtitle>Card subtitle</CardSubtitle>
-                      <CardText>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </CardText> */}
                     </CardBody>
                   </Card>
                 </Col>
@@ -141,19 +122,4 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu)
 
-// {this.props.isLoggedIn === true &&
-//   this.props.is_admin === true ? (
-//     <Button
-//       color='danger'
-//       // onClick={() => this.props.showModalDispatcher(index)}
-//     >
-//       Add
-//     </Button>
-//   ) : (
-//     <Button
-//       color='danger'
-//       onClick={() => this.props.showModalDispatcher(index)}
-//     >
-//       Add
-//     </Button>
-//   )}
+ 

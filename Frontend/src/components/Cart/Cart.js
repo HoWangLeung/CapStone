@@ -40,7 +40,7 @@ import { useTransition, animated } from 'react-spring'
 
 const styles = {
   root: {
-    background: 'linear-gradient(45deg, #82f573 30%, #c4fc4c 90%)', 
+    background: 'linear-gradient(45deg, #82f573 30%, #c4fc4c 90%)',
     borderRadius: 3,
     border: 0,
     color: 'white',
@@ -63,8 +63,7 @@ class Cart extends Component {
 
     this.state = {
       items: [],
-      grand_total: 0,
-
+      grand_total: 0
     }
   }
 
@@ -288,6 +287,7 @@ class Cart extends Component {
                     <TableCell align='left'>Unit Price($)</TableCell>
                     <TableCell align='left'></TableCell>
                   </TableRow>
+
                   {listItems}
                 </>
               )}

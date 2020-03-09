@@ -8,32 +8,31 @@
 // import TableRow from '@material-ui/core/TableRow'
 // import axios from 'axios'
 
-// export default function SignUpSuccess () {
-//   const [items, setList] = useState([
-
-//   ])
+// export default function RemovalAnimation (prop) {
+//   let propItems = prop.items
+//   const [items, setList] = useState(propItems)
 
 //   // const [index, setIndex] = useState(0)
 
-//   useEffect(() => {
-//     let token = localStorage.token
-//     const config = {
-//       headers: { Authorization: `Bearer ${token}` }
-//     }
-//     axios
-//       .get(`${process.env.REACT_APP_API_SERVER}/api/orderedItem/`, config)
-//       .then(res => {
-//         let items = res.data
-//         let grand_total = 0
-//         items.forEach(item => {
-//           grand_total += item.quantity * item.price
-//         })
+//   // useEffect(() => {
+//   //   let token = localStorage.token
+//   //   const config = {
+//   //     headers: { Authorization: `Bearer ${token}` }
+//   //   }
+//   //   axios
+//   //     .get(`${process.env.REACT_APP_API_SERVER}/api/orderedItem/`, config)
+//   //     .then(res => {
+//   //       let items = res.data
+//   //       let grand_total = 0
+//   //       items.forEach(item => {
+//   //         grand_total += item.quantity * item.price
+//   //       })
 
-//         console.log(items)
-//         setList(items)
-//       })
-//       .catch(error => console.log('error:', error))
-//   }, [])
+//   //       console.log(items)
+//   //       setList(items)
+//   //     })
+//   //     .catch(error => console.log('error:', error))
+//   // }, [])
 
 //   const removeFromList = () => {
 //     var nItems = items.slice()
@@ -46,9 +45,13 @@
 //     enter: { transform: 'translate3d(0%, 0%,0)' },
 //     leave: { transform: 'translate3d(100%,0%,0)' }
 //   })
+
+//   console.log(transitions);
+  
 //   return (
 //     <div>
 //       {/* <button onClick={addToList}>add</button> */}
+//       {/* {prop.items} */}
 
 //       {transitions.map(({ item, props, key }) => {
 //         console.log(item)
@@ -57,15 +60,7 @@
 
 //         return (
 //           <div>
-//             <animated.div style={props}>
-//               <div>
-              
-//                 {item.product_name}:{item.product_price}
-                
-//               </div>
-//               <button onClick={removeFromList}>remove</button>
-//             </animated.div>
-         
+//             <animated.div style={props}></animated.div>
 //           </div>
 //         )
 //       })}
