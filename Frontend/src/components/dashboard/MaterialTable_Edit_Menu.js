@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import MaterialTable from 'material-table'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import DrawerLeft from './Drawer'
+import DrawerLeft from './Statistic/Drawer'
 
 export default function MaterialTable_Edit_Menu () {
   const [state, setState] = React.useState({

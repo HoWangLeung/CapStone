@@ -16,6 +16,10 @@ class AdminRouter {
         next()
       }
     }
+    //================Stat=========================================//
+    router.get('/statistic', is_admin, this.getStat.bind(this))
+
+    //================Stat=========================================//
     //================product=========================================//
     router.get('/product', is_admin, this.get.bind(this))
     router.post('/product', is_admin, this.post.bind(this))
@@ -48,6 +52,14 @@ class AdminRouter {
     router.get('/order', is_admin, this.getOrder.bind(this))
     //================Order Control=========================================//
     return router
+  }
+
+  getStat (req, res) {
+    return this.adminService.getIncome().then(data => {
+   
+      
+      res.json(data)
+    })
   }
 
   getOrder (req, res) {

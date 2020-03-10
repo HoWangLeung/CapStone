@@ -54,7 +54,16 @@ class CartModal extends Component {
     items[modalid] = item
     this.setState({
       ...this.state,
-      items: items
+      items: items,
+      hot_checked: false,
+      cold_checked: false,
+      small_checked: false,
+      medium_checked: false,
+      large_checked: false,
+      whole_milk_checked: false,
+      skimmed_milk_checked: false,
+      soy_milk_checked: false,
+      special_instruction: ''
     })
   }
 
@@ -238,6 +247,9 @@ class CartModal extends Component {
 
   handleSubmit (event, modalid) {
     event.preventDefault()
+
+
+
     let targetForm = this.state.items[modalid]
     console.log(targetForm);
     
@@ -273,6 +285,17 @@ class CartModal extends Component {
       )
       .then(function (response) {
         console.log(response)
+        this.setState({
+          hot_checked: false,
+          cold_checked: false,
+          small_checked: false,
+          medium_checked: false,
+          large_checked: false,
+          whole_milk_checked: false,
+          skimmed_milk_checked: false,
+          soy_milk_checked: false,
+          special_instruction: ''
+        })
       })
       .catch(function (error) {
         console.log(error)

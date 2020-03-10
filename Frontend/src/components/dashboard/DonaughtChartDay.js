@@ -1,7 +1,7 @@
 import { Doughnut } from 'react-chartjs-2'
 import Grid from '@material-ui/core/Grid'
 import React, { Component } from 'react'
-import DatePicker_day from './DatePicker_day'
+import DatePicker_day from './Statistic/DatePicker_day'
 import '../CSS/DonaughtChartDay.css'
 import axios from 'axios'
 export default class DonaughtChartDay extends Component {
@@ -25,24 +25,14 @@ export default class DonaughtChartDay extends Component {
         config
       )
       .then(data => {
-        console.log(data.data)
-
         let data_by_day = data.data
         data_by_day.map(rows => {
           let date = new Date(rows.date_trunc).toLocaleDateString('en-US')
-          console.log(date)
 
           data_by_day.map(data => {
             data.date_trunc = date
           })
         })
-
-        console.log(data_by_day)
-
-        // let items = [...this.state.items]
-        // let item = { ...items[modalid] }
-        // item.quantity = item.quantity + 1
-        // items[modalid] = item
 
         this.setState({
           data_by_day
@@ -65,7 +55,6 @@ export default class DonaughtChartDay extends Component {
       labels_arr.push(rows.product_name)
       datasets_arr.push(rows.total_ordered_quantity)
     })
-    let empty_img
 
     const data = {
       labels: labels_arr,
@@ -87,18 +76,19 @@ export default class DonaughtChartDay extends Component {
 
     if (labels_arr.length !== 0) {
       return (
-        <div className='donaught'>
+        <Grid container direction='row' justify='center' alignItems='center'>
           <DatePicker_day className='DatePicker_day' pickDate={this.pickDate} />
-          <h2>Sales Record</h2>
+          <h6>Number of products sold</h6>
 
           <Doughnut
             options={{
               responsive: true,
+              maintainAspectRatio: true,
               maintainAspectRatio: true
             }}
             data={data}
           />
-        </div>
+        </Grid>
       )
     } else {
       return (

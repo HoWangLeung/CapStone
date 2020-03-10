@@ -43,9 +43,10 @@ export const getCoffeeItem = (item) => {
   }
 }
 
+
 export const getCoffeeItemThunk = () => {
   return dispatch => {
-    axios.get(`http://localhost:8000/api/product`).then(res => {
+    axios.get(`${process.env.REACT_APP_API_SERVER}/api/product`).then(res => {
       console.log('cartaction line 43')
 
       console.log(res.data)

@@ -3,6 +3,59 @@ class AdminService {
     this.knex = knex
   }
 
+  getIncome () {
+    let date = new Date()
+
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+
+    if (month < 10) {
+      month = '0' + month
+    }
+
+    let thisMonth = month + '/' + year
+    console.log(thisMonth)
+
+    console.log('getting income')
+
+    let query = this.knex
+      .select(
+        // 'ordered_item.price',
+        // 'ordered_item.quantity',
+        // this.knex.raw("to_char(created_at, 'DD/MM/YYYY')"),
+        this.knex.raw(' sum(quantity*price) as income_thisMonth ')
+      )
+
+      .from('ordered_item')
+      .where(this.knex.raw("to_char(created_at, 'MM/YYYY')"), thisMonth)
+
+    return query.then(income_thisMonth => {
+      let CostQuery = this.knex
+        .select(
+          // 'ordered_item.quantity',
+          // 'product.product_cost',
+          this.knex.raw(
+            ' sum(ordered_item.quantity*product.product_cost) as cost_thisMonth '
+          )
+        )
+        .from('ordered_item')
+        .innerJoin('product', 'product.id', 'ordered_item.product_id')
+        .where(
+          this.knex.raw("to_char(ordered_item.created_at, 'MM/YYYY')"),
+          thisMonth
+        )
+
+      return CostQuery.then(cost_thisMonth => {
+        console.log(income_thisMonth[0], cost_thisMonth[0]);
+
+        let MonthlyIncome = income_thisMonth[0]
+        let MonthlyCost = cost_thisMonth[0]
+        
+        return {MonthlyIncome, MonthlyCost}
+      })
+    })
+  }
+
   list () {
     console.log('admin getting')
 
@@ -171,14 +224,14 @@ class AdminService {
   getOrder () {
     console.log('getting order')
     let query = this.knex('ordered_item')
-    .innerJoin('order','ordered_item.order_id','order.id')
-    .innerJoin('users', 'users.id','order.user_id')
-    .innerJoin('customer_info','customer_info.user_id','users.id')
-    .innerJoin('product','product.id','ordered_item.product_id')
+      .innerJoin('order', 'ordered_item.order_id', 'order.id')
+      .innerJoin('users', 'users.id', 'order.user_id')
+      .innerJoin('customer_info', 'customer_info.user_id', 'users.id')
+      .innerJoin('product', 'product.id', 'ordered_item.product_id')
 
     return query.then(data => {
-      console.log(data);
-      
+      console.log(data)
+
       return data
     })
   }

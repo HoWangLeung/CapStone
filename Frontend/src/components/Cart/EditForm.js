@@ -19,7 +19,7 @@ const EditForm = props => {
           name='Temperature'
           id='exampleSelect'
           onChange={props.handleChange('Temperature')}
-          defaultValue={'Cold'}
+          defaultValue={'Hot'}
         >
           <option>Hot</option>
           <option>Cold</option>

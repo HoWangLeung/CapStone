@@ -17,7 +17,7 @@ import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import SignUp from './components/Authentication/SignUp'
 import MaterialTable_Edit_Menu from './components/dashboard/MaterialTable_Edit_Menu'
-import Statistic from './components/dashboard/Statistic'
+import Statistic from './components/dashboard/DashboardStat'
 import OrderControl from './components/dashboard/OrderControl/OrderControl'
 import SignUpSuccess from './components/Authentication/SignUpSuccess'
 

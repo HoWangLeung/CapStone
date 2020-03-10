@@ -8,9 +8,9 @@ const EditModal = props => {
 
   const [modal, setModal] = useState(false)
   const [state, setState] = useState({
-    Temperature: '',
-    Size: '',
-    Milk: '',
+    Temperature: 'Hot',
+    Size: 'Large',
+    Milk: 'Whole Milk',
     special_instruction: ''
   })
 
