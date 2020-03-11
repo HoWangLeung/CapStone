@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import {
   Card,
   CardImg,
@@ -15,58 +15,57 @@ import {
   Label,
   Input,
   FormText
-} from 'reactstrap'
+} from "reactstrap";
 
-import '../CSS/Menu.css'
-import * as cartActions from '../../stores/actions/cartAction'
-import * as modalActions from '../../stores/actions/modalAction'
-import { connect } from 'react-redux'
-import CartModal from '../CartModal'
+import "../CSS/Menu.css";
+import * as cartActions from "../../stores/actions/cartAction";
+import * as modalActions from "../../stores/actions/modalAction";
+import { connect } from "react-redux";
+import CartModal from "../CartModal";
 
 class Menu extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       modal: false
-    }
+    };
   }
-  componentDidMount () {
-    this.props.getCoffeeItemDispatcher()
+  componentDidMount() {
+    this.props.getCoffeeItemDispatcher();
   }
 
   showModal = (e, index) => {
     this.setState({
       // modal: true
-    })
-  }
+    });
+  };
 
-  render () {
-
+  render() {
     return (
       <div>
         <Container fluid={true}>
           <Row>
             {this.props.items.map((item, index) => {
               return (
-                <Col md='3'>
+                <Col md="3">
                   <Card>
-                    <div className='hovereffect'>
+                    <div className="hovereffect">
                       <CardImg
-                        height='auto'
+                        height="auto"
                         top
-                        width='100%'
+                        width="100%"
                         src={item.product_img}
-                        alt='Card image cap'
+                        alt="Card image cap"
                       />
-                      <div class='overlay'>
+                      <div class="overlay">
                         <h2>{item.product_name}</h2>
 
                         {this.props.isLoggedIn === true &&
                         this.props.is_admin === true ? (
-                          <p className='pointer'>Not Available to Admin user</p>
+                          <p className="pointer">Not Available to Admin user</p>
                         ) : (
                           <p
-                            className='pointer'
+                            className="pointer"
                             onClick={() =>
                               this.props.showModalDispatcher(index)
                             }
@@ -83,13 +82,13 @@ class Menu extends Component {
                     </CardBody>
                   </Card>
                 </Col>
-              )
+              );
             })}
           </Row>
         </Container>
         <CartModal />
       </div>
-    )
+    );
   }
 }
 
@@ -100,26 +99,24 @@ const mapStateToProps = state => {
     items: state.cartReducer.items,
     modal: state.modalReducer.modal,
     modalid: state.modalReducer.Id
-  }
-}
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
     addToCartDispatcher: id => {
-      dispatch(cartActions.addQuantity(id))
+      dispatch(cartActions.addQuantity(id));
     },
     showModalDispatcher: id => {
-      console.log(id)
-      dispatch(modalActions.showModal(id))
+      console.log(id);
+      dispatch(modalActions.showModal(id));
     },
     hideModalDispatcher: id => {
-      dispatch(modalActions.hideModal(id))
+      dispatch(modalActions.hideModal(id));
     },
     getCoffeeItemDispatcher: () => {
-      dispatch(cartActions.getCoffeeItemThunk())
+      dispatch(cartActions.getCoffeeItemThunk());
     }
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Menu)
-
- 
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

@@ -12,8 +12,9 @@ class CustomerInfoRouter {
   }
 
   get (req, res) {
+    let user = req.user
     return this.customerInfoService
-      .list()
+      .list(user)
       .then(data => {
         res.json(data)
       })

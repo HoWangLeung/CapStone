@@ -3,15 +3,16 @@ class OrderedItemService {
     this.knex = knex
   }
 
-  listForAdmin (id) {
-    console.log('listforadmin line8')
-    console.log(id)
-
+  listForCustomerProfile (user_id ) {
+    console.log('listForCustomerProfile line8')
+    console.log(user_id);
+    
     let query = this.knex
       .select(
         'order.id as orderID',
         'order.user_id',
         'order.status',
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY') as orderedItem_created_at"),
         'ordered_item.id as orderItemID',
         'ordered_item.product_id',
         'ordered_item.quantity',
@@ -27,8 +28,8 @@ class OrderedItemService {
         'available_period'
       )
       .from('order')
-      .where('order.status', 'pending')
-      .where('order.id', id)
+      .where('order.status', 'paid')
+      .where('order.user_id',user_id.id )
       .innerJoin('ordered_item', 'ordered_item.order_id', 'order.id')
       .innerJoin('product', 'product.id', 'ordered_item.product_id')
       .orderBy('order.id', 'asc')

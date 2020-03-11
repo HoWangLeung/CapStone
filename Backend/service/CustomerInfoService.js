@@ -3,8 +3,9 @@ class CustomerInfoService {
     this.knex = knex
   }
 
-  list () {
-    let query = this.knex.from('product').orderBy('product.id')
+  list (user) {
+    let query = this.knex.from('customer_info')
+    .where('customer_info.user_id', user.id)
 
     return query.then(rows => {
       return rows
