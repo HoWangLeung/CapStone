@@ -47,11 +47,11 @@ jobs:
 
      - run:
          name: Deploy to S3 if the build is successful
-         command: ~/.local/bin/aws s3 sync --acl public-read /tmp/my-project/build/ s3://[S3_BUCKET_NAME] --delete
+         command: ~/.local/bin/aws s3 sync --acl public-read /tmp/my-project/build/ s3://derek-coffee-shop-2020 --delete
        
      - run:
          name: Invalidate Cloudfront distribution
-         command: ~/.local/bin/aws cloudfront create-invalidation --distribution-id [CLOUDFRONT_ID] --paths "/*"
+         command: ~/.local/bin/aws cloudfront create-invalidation --distribution-id E9APMWY68027J --paths "/*"
  
 workflows:
  version: 2

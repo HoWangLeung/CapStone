@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import MaterialTable from "material-table";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import PaymentIcon from '@material-ui/icons/Payment';
+import PaymentIcon from "@material-ui/icons/Payment";
+import ShopIcon from "@material-ui/icons/Shop";
+import { Link } from "react-router-dom";
+
 export default function CurrentOrder() {
   const [state, setState] = React.useState({
     columns: [
@@ -63,10 +66,14 @@ export default function CurrentOrder() {
           data={state.data}
           actions={[
             {
-              icon: "add",
-              tooltip: "Add User",
-              isFreeAction: true,
-              onClick: event => alert("You want to add a new row")
+              icon: () => (
+                <Link to="/cart">
+                  <ShopIcon style={{ color: "grey" }} />
+                </Link>
+              ),
+              //   tooltip: "Add User",
+              isFreeAction: true
+              //   onClick: event =>
             }
           ]}
         />

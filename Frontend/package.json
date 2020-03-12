@@ -2,6 +2,7 @@
   "name": "capstone",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://dereklhw.com",
   "dependencies": {
     "@devexpress/dx-chart-core": "^2.4.1",
     "@devexpress/dx-react-chart": "^2.4.1",
@@ -40,8 +41,8 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "yarn": "^1.22.0",
-    "homepage": "https://dereklhw.com"
+    "yarn": "^1.22.0"
+ 
   },
   "scripts": {
     "start": "react-scripts start",

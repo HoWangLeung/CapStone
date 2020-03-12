@@ -6,6 +6,10 @@
    
 }
 
+.myBoxes{
+    min-width: 100%;
+}
+
 /* .myMedia{
     max-height: 400px,
 } */
