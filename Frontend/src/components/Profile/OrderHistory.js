@@ -1,4 +1,5 @@
-import React, {   useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import MaterialTable from "material-table";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";

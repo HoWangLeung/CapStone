@@ -121,15 +121,15 @@ class CartModal extends Component {
     if (event.target.value === 'hot') {
       this.setState({
         ...this.state,
-        hot_checked: (this.state.hot_checked = true),
-        cold_checked: (this.state.cold_checked = false),
+        hot_checked: true,
+        cold_checked: false,
         items
       })
     } else if (event.target.value === 'cold') {
       this.setState({
         ...this.state,
-        cold_checked: (this.state.cold_checked = true),
-        hot_checked: (this.state.hot_checked = false),
+        cold_checked: true,
+        hot_checked: false,
         items
       })
     }
@@ -147,9 +147,9 @@ class CartModal extends Component {
       case 'small':
         this.setState({
           ...this.state,
-          small_checked: (this.state.small_checked = true),
-          medium_checked: (this.state.medium_checked = false),
-          large_checked: (this.state.large_checked = false),
+          small_checked: true,
+          medium_checked: false,
+          large_checked: false,
           items
         })
         break
@@ -157,18 +157,18 @@ class CartModal extends Component {
       case 'medium':
         this.setState({
           ...this.state,
-          small_checked: (this.state.small_checked = false),
-          medium_checked: (this.state.medium_checked = true),
-          large_checked: (this.state.large_checked = false),
+          small_checked: true,
+          medium_checked:true,
+          large_checked: false,
           items
         })
         break
       case 'large':
         this.setState({
           ...this.state,
-          small_checked: (this.state.small_checked = false),
-          medium_checked: (this.state.medium_checked = false),
-          large_checked: (this.state.large_checked = true),
+          small_checked: false,
+          medium_checked: false,
+          large_checked: true,
           items
         })
         break
@@ -188,9 +188,9 @@ class CartModal extends Component {
       case 'whole_milk':
         this.setState({
           ...this.state,
-          whole_milk_checked: (this.state.small_checked = true),
-          skimmed_milk_checked: (this.state.medium_checked = false),
-          soy_milk_checked: (this.state.large_checked = false),
+          whole_milk_checked: true,
+          skimmed_milk_checked: false,
+          soy_milk_checked: false,
           items
         })
         break
@@ -198,9 +198,9 @@ class CartModal extends Component {
       case 'skimmed_milk':
         this.setState({
           ...this.state,
-          whole_milk_checked: (this.state.small_checked = false),
-          skimmed_milk_checked: (this.state.medium_checked = true),
-          soy_milk_checked: (this.state.large_checked = false),
+          whole_milk_checked: false,
+          skimmed_milk_checked: true,
+          soy_milk_checked: false,
           items
         })
         break
@@ -208,9 +208,9 @@ class CartModal extends Component {
       case 'soy_milk':
         this.setState({
           ...this.state,
-          whole_milk_checked: (this.state.small_checked = false),
-          skimmed_milk_checked: (this.state.medium_checked = false),
-          soy_milk_checked: (this.state.large_checked = true),
+          whole_milk_checked: false,
+          skimmed_milk_checked: false,
+          soy_milk_checked: true,
           items
         })
         break
