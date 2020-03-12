@@ -21,7 +21,7 @@ jobs:
          root: .
          # Must be relative path from root
          paths:
-           - build/*
+           - Frontend/build/*
 
  deploy:
    docker:
