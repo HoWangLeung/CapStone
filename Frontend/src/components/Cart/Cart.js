@@ -1,24 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./CSS/Cart.css";
-// import {
-//   Card,
-//   CardImg,
-//   CardText,
-//   CardBody,
-//   CardTitle,
-//   CardSubtitle,
-//   Button,
-//   Container,
-//   Row,
-//   Col,
-//   Form,
-//   FormGroup,
-//   Label,
-//   Input,
-//   FormText,
-//   Table
-// } from 'reactstrap'
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -37,8 +19,9 @@ import Card from "@material-ui/core/Card";
 import EditModal from "./EditModal";
 import { withStyles } from "@material-ui/styles";
 import { useTransition, animated } from "react-spring";
-import CartHeader from './CartHeader'
-
+import CartHeader from "./CartHeader";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import uuid from "uuid";
 const styles = {
   root: {
     background: "linear-gradient(45deg, #82f573 30%, #c4fc4c 90%)",
@@ -192,6 +175,7 @@ class Cart extends Component {
     const { classes } = this.props;
     let items = this.state.items;
     const listItems = items.map((row, index) => (
+      
       <TableRow key={row.desc}>
         <TableCell>
           {" "}
@@ -255,7 +239,7 @@ class Cart extends Component {
 
     return (
       <>
-      <CartHeader/>
+        <CartHeader />
         <TableContainer component={Paper}>
           <Table className="myTable" aria-label="spanning table">
             <TableHead></TableHead>

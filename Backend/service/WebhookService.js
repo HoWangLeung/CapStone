@@ -12,9 +12,7 @@ class WebhookService {
       .update({
         status: 'paid'
       })
-      
   }
-
 }
 
 module.exports = WebhookService
