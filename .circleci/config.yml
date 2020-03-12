@@ -41,7 +41,7 @@ jobs:
 
      - run:
          name: Deploy to S3 if the build is successful
-         command: ~/.local/bin/aws s3 sync --acl public-read /tmp/my-project/build/ s3://derek-coffee-shop-2020 --delete
+         command: ~/.local/bin/aws s3 sync --acl public-read /tmp/my-project/Frontend/build/ s3://derek-coffee-shop-2020 --delete
        
      - run:
          name: Invalidate Cloudfront distribution
