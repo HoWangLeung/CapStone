@@ -5,7 +5,6 @@ import {
   ADD_QUANTITY,
   GET_COFFEE_ITEM
 } from '../actions/cartActionType'
-import { act } from 'react-dom/test-utils'
 
 const initState = {
   items: [],
@@ -18,8 +17,7 @@ const addToCartReducer = (state, action) => {
   console.log('in addtocartreducer')
   // console.log(action.item_total);
   let item_total = action.item_total
-  let index = action.id - 1
-  let items = state.items
+  
   // console.log(items[index]);
   // console.log(items[index].quantity);
   // console.log(items[index].product_price);

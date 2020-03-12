@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
+ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import CardContent from '@material-ui/core/CardContent'
 import Checkbox from '@material-ui/core/Checkbox'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
+ import Button from '@material-ui/core/Button'
 import NativeSelect from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import '../CSS/MuiFormControl.css'
 import Card from '@material-ui/core/Card'
 import { withStyles } from '@material-ui/styles'
-import jssTemplate from 'jss-plugin-template'
-const styles = theme => ({
+ const styles = theme => ({
   root: {
     maxWidth: 1207,
 
@@ -43,8 +40,7 @@ class AddressForm extends Component {
   }
 
   render () {
-    const { classes } = this.props
-
+ 
     const { values, handleChange } = this.props
 
     console.log(values)

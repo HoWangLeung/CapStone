@@ -8,16 +8,12 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import * as authAction from '../stores/actions/authAction'
 import * as uiActions from '../stores/actions/uiAction'
 import LoginModal from './LoginModal'
-import Axios from 'axios'
 
 class MyNavbar extends Component {
   constructor (props) {
@@ -36,7 +32,7 @@ class MyNavbar extends Component {
     })
   }
   render () {
-    const { navCollapsed } = this.state
+    
     return (
       <div>
         <Navbar color='light' light expand='md'>

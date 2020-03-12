@@ -16,7 +16,7 @@ import './CSS/SignUp.css'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import axios from 'axios'
-import { Redirect } from 'react-router'
+// import { Redirect } from 'react-router'
 
 function Copyright () {
   return (

@@ -2,19 +2,11 @@ import React, { Component } from "react";
 import {
   Card,
   CardImg,
-  CardText,
   CardBody,
   CardTitle,
-  CardSubtitle,
-  Button,
   Container,
   Row,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText
+  Col
 } from "reactstrap";
 
 import "../CSS/Menu.css";

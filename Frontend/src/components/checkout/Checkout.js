@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
 import Paper from '@material-ui/core/Paper'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
-import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 import AddressForm from './AddressForm'
@@ -15,7 +12,6 @@ import PaymentForm from './PaymentForm'
 import Review from './Review'
 import axios from 'axios'
 import { withStyles } from '@material-ui/styles'
-import { red } from '@material-ui/core/colors'
 import '../CSS/Checkout.css'
 const styles = makeStyles(theme => ({
   appBar: {
@@ -126,10 +122,10 @@ class Checkout extends Component {
           step: step + 1
         })
         return
-        break
+    
       case 2:
         return
-        break
+       
       default:
         throw new Error('Unknown step')
     }
@@ -169,18 +165,9 @@ class Checkout extends Component {
   render () {
     const steps = ['Shipping address', 'Payment details', 'Review your order']
     const { classes } = this.props
-    const { step } = this.state
-    const {
-      firstName,
-      lastName,
-      address1,
-      address2,
-      district,
-      area,
-      phone
-    } = this.state
 
-    const values = {}
+
+  
     return (
       <React.Fragment>
         <CssBaseline />

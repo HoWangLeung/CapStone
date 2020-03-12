@@ -8,10 +8,10 @@ import {
   Form,
   FormGroup,
   Label,
-  Input,
-  FormText,
-  Col,
-  Row,
+  // Input,
+  // FormText,
+  // Col,
+  // Row,
   Container
 } from 'reactstrap'
 class PaymentForm extends React.Component {

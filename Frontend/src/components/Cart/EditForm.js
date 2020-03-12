@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import {   Form, FormGroup, Label, Input,  } from 'reactstrap'
 
 const EditForm = props => {
   //   const handleChange = input => e => {
@@ -28,7 +28,7 @@ const EditForm = props => {
       <FormGroup>
         <Label for='exampleSelect'>Size</Label>
         <Input
-          defaultValue={{ label: 'Select Dept', value: 0 }}
+        
           type='select'
           name='Size'
           id='exampleSelect'

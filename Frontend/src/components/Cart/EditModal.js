@@ -4,7 +4,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import EditForm from './EditForm'
 import axios from 'axios'
 const EditModal = props => {
-  const { buttonLabel, className } = props
+  const { className } = props
 
   const [modal, setModal] = useState(false)
   const [state, setState] = useState({

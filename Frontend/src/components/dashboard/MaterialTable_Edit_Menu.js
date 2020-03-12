@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, {useEffect } from 'react'
 import MaterialTable from 'material-table'
-import { connect } from 'react-redux'
+ 
 import axios from 'axios'
 import DrawerLeft from './Statistic/Drawer'
 
@@ -18,7 +18,7 @@ export default function MaterialTable_Edit_Menu () {
         title: 'product image',
         field: 'product_img',
         render: rowData => (
-          <img src={rowData.product_img} style={{ width: 40 }} />
+          <img src={rowData.product_img} style={{ width: 40 }} alt="img" />
         )
       },
       { title: 'Genre ID', field: 'genre_id' }

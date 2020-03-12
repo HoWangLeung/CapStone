@@ -1,20 +1,11 @@
 import React, { Component } from 'react'
 import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
   Button,
-  Container,
-  Row,
   Col,
   Form,
   FormGroup,
   Label,
   Input,
-  FormText,
   Modal,
   ModalBody,
   ModalFooter,
@@ -71,7 +62,7 @@ class CartModal extends Component {
     this.props.getCoffeeItemDispatcher()
     axios.get(`${process.env.REACT_APP_API_SERVER}/api/product`).then(res => {
       res.data.map(rows => {
-        rows.quantity = 1
+        return rows.quantity = 1
       })
 
       this.setState({
@@ -183,7 +174,7 @@ class CartModal extends Component {
         break
       default:
         return this.state
-        break
+      
     }
   }
 

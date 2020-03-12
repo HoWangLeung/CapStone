@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, {   useEffect } from "react";
 import MaterialTable from "material-table";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import PaymentIcon from "@material-ui/icons/Payment";
-import ShopIcon from "@material-ui/icons/Shop";
+ import ShopIcon from "@material-ui/icons/Shop";
 import { Link } from "react-router-dom";
 
 export default function CurrentOrder() {

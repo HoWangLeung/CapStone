@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./CSS/Cart.css";
-import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -13,15 +12,10 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
 import EditModal from "./EditModal";
 import { withStyles } from "@material-ui/styles";
-import { useTransition, animated } from "react-spring";
 import CartHeader from "./CartHeader";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import uuid from "uuid";
 const styles = {
   root: {
     background: "linear-gradient(45deg, #82f573 30%, #c4fc4c 90%)",
@@ -114,7 +108,7 @@ class Cart extends Component {
   }
 
   handleDelete(event, orderItemID) {
-    let targetValue = event.target.value;
+ 
     let token = localStorage.token;
     const config = {
       headers: { Authorization: `Bearer ${token}` }
@@ -126,9 +120,9 @@ class Cart extends Component {
         config
       )
       .then(response => {
-        const index = this.state.items.findIndex(
-          item => item.orderItemID === orderItemID
-        );
+        // const index = this.state.items.findIndex(
+        //   item => item.orderItemID === orderItemID
+        // );
 
         let filtered = this.state.items.filter(item => {
           return item.orderItemID !== orderItemID;
@@ -179,7 +173,7 @@ class Cart extends Component {
       <TableRow key={row.desc}>
         <TableCell>
           {" "}
-          <img className="cart_img" src={row.product_img}></img>{" "}
+          <img className="cart_img" src={row.product_img} alt="img" ></img>{" "}
         </TableCell>
         <TableCell align="left">{row.product_name}</TableCell>
         <TableCell className="preference-box">
@@ -252,7 +246,7 @@ class Cart extends Component {
                     justify="space-around"
                     alignItems="center"
                   >
-                    <img src="http://alhindmart.com/assets/front-end/img/empty-cart-icon.png"></img>
+                    <img src="http://alhindmart.com/assets/front-end/img/empty-cart-icon.png" alt="img" ></img>
                     <h2>Cart is empty!</h2>
                     <h5>Looks like you have nothing in your cart</h5>
                     <Link className={classes.link} to="/coffee_menu">

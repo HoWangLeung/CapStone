@@ -1,7 +1,7 @@
 import { Doughnut } from "react-chartjs-2";
 import Grid from "@material-ui/core/Grid";
 import React, { Component } from "react";
-import DatePicker_day from "./Statistic/DatePicker_day";
+import DatePickerDay from "./Statistic/DatePicker_day";
 import "../CSS/DonaughtChartDay.css";
 import axios from "axios";
 export default class DonaughtChartDay extends Component {
@@ -29,8 +29,8 @@ export default class DonaughtChartDay extends Component {
         data_by_day.map(rows => {
           let date = new Date(rows.date_trunc).toLocaleDateString("en-US");
 
-          data_by_day.map(data => {
-            data.date_trunc = date;
+          return data_by_day.map(data => {
+            return data.date_trunc = date;
           });
         });
 
@@ -77,14 +77,14 @@ export default class DonaughtChartDay extends Component {
     if (labels_arr.length !== 0) {
       return (
         <Grid container direction="row" justify="center" alignItems="center">
-          <DatePicker_day className="DatePicker_day" pickDate={this.pickDate} />
+          <DatePickerDay className="DatePicker_day" pickDate={this.pickDate} />
           <h6>Number of products sold</h6>
 
           <Doughnut
             options={{
               responsive: true,
               maintainAspectRatio: true,
-              maintainAspectRatio: true
+            
             }}
             data={data}
           />
@@ -93,8 +93,8 @@ export default class DonaughtChartDay extends Component {
     } else {
       return (
         <Grid container direction="row" justify="center" alignItems="center">
-          <DatePicker_day className="DatePicker_day" pickDate={this.pickDate} />
-          <img src="https://img.icons8.com/dotty/80/000000/nothing-found.png"></img>
+          <DatePickerDay className="DatePicker_day" pickDate={this.pickDate} />
+          <img src="https://img.icons8.com/dotty/80/000000/nothing-found.png" alt="img"></img>
           <br />
           <h1 style={{ fontFamily: "Amatic SC", fontSize: "48px" }}>
             Data Not Found <br />

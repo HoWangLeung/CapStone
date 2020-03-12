@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Line } from 'react-chartjs-2'
-import DatePicker_month from './DatePicker_month'
+import DatePickerMonth from './DatePicker_month'
 import Grid from '@material-ui/core/Grid'
 
 export default class LineChart_month extends Component {
@@ -77,7 +77,7 @@ export default class LineChart_month extends Component {
     return (
    
         <Grid container direction='row' justify='center' alignItems='center'>
-        <DatePicker_month pickYear={this.pickYear} />
+        <DatePickerMonth pickYear={this.pickYear} />
         <Line data={data} />
         </Grid>
   

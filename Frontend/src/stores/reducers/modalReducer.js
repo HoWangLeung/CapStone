@@ -27,13 +27,11 @@ const reducer = (state = initState, action) => {
   switch (action.type) {
     case actionType.SHOW_MODAL:
       return showModalReducer(state, action)
-      break
-    case actionType.HIDE_MODAL:
+     case actionType.HIDE_MODAL:
       return hideModalReducer(state, action)
     default:
       return state
-      break
-  }
+   }
 }
 
 export default reducer

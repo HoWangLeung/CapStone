@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Grid from '@material-ui/core/Grid'
-import '../CSS/Review.css'
+  import '../CSS/Review.css'
 import axios from 'axios'
-import { Jumbotron, Container, Row, Col, Table } from 'reactstrap'
+import { Jumbotron,   Table } from 'reactstrap'
 import Button from '@material-ui/core/Button'
 
 export default class Review extends Component {
