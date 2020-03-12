@@ -36,7 +36,7 @@ jobs:
          name: Install AWS CLI
          command: pip install awscli --user
     
-     - run: ls
+     - run: ls /tmp/my-project/
      - run: pwd
 
      - run:
