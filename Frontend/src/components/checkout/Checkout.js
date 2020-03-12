@@ -99,7 +99,7 @@ class Checkout extends Component {
           headers: { Authorization: `Bearer ${token}` }
         }
         axios.post(
-          'http://localhost:8000/api/customerInfo',
+          `${process.env.REACT_APP_API_SERVER}/api/customerInfo`,
           {
             firstName,
             lastName,

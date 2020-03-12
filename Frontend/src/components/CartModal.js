@@ -261,7 +261,7 @@ class CartModal extends Component {
 
     axios
       .post(
-        'http://localhost:8000/api/orderedItem',
+        `${process.env.REACT_APP_API_SERVER}/api/orderedItem`,
         {
           product_id,
           quantity,
