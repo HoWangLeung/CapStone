@@ -37,6 +37,7 @@ jobs:
          command: pip install awscli --user
     
      - run: ls
+     - run: pwd
 
      - run:
          name: Deploy to S3 if the build is successful
