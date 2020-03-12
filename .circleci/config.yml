@@ -27,7 +27,7 @@ jobs:
    docker:
      - image: circleci/python:3.6
 
-   work_directory: /tmp/my-project/Frontend
+   work_directory: /tmp/my-project/
    steps:
      - attach_workspace:
          at: /tmp/my-project
