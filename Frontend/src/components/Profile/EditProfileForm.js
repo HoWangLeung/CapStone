@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -12,7 +12,7 @@ import MotorcycleOutlinedIcon from "@material-ui/icons/MotorcycleOutlined";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import CheckIcon from "@material-ui/icons/Check";
 export default function EditProfileForm(props) {
-  const [state, setState] = React.useState({ data: ["data"] });
+  const [state] = React.useState({ data: ["data"] });
 
   const useStyles = makeStyles({
     root: {
@@ -34,7 +34,7 @@ export default function EditProfileForm(props) {
 
   let user = state.data[0];
   console.log(user);
-  const { values, handleChange } = props;
+  const {  handleChange } = props;
   const { input, handleSubmit } = props;
   return (
     <Card className={classes.root}>
