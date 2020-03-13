@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {   useEffect } from "react";
+import React, { useEffect } from "react";
 import MaterialTable from "material-table";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
- import ShopIcon from "@material-ui/icons/Shop";
+import ShopIcon from "@material-ui/icons/Shop";
 import { Link } from "react-router-dom";
 
 export default function CurrentOrder() {
@@ -39,7 +39,6 @@ export default function CurrentOrder() {
       .get(`${process.env.REACT_APP_API_SERVER}/api/orderedItem/`, config)
       .then(res => {
         let items = res.data;
-
         console.log(items);
 
         setState({

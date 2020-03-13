@@ -163,7 +163,7 @@ class Checkout extends Component {
   }
 
   render () {
-    const steps = ['Shipping address', 'Payment details', 'Review your order']
+    const steps = ['Personal Information', 'Review your order ', 'Payment details']
     const { classes } = this.props
 
 

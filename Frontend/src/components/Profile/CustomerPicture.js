@@ -15,8 +15,12 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CustomerPicture() {
+export default function CustomerPicture(props) {
   const classes = useStyles();
+
+  const handleEdit=()=>{
+      props.handleEdit()
+  }
 
   return (
     <Card   align="center" className={classes.root}>
@@ -39,7 +43,7 @@ export default function CustomerPicture() {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button onClick={handleEdit} size="small" color="primary">
           Edit Profile
         </Button>
       </CardActions>

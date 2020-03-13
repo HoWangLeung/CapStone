@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import * as authAction from '../stores/actions/authAction'
 import * as uiActions from '../stores/actions/uiAction'
 import LoginModal from './LoginModal'
-
+import { withRouter } from 'react-router-dom';
 class MyNavbar extends Component {
   constructor (props) {
     super(props)
@@ -84,6 +84,7 @@ class MyNavbar extends Component {
                     onClick={() => {
                       if (this.props.isLoggedIn) {
                         this.props.logoutDispatcher()
+                        this.props.history.push('/')
                       } else {
                         this.props.showLoginModalDispatcher()
                       }
@@ -124,4 +125,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(MyNavbar)
+export default  withRouter (connect(mapStateToProps, mapDispatchToProps)(MyNavbar))

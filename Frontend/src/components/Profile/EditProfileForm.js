@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {  useEffect } from "react";
- import Card from "@material-ui/core/Card";
- import CardContent from "@material-ui/core/CardContent";
+import React, { useEffect } from "react";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
 import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
 import WcIcon from "@material-ui/icons/Wc";
 import MotorcycleOutlinedIcon from "@material-ui/icons/MotorcycleOutlined";
- import VpnKeyIcon from '@material-ui/icons/VpnKey';
-export default function EditProfileForm() {
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import CheckIcon from "@material-ui/icons/Check";
+export default function EditProfileForm(props) {
   const [state, setState] = React.useState({ data: ["data"] });
+
   const useStyles = makeStyles({
     root: {
       maxWidth: "100%"
@@ -31,30 +32,10 @@ export default function EditProfileForm() {
   });
   const classes = useStyles();
 
-  useEffect(() => {
-    let token = localStorage.token;
-    const config = {
-      headers: { Authorization: `Bearer ${token}` }
-    };
-
-    axios
-      .get(`${process.env.REACT_APP_API_SERVER}/api/customerInfo`, config)
-      .then(res => {
-        let info = res.data;
-
-        console.log(info);
-
-        setState({
-          ...state,
-          data: res.data
-        });
-      })
-      .catch(error => console.log("error:", error));
-  }, []);
-
   let user = state.data[0];
   console.log(user);
-
+  const { values, handleChange } = props;
+  const { input, handleSubmit } = props;
   return (
     <Card className={classes.root}>
       <CardContent>
@@ -70,26 +51,56 @@ export default function EditProfileForm() {
           <PermContactCalendarIcon /> Your ID: {user.user_id}
           <br />
           <LoyaltyIcon /> First Name:{" "}
-          <input placeholder="Enter First Name"></input>
+          <input
+            placeholder="Enter First Name"
+            onChange={handleChange("firstName")}
+          ></input>
           <br />
           <LoyaltyIcon /> Last Name:{" "}
-          <input placeholder="Enter Last Name"></input>
+          <input
+            placeholder="Enter Last Name"
+            onChange={handleChange("lastName")}
+          ></input>
           <br />
           <ContactPhoneIcon /> Phone:{" "}
-          <input placeholder="Enter Phone number"></input>
+          <input
+            placeholder="Enter Phone number"
+            onChange={handleChange("phone")}
+          ></input>
           <br />
           <WcIcon /> Gender:{" "}
-          <select>
+          <select onChange={handleChange("gender")}>
             {" "}
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-          
           </select>
           <br />
-          <MotorcycleOutlinedIcon /> Delivery Address:   <input placeholder="Address Line 1"></input>  <input placeholder="Address Line 2"></input>  <input placeholder="District"></input>  <input placeholder="Area"></input>
+          <MotorcycleOutlinedIcon /> Delivery Address:{" "}
+          <input
+            placeholder="Address Line 1"
+            onChange={handleChange("address1")}
+          ></input>{" "}
+          <input
+            placeholder="Address Line 2"
+            onChange={handleChange("address2")}
+          ></input>{" "}
+          <input
+            placeholder="District"
+            onChange={handleChange("district")}
+          ></input>{" "}
+          <input placeholder="Area" onChange={handleChange("area")}></input>
           <br />
-          <VpnKeyIcon/> Password:<input placeholder="password "></input><input placeholder="confirm password"></input>
-                        <button>Confirm</button>
+          <VpnKeyIcon /> New Password:
+          <input
+            placeholder="password"
+            onChange={handleChange("password1")}
+          ></input>
+          <input
+            placeholder="confirm new password"
+            onChange={handleChange("password2")}
+          ></input>
+          <button onClick={handleSubmit}>Confirm</button>{" "}
+          {props.success ? <CheckIcon style={{color:"green", fontSize:"210%"}} /> : props.loading && props.circular}
         </Typography>
       </CardContent>
     </Card>

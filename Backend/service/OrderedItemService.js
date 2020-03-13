@@ -56,6 +56,9 @@ class OrderedItemService {
         "ordered_item.product_milk",
         "ordered_item.product_temperature",
         "ordered_item.special_instruction",
+        this.knex.raw(
+          "to_char(ordered_item.created_at, 'DD/MM/YYYY') as created_at"
+        ),
         "ordered_item.price",
         "product.genre_id",
         "product.product_name",
