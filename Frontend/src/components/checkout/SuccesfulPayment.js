@@ -1,12 +1,12 @@
 /**
  * Use the CSS tab above to style your Element's container.
  */
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 
-import { render } from "react-dom";
 import { useTransition, animated } from "react-spring";
 import "./CSS/success.css";
 function SuccessfulPayment() {
