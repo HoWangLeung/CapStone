@@ -5,7 +5,7 @@ class OrderedItemService {
 
   listForCustomerProfile(user_id) {
     console.log("listForCustomerProfile line8");
-    console.log(user_id);
+    console.log(user_id,'line 8 orderitems service -------->');
 
     let query = this.knex
       .select(

@@ -12,36 +12,60 @@ const useStyles = makeStyles({
   root: {
     maxWidth: "99%",
     Height: "100%"
+  },
+  inputFile: {
+    display: "none"
+  },
+  pointer: {
+    cursor: "pointer"
   }
 });
 
 export default function CustomerPicture(props) {
   const classes = useStyles();
+  let fileInput = React.createRef();
+  const handleEdit = () => {
+    props.handleEdit();
+  };
+  const handleImageSubmit = e => {
+    console.log(e.target.files);
 
-  const handleEdit=()=>{
-      props.handleEdit()
-  }
+    // console.log(fileInput.current.files[0].name);
+  };
 
   return (
-    <Card   align="center" className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="Contemplative Reptile"
-          height="300"
-          width="auto"
-          image="https://images.unsplash.com/photo-1495568995596-9e40959aa178?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-          title="Contemplative Reptile"
+    <Card align="center" className={classes.root}>
+      <CardActionArea onClick={handleImageSubmit}>
+        <label for="file-input">
+          <CardMedia
+            component="img"
+            alt="Contemplative Reptile"
+            height="300"
+            width="auto"
+            image="https://images.unsplash.com/photo-1495568995596-9e40959aa178?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+            title="Contemplative Reptile"
+            className={classes.pointer}
+          />
+
+          <CardContent className={classes.pointer}>
+            <Typography gutterBottom variant="h5" component="h2">
+              Lizard
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Thank you for your continuous support! Hope you have a nice day!
+              If you have any question, just email us
+            </Typography>
+          </CardContent>
+        </label>
+        <input
+          className={classes.inputFile}
+          id="file-input"
+          type="file"
+          ref={fileInput}
+          onChange={handleImageSubmit}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          Thank you for your continuous support! Hope you have a nice day! If you have any question, just email us
-          </Typography>
-        </CardContent>
       </CardActionArea>
+
       <CardActions>
         <Button onClick={handleEdit} size="small" color="primary">
           Edit Profile
