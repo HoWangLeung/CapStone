@@ -35,6 +35,7 @@ class CartModal extends Component {
       special_instruction: ''
     }
     this.changeTemperature = this.changeTemperature.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   toggle = modalid => {
@@ -239,7 +240,7 @@ class CartModal extends Component {
   handleSubmit (event, modalid) {
     event.preventDefault()
 
-
+    if(this.props.isLoggedIn === true){
 
     let targetForm = this.state.items[modalid]
     console.log(targetForm);
@@ -276,17 +277,17 @@ class CartModal extends Component {
       )
       .then(function (response) {
         console.log(response)
-        this.setState({
-          hot_checked: false,
-          cold_checked: false,
-          small_checked: false,
-          medium_checked: false,
-          large_checked: false,
-          whole_milk_checked: false,
-          skimmed_milk_checked: false,
-          soy_milk_checked: false,
-          special_instruction: ''
-        })
+        // this.setState({
+        //   hot_checked: false,
+        //   cold_checked: false,
+        //   small_checked: false,
+        //   medium_checked: false,
+        //   large_checked: false,
+        //   whole_milk_checked: false,
+        //   skimmed_milk_checked: false,
+        //   soy_milk_checked: false,
+        //   special_instruction: ''
+        // })
       })
       .catch(function (error) {
         console.log(error)
@@ -295,6 +296,8 @@ class CartModal extends Component {
     this.props.hideModalDispatcher(modalid)
 
     this.calculateGrandTotal(modalid)
+    }
+
   }
 
   calculateGrandTotal (modalid) {
@@ -503,7 +506,8 @@ const mapStateToProps = state => {
   return {
     items: state.cartReducer.items,
     modal: state.modalReducer.modal,
-    modalid: state.modalReducer.id
+    modalid: state.modalReducer.id,
+    isLoggedIn:state.authReducer.isLoggedIn
   }
 }
 

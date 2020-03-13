@@ -108,7 +108,6 @@ class Cart extends Component {
   }
 
   handleDelete(event, orderItemID) {
- 
     let token = localStorage.token;
     const config = {
       headers: { Authorization: `Bearer ${token}` }
@@ -169,11 +168,10 @@ class Cart extends Component {
     const { classes } = this.props;
     let items = this.state.items;
     const listItems = items.map((row, index) => (
-      
       <TableRow key={row.desc}>
         <TableCell>
           {" "}
-          <img className="cart_img" src={row.product_img} alt="img" ></img>{" "}
+          <img className="cart_img" src={row.product_img} alt="img"></img>{" "}
         </TableCell>
         <TableCell align="left">{row.product_name}</TableCell>
         <TableCell className="preference-box">
@@ -246,7 +244,10 @@ class Cart extends Component {
                     justify="space-around"
                     alignItems="center"
                   >
-                    <img src="http://alhindmart.com/assets/front-end/img/empty-cart-icon.png" alt="img" ></img>
+                    <img
+                      src="http://alhindmart.com/assets/front-end/img/empty-cart-icon.png"
+                      alt="img"
+                    ></img>
                     <h2>Cart is empty!</h2>
                     <h5>Looks like you have nothing in your cart</h5>
                     <Link className={classes.link} to="/coffee_menu">
@@ -268,6 +269,7 @@ class Cart extends Component {
                   </TableRow>
 
                   {listItems}
+                  <p className="grand-total" >Grand Total: ${this.state.grand_total}</p>
                 </>
               )}
             </TableBody>

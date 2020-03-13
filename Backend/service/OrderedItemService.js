@@ -1,110 +1,112 @@
 class OrderedItemService {
-  constructor (knex) {
-    this.knex = knex
+  constructor(knex) {
+    this.knex = knex;
   }
 
-  listForCustomerProfile (user_id ) {
-    console.log('listForCustomerProfile line8')
+  listForCustomerProfile(user_id) {
+    console.log("listForCustomerProfile line8");
     console.log(user_id);
-    
+
     let query = this.knex
       .select(
-        'order.id as orderID',
-        'order.user_id',
-        'order.status',
-        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY') as orderedItem_created_at"),
-        'ordered_item.id as orderItemID',
-        'ordered_item.product_id',
-        'ordered_item.quantity',
-        'ordered_item.product_size',
-        'ordered_item.product_milk',
-        'ordered_item.product_temperature',
-        'ordered_item.special_instruction',
-        'product.genre_id',
-        'product.product_name',
-        'product.product_img',
-        'product.product_cost',
-        'product.product_price',
-        'available_period'
+        "order.id as orderID",
+        "order.user_id",
+        "order.status",
+        this.knex.raw(
+          "to_char(ordered_item.created_at, 'DD/MM/YYYY') as orderedItem_created_at"
+        ),
+        "ordered_item.id as orderItemID",
+        "ordered_item.product_id",
+        "ordered_item.quantity",
+        "ordered_item.product_size",
+        "ordered_item.product_milk",
+        "ordered_item.product_temperature",
+        "ordered_item.special_instruction",
+        "product.genre_id",
+        "product.product_name",
+        "product.product_img",
+        "product.product_cost",
+        "product.product_price",
+        "available_period"
       )
-      .from('order')
-      .where('order.status', 'paid')
-      .where('order.user_id',user_id.id )
-      .innerJoin('ordered_item', 'ordered_item.order_id', 'order.id')
-      .innerJoin('product', 'product.id', 'ordered_item.product_id')
-      .orderBy('order.id', 'asc')
+      .from("order")
+      .where("order.status", "paid")
+      .where("order.user_id", user_id.id)
+      .innerJoin("ordered_item", "ordered_item.order_id", "order.id")
+      .innerJoin("product", "product.id", "ordered_item.product_id")
+      .orderBy("order.id", "asc");
 
     return query.then(rows => {
-      console.log(rows)
+      console.log(rows);
 
-      return rows
-    })
+      return rows;
+    });
   }
 
-  listForUser (user) {
+  listForUser(user) {
     let query = this.knex
       .select(
-        'order.id as orderID',
-        'order.user_id',
-        'order.status',
-        'ordered_item.id as orderItemID',
-        'ordered_item.product_id',
-        'ordered_item.quantity',
-        'ordered_item.product_size',
-        'ordered_item.product_milk',
-        'ordered_item.product_temperature',
-        'ordered_item.special_instruction',
-        'ordered_item.price',
-        'product.genre_id',
-        'product.product_name',
-        'product.product_img',
-        'product.product_cost',
-        'product.product_price',
-        'available_period'
+        "order.id as orderID",
+        "order.user_id",
+        "order.status",
+        "ordered_item.id as orderItemID",
+        "ordered_item.product_id",
+        "ordered_item.quantity",
+        "ordered_item.product_size",
+        "ordered_item.product_milk",
+        "ordered_item.product_temperature",
+        "ordered_item.special_instruction",
+        "ordered_item.price",
+        "product.genre_id",
+        "product.product_name",
+        "product.product_img",
+        "product.product_cost",
+        "product.product_price",
+        "available_period"
       )
-      .from('order')
-      .where('order.user_id', user.id)
-      .where('order.status', 'pending')
-      .innerJoin('ordered_item', 'ordered_item.order_id', 'order.id')
-      .innerJoin('product', 'product.id', 'ordered_item.product_id')
-      .orderBy('ordered_item.id', 'asc')
+      .from("order")
+      .where("order.user_id", user.id)
+      .where("order.status", "pending")
+      .innerJoin("ordered_item", "ordered_item.order_id", "order.id")
+      .innerJoin("product", "product.id", "ordered_item.product_id")
+      .orderBy("ordered_item.id", "asc");
 
     return query.then(rows => {
-      console.log(rows)
+      console.log(rows);
 
-      return rows
-    })
+      return rows;
+    });
   }
 
-  add (user, order_content) {
-    console.log(order_content, '========================order_content')
+  add(user, order_content) {
+    console.log(order_content, "========================order_content");
 
     let query = this.knex
-      .select('users.id as users_id', 'order.id as order_id', 'order.status')
-      .from('users')
-      .where('users.id', user.id)
-      .innerJoin('order', 'order.user_id', 'users.id')
-      .where('order.status', 'pending')
+      .select("users.id as users_id", "order.id as order_id", "order.status")
+      .from("users")
+      .where("users.id", user.id)
+      .innerJoin("order", "order.user_id", "users.id")
+      .where("order.status", "pending");
 
     return query.then(data => {
       console.log(
         data,
-        '----------------------==================================='
-      )
-      console.log(user.id)
-      console.log(data.length, 'datalength=======================')
+        "----------------------==================================="
+      );
+      console.log(user.id);
+      console.log(data.length, "datalength=======================");
 
       if (data.length === 0) {
         return this.knex
           .insert({
             user_id: user.id,
-            status: 'pending'
+            status: "pending"
           })
-          .into('order')
-          .returning('id')
+          .into("order")
+          .returning("id")
           .then(id => {
             // console.log(order_content)
-            console.log(id[0], 'the order id')
+            console.log(id[0], "the order id");
 
             return this.knex
               .insert({
@@ -117,14 +119,16 @@ class OrderedItemService {
                 special_instruction: order_content.special_instruction,
                 price: order_content.product_price
               })
-              .into('ordered_item')
-          })
+              .into("ordered_item");
+          });
       } else {
-        console.log('else')
-        let query = this.knex('order').where('order.user_id', user.id)
+        console.log("else");
+        let query = this.knex("order")
+          .where("order.user_id", user.id)
+          .orderBy("order.id", "asc");
 
         query.then(data => {
-          console.log(data, 'line123 orderitem service')
+          console.log(data, "line123 orderitem service");
 
           return this.knex
             .insert({
@@ -137,74 +141,73 @@ class OrderedItemService {
               special_instruction: order_content.special_instruction,
               price: order_content.product_price
             })
-            .into('ordered_item')
-        })
+            .into("ordered_item");
+        });
       }
-    })
+    });
   }
 
-  update (user, change, ordered_item_id) {
-    console.log(ordered_item_id, 'sfsdfsdfsdfsdfsfsfsdfsdsfsdfsdfsdfsdfds')
-    console.log(change)
+  update(user, change, ordered_item_id) {
+    console.log(ordered_item_id, "sfsdfsdfsdfsdfsfsfsdfsdsfsdfsdfsdfsdfds");
+    console.log(change);
 
     return this.knex
       .select(
-        'ordered_item.id',
-        'ordered_item.product_id',
-        'ordered_item.quantity',
-        'ordered_item.product_size',
-        'ordered_item.product_milk',
-        'ordered_item.product_temperature',
-        'ordered_item.special_instruction'
+        "ordered_item.id",
+        "ordered_item.product_id",
+        "ordered_item.quantity",
+        "ordered_item.product_size",
+        "ordered_item.product_milk",
+        "ordered_item.product_temperature",
+        "ordered_item.special_instruction"
       )
-      .from('ordered_item')
-      .where('ordered_item.id', ordered_item_id)
+      .from("ordered_item")
+      .where("ordered_item.id", ordered_item_id)
       .update({
         quantity: change.quantity,
         product_temperature: change.product_temperature,
         product_milk: change.product_milk,
-        product_size:change.product_size,
+        product_size: change.product_size,
         special_instruction: change.special_instruction
-      })
-      
+      });
   }
 
-  delete (order_item_id, remove) {
-    console.log(order_item_id)
-    console.log(remove)
-    console.log('removing')
+  delete(order_item_id, remove) {
+    console.log(order_item_id);
+    console.log(remove);
+    console.log("removing");
 
     let query = this.knex
       .select(
-        'order.id as orderID',
-        'ordered_item.id as ordered_item_id',
-        'order.status'
+        "order.id as orderID",
+        "ordered_item.id as ordered_item_id",
+        "order.status"
       )
-      .from('ordered_item')
+      .from("ordered_item")
       // .where('ordered_item.id', order_item_id)
-      .innerJoin('order', 'order.id', 'ordered_item.order_id')
-      .where('order.status', 'pending')
+      .innerJoin("order", "order.id", "ordered_item.order_id")
+      .where("order.status", "pending");
     return query.then(data => {
       if (data.length > 1) {
-        return this.knex('ordered_item')
-          .where('ordered_item.id', order_item_id)
-          .del()
+        return this.knex("ordered_item")
+          .where("ordered_item.id", order_item_id)
+          .del();
       } else if (data.length === 1) {
         console.log(
-          'attempting to delete the last item in cart <====================='
-        )
-        return this.knex('ordered_item')
-          .where('ordered_item.id', order_item_id)
+          "attempting to delete the last item in cart <====================="
+        );
+        return this.knex("ordered_item")
+          .where("ordered_item.id", order_item_id)
           .del()
           .then(() => {
-            return this.knex('order')
-              .where('order.status', 'pending')
-              .del()
-          })
+            return this.knex("order")
+              .where("order.status", "pending")
+              .del();
+          });
       }
-    })
+    });
   }
 
-  changeStatus (content) {}
+  changeStatus(content) {}
 }
-module.exports = OrderedItemService
+module.exports = OrderedItemService;

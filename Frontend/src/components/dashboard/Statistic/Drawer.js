@@ -134,10 +134,12 @@ export default function PersistentDrawer() {
                 to={"/dashboard/" + text}
               >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <EqualizerIcon /> : <StoreIcon />}
+                  {index === 0 ? <EqualizerIcon /> : null}
+                  {index === 1 ? <StoreIcon /> : null}
+
                   {index === 2 ? <ShoppingCartIcon /> : null}
                 </ListItemIcon>
-                p`
+
                 <ListItemText primary={text} />
               </ListItem>
             )

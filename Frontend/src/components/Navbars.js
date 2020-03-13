@@ -27,6 +27,8 @@ class MyNavbar extends Component {
     }
   }
   toggle () {
+    console.log('clicked');
+    
     this.setState({
       isOpen: !this.state.isOpen
     })
@@ -37,8 +39,8 @@ class MyNavbar extends Component {
       <div>
         <Navbar color='light' light expand='md'>
           <NavbarBrand href='/'>Coffee</NavbarBrand>
-          <NavbarToggler onClick={this.props.isLoginModalOpen} />
-          <Collapse isOpen={this.props.isLoginModalOpen} navbar>
+          <NavbarToggler onClick={()=>{this.toggle()}} />
+          <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='ml-auto' navbar>
               <Link to='/'>
                 <NavItem>

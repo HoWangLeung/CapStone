@@ -32,6 +32,14 @@ class Menu extends Component {
     });
   };
 
+  handleClick = index => e => {
+    if (this.props.isLoggedIn) {
+      this.props.showModalDispatcher(index);
+    } else {
+      alert("no");
+    }
+  };
+
   render() {
     return (
       <div>
@@ -58,9 +66,7 @@ class Menu extends Component {
                         ) : (
                           <p
                             className="pointer"
-                            onClick={() =>
-                              this.props.showModalDispatcher(index)
-                            }
+                            onClick={this.handleClick(index)}
                           >
                             Add To Cart
                           </p>

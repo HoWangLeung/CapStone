@@ -16,7 +16,7 @@ class OrderedItemRouter {
     return router;
   }
   get(req, res) {
-    console.log("reaching get");
+    console.log("reaching get line19 orderitemrouter");
     let user = req.user;
 
     return this.orderedItemService.listForUser(user).then(data => {
