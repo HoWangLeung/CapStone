@@ -3,8 +3,8 @@ import DonaughtChartDay from "./DonaughtChartDay";
 import LineChartMonth from "./LineChart_month";
 import PersistentDrawer from "./Statistic/Drawer";
 import "../CSS/Statistic.css";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+// import Card from "@material-ui/core/Card";
+// import CardContent from "@material-ui/core/CardContent";
 import Boxes from "./Statistic/Boxes.js";
 import Grid from "@material-ui/core/Grid";
 
