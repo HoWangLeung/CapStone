@@ -5,6 +5,7 @@ import SplitButton from './SplitButton'
 import './CSS/OrderControl.css'
 import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
+import DrawerLeft from '../Statistic/Drawer'
 
 export default function OrderControl () {
   const [state, setState] = React.useState({
@@ -53,6 +54,7 @@ export default function OrderControl () {
 
   return (
     <>
+    <DrawerLeft/>
       <SplitButton />
       <br />
       <br />

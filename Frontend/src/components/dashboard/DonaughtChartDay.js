@@ -4,6 +4,8 @@ import React, { Component } from "react";
 import DatePickerDay from "./Statistic/DatePicker_day";
 import "../CSS/DonaughtChartDay.css";
 import axios from "axios";
+
+import Card from "@material-ui/core/Card";
 export default class DonaughtChartDay extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +32,7 @@ export default class DonaughtChartDay extends Component {
           let date = new Date(rows.date_trunc).toLocaleDateString("en-US");
 
           return data_by_day.map(data => {
-            return data.date_trunc = date;
+            return (data.date_trunc = date);
           });
         });
 
@@ -74,27 +76,32 @@ export default class DonaughtChartDay extends Component {
       ]
     };
 
+    const options = {
+      maintainAspectRatio: false // Don't maintain w/h ratio
+    };
+
     if (labels_arr.length !== 0) {
       return (
-        <Grid container direction="row" justify="center" alignItems="center">
+        <Card className="myDonaughtCard">
           <DatePickerDay className="DatePicker_day" pickDate={this.pickDate} />
           <h6>Number of products sold</h6>
-
           <Doughnut
-            options={{
-              responsive: true,
-              maintainAspectRatio: true,
-            
-            }}
+            width={260}
+            height={120}
+            option={options}
             data={data}
+            className="myDonaught"
           />
-        </Grid>
+        </Card>
       );
     } else {
       return (
         <Grid container direction="row" justify="center" alignItems="center">
           <DatePickerDay className="DatePicker_day" pickDate={this.pickDate} />
-          <img src="https://img.icons8.com/dotty/80/000000/nothing-found.png" alt="img"></img>
+          <img
+            src="https://img.icons8.com/dotty/80/000000/nothing-found.png"
+            alt="img"
+          ></img>
           <br />
           <h1 style={{ fontFamily: "Amatic SC", fontSize: "48px" }}>
             Data Not Found <br />

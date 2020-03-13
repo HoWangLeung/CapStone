@@ -60,10 +60,10 @@ export default function Boxes() {
   return (
     <Grid
       container
-      direction="row"
+      direction="column"
       justify="center"
       alignItems="space-around"
-      spacing={8}
+      spacing={0}
     >
       <Grid item xs={12} sm={4}>
         <Box
