@@ -1,30 +1,30 @@
-import React, { Component } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Paper from '@material-ui/core/Paper'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import Link from '@material-ui/core/Link'
-import Typography from '@material-ui/core/Typography'
-import AddressForm from './AddressForm'
-import PaymentForm from './PaymentForm'
-import Review from './Review'
-import axios from 'axios'
-import { withStyles } from '@material-ui/styles'
-import '../CSS/Checkout.css'
+import React, { Component } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Paper from "@material-ui/core/Paper";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+import AddressForm from "./AddressForm";
+import PaymentForm from "./PaymentForm";
+import Review from "./Review";
+import axios from "axios";
+import { withStyles } from "@material-ui/styles";
+import "../CSS/Checkout.css";
 const styles = makeStyles(theme => ({
   appBar: {
-    position: 'relative'
+    position: "relative"
   },
   layout: {
-    width: 'auto',
+    width: "auto",
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto'
+      marginLeft: "auto",
+      marginRight: "auto"
     }
   },
   paper: {
@@ -42,41 +42,41 @@ const styles = makeStyles(theme => ({
     padding: theme.spacing(3, 0, 5)
   },
   buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end'
+    display: "flex",
+    justifyContent: "flex-end"
   },
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1)
   }
-}))
+}));
 class Checkout extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       step: 0,
-      firstName: '',
-      lastName: '',
-      gender: '',
-      phone: '',
-      address1: '',
-      address2: '',
-      district: '',
-      area: ''
-    }
+      firstName: "",
+      lastName: "",
+      gender: "",
+      phone: "",
+      address1: "",
+      address2: "",
+      district: "",
+      area: ""
+    };
   }
 
-  Copyright () {
+  Copyright() {
     return (
-      <Typography variant='body2' color='textSecondary' align='center'>
-        {'Copyright © '}
-        <Link color='inherit' href='https://material-ui.com/'>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="https://material-ui.com/">
           Your Website
-        </Link>{' '}
+        </Link>{" "}
         {new Date().getFullYear()}
-        {'.'}
+        {"."}
       </Typography>
-    )
+    );
   }
 
   nextStep = () => {
@@ -91,13 +91,13 @@ class Checkout extends Component {
       address2,
       district,
       area
-    } = this.state
+    } = this.state;
     switch (step) {
       case 0:
-        let token = localStorage.token
+        let token = localStorage.token;
         const config = {
           headers: { Authorization: `Bearer ${token}` }
-        }
+        };
         axios.post(
           `${process.env.REACT_APP_API_SERVER}/api/customerInfo`,
           {
@@ -112,39 +112,39 @@ class Checkout extends Component {
             phone
           },
           config
-        )
+        );
         this.setState({
           step: step + 1
-        })
-        break
+        });
+        break;
       case 1:
         this.setState({
           step: step + 1
-        })
-        return
-    
+        });
+        return;
+
       case 2:
-        return
-       
+        return;
+
       default:
-        throw new Error('Unknown step')
+        throw new Error("Unknown step");
     }
-  }
+  };
 
   prevStep = () => {
-    const { step } = this.state
+    const { step } = this.state;
     this.setState({
       step: step - 1
-    })
-  }
+    });
+  };
 
   handleChange = input => e => {
-    console.log([input])
+    console.log([input]);
 
-    this.setState({ [input]: e.target.value })
-  }
+    this.setState({ [input]: e.target.value });
+  };
 
-  getStepContent (step) {
+  getStepContent(step) {
     switch (step) {
       case 0:
         return (
@@ -152,29 +152,31 @@ class Checkout extends Component {
             handleChange={this.handleChange}
             nextStep={this.nextStep}
           />
-        )
+        );
       case 1:
-        return <Review nextStep={this.nextStep} />
+        return <Review nextStep={this.nextStep} />;
       case 2:
-        return <PaymentForm />
+        return <PaymentForm />;
       default:
-        throw new Error('Unknown step')
+        throw new Error("Unknown step");
     }
   }
 
-  render () {
-    const steps = ['Personal Information', 'Review your order ', 'Payment details']
-    const { classes } = this.props
+  render() {
+    const steps = [
+      "Personal Information",
+      "Review your order ",
+      "Payment details"
+    ];
+    const { classes } = this.props;
 
-
-  
     return (
       <React.Fragment>
         <CssBaseline />
 
         <main className={classes.layout}>
           <Paper className={classes.paper}>
-            <Typography component='h1' variant='h4' align='center'>
+            <Typography component="h1" variant="h4" align="center">
               Checkout
             </Typography>
             <Stepper activeStep={this.state.step} className={classes.stepper}>
@@ -189,10 +191,10 @@ class Checkout extends Component {
             <React.Fragment>
               {this.state.step === steps.length ? (
                 <React.Fragment>
-                  <Typography variant='h5' gutterBottom>
+                  <Typography variant="h5" gutterBottom>
                     Thank you for your order.
                   </Typography>
-                  <Typography variant='subtitle1'>
+                  <Typography variant="subtitle1">
                     Your order number is #2001539. We have emailed your order
                     confirmation, and will send you an update when your order
                     has shipped.
@@ -223,8 +225,8 @@ class Checkout extends Component {
           {/* <Copyright /> */}
         </main>
       </React.Fragment>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(Checkout)
+export default withStyles(styles)(Checkout);

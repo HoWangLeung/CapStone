@@ -7,7 +7,6 @@ import {
   Button,
   Form,
   FormGroup,
-  Label,
   // Input,
   // FormText,
   // Col,
@@ -15,55 +14,54 @@ import {
   Container
 } from "reactstrap";
 
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { green } from '@material-ui/core/colors';
-import Fab from '@material-ui/core/Fab';
-import CheckIcon from '@material-ui/icons/Check';
-import CreditCardIcon from '@material-ui/icons/CreditCard';// import { Redirect } from 'react-router-dom'
-
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { green } from "@material-ui/core/colors";
+import Fab from "@material-ui/core/Fab";
+import CheckIcon from "@material-ui/icons/Check";
+import CreditCardIcon from "@material-ui/icons/CreditCard"; // import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center"
   },
   wrapper: {
     margin: theme.spacing(1),
-    position: 'relative',
+    position: "relative"
   },
   buttonSuccess: {
     backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[700],
-    },
+    "&:hover": {
+      backgroundColor: green[700]
+    }
   },
   fabProgress: {
     color: green[500],
-    position: 'absolute',
+    position: "absolute",
     top: -6,
     left: -6,
-    zIndex: 1,
+    zIndex: 1
   },
   buttonProgress: {
     color: green[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
-    marginLeft: -12,
-  },
+    marginLeft: -12
+  }
 }));
 
- function CircularIntegration(props) {
+function CircularIntegration(props) {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
 
   const buttonClassname = clsx({
-    [classes.buttonSuccess]: success,
+    [classes.buttonSuccess]: success
   });
 
   React.useEffect(() => {
@@ -73,9 +71,8 @@ const useStyles = makeStyles(theme => ({
   }, []);
 
   const handleButtonClick = e => {
-    props.handleSubmit(e)
+    props.handleSubmit(e);
     if (!loading) {
-
       setSuccess(false);
       setLoading(true);
       timer.current = setTimeout(() => {
@@ -96,7 +93,9 @@ const useStyles = makeStyles(theme => ({
         >
           {success ? <CheckIcon /> : <CreditCardIcon />}
         </Fab>
-        {loading && <CircularProgress size={68} className={classes.fabProgress} />}
+        {loading && (
+          <CircularProgress size={68} className={classes.fabProgress} />
+        )}
       </div>
       <div className={classes.wrapper}>
         <Button
@@ -108,14 +107,13 @@ const useStyles = makeStyles(theme => ({
         >
           Confirm
         </Button>
-        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        {loading && (
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        )}
       </div>
     </div>
   );
 }
-
-
-
 
 class PaymentForm extends React.Component {
   constructor(props) {
@@ -224,24 +222,10 @@ class PaymentForm extends React.Component {
       <Container align="center">
         <Form onSubmit={this.handleSubmit}>
           <FormGroup className="myForm">
-            <Label for="exampleEmail">Card Details:</Label>
-          </FormGroup>
-          <FormGroup className="myForm">
-            <Label for="exampleEmail">Card Details:</Label>
             <CardSection class="card-input" />{" "}
           </FormGroup>
-{/* 
-          <Button
-            onClick={this.handleSubmit}
-            color="primary"
-            disabled={!this.props.stripe}
-          >
-            Confirm order
-          </Button> */}
-          <CircularIntegration
-         handleSubmit={this.handleSubmit}
-         
-          />
+
+          <CircularIntegration handleSubmit={this.handleSubmit} />
         </Form>
       </Container>
     );
