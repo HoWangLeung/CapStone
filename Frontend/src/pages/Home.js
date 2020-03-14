@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 });
 
 export default function Home(props) {
-  const classes = useStyles(props);
+  // const classes = useStyles(props);
   return (
     <Grid container className="resize">
       <div className="gradient"> </div>
