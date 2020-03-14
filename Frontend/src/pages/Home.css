@@ -18,8 +18,38 @@ html, body {
     
     } */
 
-  .gradient{
-    height: 100%;
-    background-image: linear-gradient(red, yellow);
+.gradient{
+    height: 100vh;
+    width: 100%;
+    background: 
+    linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
+    background-size: cover;
 }
+
+@media only screen and (max-width: 750px) {
+    .gradient{
+        height: 100vh;
+        /* width: 100%; */
+        background: 
+        linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
+        background-size: 100% 100%;
+        object-fit: cover;
+      
+    }
+  }
+
+
+@media only screen and (max-width: 600px) {
+    .gradient{
+        height: 100vh;
+        /* width: 100%; */
+        background: 
+        linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
+        background-size: 100% 100%;
+        object-fit: cover;
+      
+    }
+  }
+
+ 
  

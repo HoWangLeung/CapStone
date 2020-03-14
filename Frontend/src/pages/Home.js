@@ -8,10 +8,9 @@ const useStyles = makeStyles({
     objectFit: "cover"
   },
   gradient: {
-    display: "block",
     height: "100vh",
-    width: "auto",
-    backgroundRepeat: "no-repeat",
+    width: "100%",
+    objectFit: "cover",
     backgroundSize: "cover",
     background:
       "linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') "
@@ -20,8 +19,9 @@ const useStyles = makeStyles({
 
 export default function Home(props) {
   const classes = useStyles(props);
-  return <Grid className={classes.gradient} sm={12} md={12}>
-
-    
-  </Grid>;
+  return (
+    <Grid container className="resize">
+      <div className="gradient"> </div>
+    </Grid>
+  );
 }

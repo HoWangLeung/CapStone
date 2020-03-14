@@ -175,26 +175,20 @@ class Cart extends Component {
         </TableCell>
         <TableCell align="left">{row.product_name}</TableCell>
         <TableCell className="preference-box">
-          <div align="center" className="preference">
-            {" "}
-            {row.product_size}
-          </div>
+          {row.product_size}
 
           <br />
-          <div align="center" className="preference">
-            {row.product_temperature}
-          </div>
+
+          {row.product_temperature}
 
           <br />
-          <div align="center" className="preference">
-            {row.product_milk}
-          </div>
+
+          {row.product_milk}
+
           <br />
 
           {row.special_instruction === "" ? null : (
-            <div align="center" className="preference">
-              {row.special_instruction}
-            </div>
+            <span>{row.special_instruction}</span>
           )}
         </TableCell>
         <TableCell align="left">
@@ -269,7 +263,9 @@ class Cart extends Component {
                   </TableRow>
 
                   {listItems}
-                  <p className="grand-total" >Grand Total: ${this.state.grand_total}</p>
+                  <p className="grand-total">
+                    Grand Total: ${this.state.grand_total}
+                  </p>
                 </>
               )}
             </TableBody>
