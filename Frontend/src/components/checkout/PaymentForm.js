@@ -13,6 +13,7 @@ import {
   // Row,
   Container
 } from "reactstrap";
+import Grid from "@material-ui/core/Grid";
 
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,7 +30,9 @@ const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     margin: theme.spacing(1),
-    position: "relative"
+    position: "relative",
+    display:"flex"
+  
   },
   buttonSuccess: {
     backgroundColor: green[500],

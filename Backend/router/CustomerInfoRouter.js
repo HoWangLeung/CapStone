@@ -17,6 +17,8 @@ class CustomerInfoRouter {
     return this.customerInfoService
       .list(user)
       .then(data => {
+        console.log(data,'line20 info router ------>---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->-->');
+        
         res.json(data);
       })
       .catch(err => res.status(500).json(err));

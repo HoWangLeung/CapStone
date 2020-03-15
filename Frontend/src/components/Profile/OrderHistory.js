@@ -11,10 +11,15 @@ export default function CurrentOrder() {
 
       { title: "Ordered_Item", field: "product_name" },
       { title: "Quantity", field: "quantity" },
+      // {
+      //   title: "Order Status",
+      //   field: "status",
+      //   // lookup: { pending: "Pending", paid: "paid" }
+      // },
       {
-        title: "Order Status",
-        field: "status",
-        lookup: { pending: "Pending", paid: "paid" }
+        title: "Item Status",
+        field: "ordered_item_status",
+        // lookup: { pending: "Pending", paid: "paid" }
       },
       { title: "Created Date", field: "ordereditem_created_at" }
     ],
@@ -42,6 +47,8 @@ export default function CurrentOrder() {
       .then(response => {
         console.log(response);
         let data = response.data;
+        console.log(data);
+        
         setState({
           ...state,
           data: data

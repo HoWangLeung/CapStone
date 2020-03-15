@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {   useEffect } from "react";
- import Card from "@material-ui/core/Card";
- import CardContent from "@material-ui/core/CardContent";
+import React, { useEffect } from "react";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
@@ -9,7 +9,7 @@ import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
 import WcIcon from "@material-ui/icons/Wc";
-import MotorcycleOutlinedIcon from '@material-ui/icons/MotorcycleOutlined';
+import MotorcycleOutlinedIcon from "@material-ui/icons/MotorcycleOutlined";
 export default function CustomerInfo() {
   const [state, setState] = React.useState({ data: ["data"] });
   const useStyles = makeStyles({
@@ -45,7 +45,7 @@ export default function CustomerInfo() {
 
         setState({
           ...state,
-          data: res.data
+          data: info
         });
       })
       .catch(error => console.log("error:", error));
@@ -53,6 +53,7 @@ export default function CustomerInfo() {
 
   let user = state.data[0];
   console.log(user);
+  console.log(state.data);
 
   return (
     <Card className={classes.root}>
@@ -76,8 +77,8 @@ export default function CustomerInfo() {
           <br />
           <WcIcon /> Gender: {user.gender}
           <br />
-          <MotorcycleOutlinedIcon/> Delivery Address: {user.address1},{user.address2},{user.district},
-          {user.area}
+          <MotorcycleOutlinedIcon /> Delivery Address: {user.address1},
+          {user.address2},{user.district},{user.area}
           <br />
         </Typography>
       </CardContent>

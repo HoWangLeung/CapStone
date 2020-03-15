@@ -11,21 +11,23 @@ import Grid from "@material-ui/core/Grid";
 export default class Statistic extends Component {
   render() {
     return (
-      <Grid direction="row" container fluid={true} >
-          <Grid xs={12}  sm={12} md={12}>
+      <Grid   direction="row" container fluid={true}>
+        <Grid xs={12} sm={12} md={12}>
           <PersistentDrawer />
-          </Grid>
-      
-        <Grid xs={12}  sm={12} md={12}>
-        <Boxes />
-         </Grid>
+        </Grid>
+
+        <Grid xs={12} sm={12} md={12}>
+          <Boxes />
+        </Grid>
         {/* <Grid sm={6}> */}
 
         {/* </Grid> */}
-        <Grid xs={12}  sm={12} md={6}>
+
+        <Grid xs={12} sm={12} md={6}>
           <DonaughtChartDay />
         </Grid>
-        <Grid  xs={12} sm={12} md={6}>
+
+        <Grid xs={12} sm={12} md={6}>
           <LineChartMonth />
         </Grid>
       </Grid>

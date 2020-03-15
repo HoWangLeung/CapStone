@@ -96,6 +96,7 @@ export default class DonaughtChartDay extends Component {
       );
     } else {
       return (
+        <Card className="myDonaughtCard">
         <Grid container direction="row" justify="center" alignItems="center">
           <DatePickerDay className="DatePicker_day" pickDate={this.pickDate} />
           <img
@@ -108,6 +109,7 @@ export default class DonaughtChartDay extends Component {
             Try another date
           </h1>
         </Grid>
+        </Card>
       );
     }
   }

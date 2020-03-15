@@ -1,4 +1,8 @@
 .myLineChartCard{
-    max-width: 100%;
+    max-width: 98%;
     height: 60vh !important;
+    padding:10px;
+    margin-left: 1px;
+    margin-top: 10px;
+ 
 }

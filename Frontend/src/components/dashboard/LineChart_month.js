@@ -70,9 +70,16 @@ export default class LineChart_month extends Component {
       maintainAspectRatio: false // Don't maintain w/h ratio
     };
     //    const displayName = 'LineExample',
+
+    // const styles={
+    //   datePicker:{
+    //     padding:"30px"
+    //   }
+    // }
     return (
       <Card className="myLineChartCard">
-        <DatePickerMonth pickYear={this.pickYear} />
+          <DatePickerMonth   pickYear={this.pickYear} />
+
         <Line
           data={data}
           option={options}

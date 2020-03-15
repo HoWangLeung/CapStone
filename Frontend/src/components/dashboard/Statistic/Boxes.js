@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
-
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import { useSpring, animated } from "react-spring";
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 // const useStyles = makeStyles({
 //   root: {
 //     maxWidth: 345
@@ -60,21 +62,21 @@ export default function Boxes() {
   return (
     <Grid
       container
-      direction="column"
+      direction="row"
       justify="center"
       alignItems="space-around"
-      spacing={0}
+      spacing={1}
     >
       <Grid item xs={12} sm={4}>
         <Box
           boxShadow={3}
-          bgcolor="#5c5c5c"
-          borderRadius={16}
+          bgcolor="#32a852"
+          borderRadius={2}
           color="primary.contrastText"
           p={6}
           fontSize={{ xs: "h6.fontSize", sm: "h4.fontSize", md: "h5.fontSize" }}
         >
-          This Month's Income $
+          <span><MonetizationOnIcon/>This Month's Income $</span>
           <animated.span>
             {props.number.interpolate(val => Math.floor(val))}
           </animated.span>
@@ -83,13 +85,13 @@ export default function Boxes() {
       <Grid item xs={12} sm={4}>
         <Box
           boxShadow={3}
-          bgcolor="#a3a2a2"
-          borderRadius={16}
+          bgcolor="#32a852"
+          borderRadius={2}
           color="secondary.contrastText"
           p={6}
           fontSize={{ xs: "h6.fontSize", sm: "h4.fontSize", md: "h5.fontSize" }}
         >
-          This Month's cost $
+          <span><MoneyOffIcon/>This Month's Cost $</span>
           <animated.span>
             {spring_cost.number.interpolate(val => Math.floor(val))}
           </animated.span>
@@ -98,16 +100,16 @@ export default function Boxes() {
       <Grid item xs={12} sm={4}>
         <Box
           boxShadow={3}
-          bgcolor="#5c5c5c"
-          borderRadius={16}
+          bgcolor="#32a852"
+          borderRadius={2}
           color="error.contrastText"
           p={6}
           fontSize={{ xs: "h6.fontSize", sm: "h4.fontSize", md: "h5.fontSize" }}
         >
-          Monthly net Income $
-          <animated.span>
+        <span><AccountBalanceIcon/> Monthly net Income $</span>       <animated.span>
             {spring_net.number.interpolate(val => Math.floor(val))}
           </animated.span>
+       
         </Box>
       </Grid>
     </Grid>

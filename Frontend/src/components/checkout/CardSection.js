@@ -16,21 +16,19 @@ const CARD_ELEMENT_OPTIONS = {
       color: "#32325d",
       fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
       fontSmoothing: "antialiased",
-      fontSize: "100px",
+      fontSize: "20px",
       "::placeholder": {
-        color: "#aab7c4",
-      },
+        color: "#aab7c4"
+      }
     },
     invalid: {
       color: "#fa755a",
-      iconColor: "#fa755a",
-    },
-  },
-}
+      iconColor: "#fa755a"
+    }
+  }
+};
 
 function CardSection() {
- 
-
   const useStyles = makeStyles(theme => ({
     margin: {
       margin: theme.spacing(1)
@@ -52,7 +50,7 @@ function CardSection() {
           <TextField
             className={classes.margin}
             id="input-with-icon-textfield"
-            label="TextField"
+            label="Card Holder Name"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

@@ -13,6 +13,7 @@ class OrderedItemRouter {
     router.put("/:id", this.put.bind(this));
     router.put("/changeStatus/:id", this.changeStatus.bind(this));
     router.delete("/:id", this.delete.bind(this));
+    router.put("/refund/:id", this.refund.bind(this));
     return router;
   }
   get(req, res) {
@@ -25,12 +26,10 @@ class OrderedItemRouter {
   }
 
   listForCustomerProfile(req, res) {
-  
-    
-    let user_id = req.user
+    let user_id = req.user;
 
     return this.orderedItemService
-      .listForCustomerProfile(user_id )
+      .listForCustomerProfile(user_id)
       .then(data => res.json(data));
   }
 
@@ -42,7 +41,6 @@ class OrderedItemRouter {
 
     return this.orderedItemService.add(user, order_content).then(response => {
       console.log(" reaching .then in router--------->>>>><<<<<<");
-
       res.json(response);
     });
   }
@@ -77,6 +75,19 @@ class OrderedItemRouter {
   changeStatus(req, res) {
     let content = req.body;
     return this.orderedItemService.changeStatus(content).then(data => {
+      res.json(data);
+    });
+  }
+
+  refund(req, res) {
+    let content = req.body;
+    let user = req.user;
+    let id = req.params.id
+    console.log(id,'line86 oredere item router ===============');
+    
+
+    return this.orderedItemService.refund(user, content,id).then(data => {
+      console.log("line 90 orderItem router");
       res.json(data);
     });
   }

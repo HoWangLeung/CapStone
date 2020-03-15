@@ -5,7 +5,7 @@ class OrderedItemService {
 
   listForCustomerProfile(user_id) {
     console.log("listForCustomerProfile line8");
-    console.log(user_id,'line 8 orderitems service -------->');
+    console.log(user_id, "line 8 orderitems service -------->");
 
     let query = this.knex
       .select(
@@ -27,17 +27,22 @@ class OrderedItemService {
         "product.product_img",
         "product.product_cost",
         "product.product_price",
-        "available_period"
+        "available_period",
+        "ordered_item.ordered_item_status as ordered_item_status"
       )
       .from("order")
       .where("order.status", "paid")
+      .orWhere("order.status","full refund")
+      .orWhere("order.status","partial refund")
       .where("order.user_id", user_id.id)
       .innerJoin("ordered_item", "ordered_item.order_id", "order.id")
+      .where("ordered_item.ordered_item_status","paid")
+      .orWhere("ordered_item.ordered_item_status","refunded")
       .innerJoin("product", "product.id", "ordered_item.product_id")
       .orderBy("order.id", "asc");
 
     return query.then(rows => {
-      console.log(rows);
+      console.log(rows,'line42=====================================================');
 
       return rows;
     });
@@ -212,5 +217,65 @@ class OrderedItemService {
   }
 
   changeStatus(content) {}
+
+  refund(user, content, orderItemID) {
+    console.log(content,orderItemID,'content');
+    
+    console.log("refund");
+    // console.log(user, content, orderItemID);
+
+    let query = this.knex
+      .select("order.id as orderID", "ordered_item.id as orderItemID")
+      .from("ordered_item")
+      .innerJoin("order", "order.id", "ordered_item.order_id") //need order ID
+      .where("order.id", content.order_id)
+      .where("ordered_item_status", "paid")
+      .orderBy("order.id", "asc");
+
+    return query.then(data => {
+      console.log(data, '2229<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,');
+      
+      if (data.length > 1) {
+        
+        console.log(data.length, "229===================");
+
+        console.log(data, "line227");
+
+        return this.knex
+          .from("ordered_item")
+          .where("ordered_item.id", orderItemID)
+          .update({
+            ordered_item_status: "refunded"
+          })
+          .then(data => {
+            console.log(data, "line242");
+            return this.knex
+              .from("order")
+              .where("order.id", content.order_id)
+              .update({
+                status: "partial refund"
+              });
+          });
+      } else if (data.length === 1  ) {
+        console.log(data.length, "252===================");
+        console.log("data = 1 or 0");
+        return this.knex
+          .from("ordered_item")
+          .where("ordered_item.id", orderItemID)
+          .update({
+            ordered_item_status: "refunded"
+          })
+          .then(data => {
+            console.log(data, "line242");
+            return this.knex
+              .from("order")
+              .where("order.id", content.order_id)
+              .update({
+                status: "full refund"
+              });
+          });
+      }
+    });
+  }
 }
 module.exports = OrderedItemService;

@@ -9,7 +9,19 @@ class CustomerInfoService {
       .where("customer_info.user_id", user.id);
 
     return query.then(rows => {
-      return rows;
+      console.log(
+        rows,
+        "line12 info service------>---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->---->-->"
+      );
+
+      if (rows.length === 0) {
+        return this.knex
+          .select("users.id as user_id")
+          .from("users")
+          .where("users.id", user.id);
+      } else {
+        return rows;
+      }
     });
   }
 
@@ -81,13 +93,14 @@ class CustomerInfoService {
           })
           .into("customer_info")
           .where("customer_info.user_id", user.id)
-          .then((data)=>{
-            return this.knex.update({
-              password:content.password1
-            })
-            .into("users")
-            .where("users.id", user.id)
-          })
+          .then(data => {
+            return this.knex
+              .update({
+                password: content.password1
+              })
+              .into("users")
+              .where("users.id", user.id);
+          });
       } else {
         return this.knex
           .insert({
