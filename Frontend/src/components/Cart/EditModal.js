@@ -8,9 +8,9 @@ const EditModal = props => {
 
   const [modal, setModal] = useState(false)
   const [state, setState] = useState({
-    Temperature: 'Hot',
-    Size: 'Large',
-    Milk: 'Whole Milk',
+    Temperature: 'hot',
+    Size: 'large',
+    Milk: 'whole milk',
     special_instruction: ''
   })
 
@@ -41,9 +41,9 @@ console.log(state);
         return axios.put(
           `${process.env.REACT_APP_API_SERVER}/api/orderedItem/${orderedItemID}`,
           {
-            product_temperature: state.Temperature,
-            product_size: state.Size,
-            product_milk: state.Milk,
+            product_temperature: state.Temperature.toLowerCase(),
+            product_size: state.Size.toLowerCase(),
+            product_milk: state.Milk.toLowerCase(),
             special_instruction:state.special_instruction
           },
           config

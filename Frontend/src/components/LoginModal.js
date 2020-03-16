@@ -42,7 +42,9 @@ export class LoginModal extends React.Component {
     console.log(event)
     event.preventDefault()
     this.props.loginDispatch(this.state.email, this.state.password)
+   
     this.props.hideLoginModalDispatcher()
+ 
   }
 
   // closeModal(){

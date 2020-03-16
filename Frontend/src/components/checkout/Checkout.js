@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -13,14 +12,16 @@ import Review from "./Review";
 import axios from "axios";
 import { withStyles } from "@material-ui/styles";
 import "../CSS/Checkout.css";
+import Grid from "@material-ui/core/Grid";
+
 const styles = makeStyles(theme => ({
   appBar: {
     position: "relative"
   },
   layout: {
-    width: "auto",
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
+    // width: "auto",
+    // marginLeft: theme.spacing(2),
+    // marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: "auto",
@@ -28,15 +29,16 @@ const styles = makeStyles(theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
+    // marginTop: theme.spacing(3),
+    // marginBottom: theme.spacing(3),
+    // padding: theme.spacing(2),
 
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3)
-    }
+    },
+    minWidth: "1600px"
   },
   stepper: {
     padding: theme.spacing(3, 0, 5)
@@ -172,10 +174,9 @@ class Checkout extends Component {
 
     return (
       <React.Fragment>
-        <CssBaseline />
-
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
+        {/* <CssBaseline /> */}
+        <Grid container direction="column" alignItems="center"    >
+          <Paper elevation={12} className={classes.paper}>
             <Typography component="h1" variant="h4" align="center">
               Checkout
             </Typography>
@@ -223,7 +224,7 @@ class Checkout extends Component {
             </React.Fragment>
           </Paper>
           {/* <Copyright /> */}
-        </main>
+        </Grid>
       </React.Fragment>
     );
   }

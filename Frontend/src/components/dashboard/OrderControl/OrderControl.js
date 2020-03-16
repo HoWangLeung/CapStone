@@ -21,7 +21,7 @@ export default function OrderControl() {
       },
       {
         title: "Order Status",
-        field: "status"
+        field: "order_status"
         // lookup: { 'pending': 'Pending', 'paid': 'Confirmed' }
       },
       { title: "Ordered_Item", field: "product_name" },

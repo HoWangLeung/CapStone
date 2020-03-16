@@ -7,12 +7,9 @@ import {
   Button,
   Form,
   FormGroup,
-  // Input,
-  // FormText,
-  // Col,
-  // Row,
-  Container
+ 
 } from "reactstrap";
+// import Grid from "@material-ui/core/Grid";
 import Grid from "@material-ui/core/Grid";
 
 import clsx from "clsx";
@@ -26,13 +23,17 @@ import CreditCardIcon from "@material-ui/icons/CreditCard"; // import { Redirect
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    alignItems: "center"
+      flexDirection:"row",
+    alignItems: "center",
   },
   wrapper: {
     margin: theme.spacing(1),
     position: "relative",
-    display:"flex"
-  
+    display: "flex",
+    flexDirection:"row",
+    justifyContent:"center",
+    justifyItems:"center"
+    
   },
   buttonSuccess: {
     backgroundColor: green[500],
@@ -54,7 +55,8 @@ const useStyles = makeStyles(theme => ({
     left: "50%",
     marginTop: -12,
     marginLeft: -12
-  }
+  },
+
 }));
 
 function CircularIntegration(props) {
@@ -222,15 +224,14 @@ class PaymentForm extends React.Component {
 
   render() {
     return (
-      <Container align="center">
+      <Grid container direction="column" alignItems="center" alignContent="center" >
         <Form onSubmit={this.handleSubmit}>
           <FormGroup className="myForm">
             <CardSection class="card-input" />{" "}
           </FormGroup>
-
           <CircularIntegration handleSubmit={this.handleSubmit} />
         </Form>
-      </Container>
+      </Grid>
     );
   }
 }

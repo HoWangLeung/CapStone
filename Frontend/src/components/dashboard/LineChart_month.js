@@ -4,6 +4,7 @@ import DatePickerMonth from "./DatePicker_month";
 // import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import "../CSS/LineChart.css";
+import axios from "axios";
 export default class LineChart_month extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +12,31 @@ export default class LineChart_month extends Component {
       data_by_selected_year: []
     };
     this.pickYear = this.pickYear.bind(this);
+  }
+
+  componentDidMount() {
+    let token = localStorage.token;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+
+    axios
+      .get(
+        `${process.env.REACT_APP_API_SERVER}/api/admin/product/chartDataYear`,
+        config
+      )
+      .then(res => {
+        console.log(res.data);
+        let data = res.data;
+        let list = [];
+        for (let i = 0; i < data.length; i++) {
+          list.push(data[i].total_ordered_quantity);
+        }
+        console.log(list);
+        this.setState({
+          data_by_selected_year: ["39", "40", ...list,"30","50","60","30","20","80","60","70","99"]
+        });
+      });
   }
 
   pickYear(data) {
@@ -23,7 +49,7 @@ export default class LineChart_month extends Component {
     // let data_by_selected_year = data[0].total_ordered_quantity
 
     this.setState({
-      data_by_selected_year: ["39", "40", ...list]
+      data_by_selected_year: ["39", "40", ...list,"30","50","60","30","20","80","60","70","99"]
     });
   }
   render() {
@@ -78,12 +104,9 @@ export default class LineChart_month extends Component {
     // }
     return (
       <Card className="myLineChartCard">
-          <DatePickerMonth   pickYear={this.pickYear} />
+        <DatePickerMonth pickYear={this.pickYear} />
 
-        <Line
-          data={data}
-          option={options}
-        />
+        <Line data={data} option={options} />
       </Card>
     );
   }

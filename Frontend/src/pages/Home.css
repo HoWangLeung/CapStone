@@ -22,7 +22,7 @@ html, body {
     height: 100vh;
     width: 100%;
     background: 
-    linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
+    linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
     background-size: cover;
 }
 
@@ -31,7 +31,7 @@ html, body {
         height: 100vh;
         /* width: 100%; */
         background: 
-        linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
+        linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
         background-size: 100% 100%;
         object-fit: cover;
       
@@ -44,7 +44,7 @@ html, body {
         height: 100vh;
         /* width: 100%; */
         background: 
-        linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
+        linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
         background-size: 100% 100%;
         object-fit: cover;
       
