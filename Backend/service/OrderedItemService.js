@@ -13,7 +13,7 @@ class OrderedItemService {
         "order.user_id",
         "order.status",
         this.knex.raw(
-          "to_char(ordered_item.created_at, 'DD/MM/YYYY') as orderedItem_created_at"
+          "to_char(ordered_item.created_at, 'DD/MM/YYYY HH24:MI') as orderedItem_created_at"
         ),
         "ordered_item.id as orderItemID",
         "ordered_item.product_id",
@@ -31,13 +31,11 @@ class OrderedItemService {
         "ordered_item.ordered_item_status as ordered_item_status"
       )
       .from("order")
-      .where("order.status", "paid")
-      .orWhere("order.status", "full refund")
-      .orWhere("order.status", "partial refund")
       .where("order.user_id", user_id.id)
+      .whereNot("order.status", "pending")
+
       .innerJoin("ordered_item", "ordered_item.order_id", "order.id")
-      .where("ordered_item.ordered_item_status", "paid")
-      .orWhere("ordered_item.ordered_item_status", "refunded")
+      .whereNot("ordered_item.ordered_item_status", "pending")
       .innerJoin("product", "product.id", "ordered_item.product_id")
       .orderBy("order.id", "asc");
 
@@ -65,7 +63,7 @@ class OrderedItemService {
         "ordered_item.product_temperature",
         "ordered_item.special_instruction",
         this.knex.raw(
-          "to_char(ordered_item.created_at, 'DD/MM/YYYY') as created_at"
+          "to_char(ordered_item.created_at, 'DD/MM/YYYY HH24:MI') as created_at"
         ),
         "ordered_item.price",
         "product.genre_id",

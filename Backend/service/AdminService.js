@@ -249,20 +249,24 @@ class AdminService {
     console.log("getting order");
     let query = this.knex
       .select(
-        "ordered_item.id as ordered_item_id",
-        "order.id as order_id",
-        "users.id as user_id",
-        "order.status as order_status",
+      
         "ordered_item.ordered_item_status as ordered_item_status",
         "ordered_item.quantity",
         "ordered_item.price",
+        "ordered_item.id as ordered_item_id",
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY HH24:MI') as created_at"),
+        "order.id as order_id",
+        "order.status as order_status",
+        "users.id as user_id",
         "product.product_name"
       )
       .from("ordered_item")
       .innerJoin("order", "ordered_item.order_id", "order.id")
+      .orderBy("order.id")
       .innerJoin("users", "users.id", "order.user_id")
-      .innerJoin("customer_info", "customer_info.user_id", "users.id")
+      // .innerJoin("customer_info", "customer_info.user_id", "users.id")
       .innerJoin("product", "product.id", "ordered_item.product_id");
+   
 
     return query.then(data => {
       console.log(data);

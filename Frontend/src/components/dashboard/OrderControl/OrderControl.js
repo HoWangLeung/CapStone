@@ -11,8 +11,7 @@ export default function OrderControl() {
   const [state, setState] = React.useState({
     columns: [
       { title: "User ID", field: "user_id" },
-      { title: "firstName", field: "first_name" },
-      { title: "LastName", field: "last_name" },
+ 
       { title: "Order ID", field: "order_id" },
       {
         title: "Item Status",
