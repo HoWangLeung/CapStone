@@ -4,9 +4,19 @@
 }
 
 .myForm{
-    width: 800px;
+    width: 100%;
    
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
 }
+
+
+
+/* .MuiPaper-root {
+    width: 100%!important;
+} */
+
+/* .Checkout-paper-9{
+    width: 100%!important;
+} */

@@ -19,7 +19,7 @@ const EditForm = props => {
           name='Temperature'
           id='exampleSelect'
           onChange={props.handleChange('Temperature')}
-          defaultValue={'Hot'}
+          defaultValue={'hot'}
         >
           <option>Hot</option>
           <option>Cold</option>
@@ -33,7 +33,7 @@ const EditForm = props => {
           name='Size'
           id='exampleSelect'
           onChange={props.handleChange('Size')}
-          defaultValue={'Large'}
+          defaultValue={'large'}
         >
           <option>Large</option>
           <option>Medium</option>
@@ -47,7 +47,7 @@ const EditForm = props => {
           name='Milk'
           id='exampleSelect'
           onChange={props.handleChange('Milk')}
-          defaultValue={'Whole Milk'}
+          defaultValue={'whole milk'}
         >
           <option>Whole Milk</option>
           <option>Skimmed Milk</option>

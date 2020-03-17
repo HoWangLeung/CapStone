@@ -82,11 +82,10 @@ class OrderedItemRouter {
   refund(req, res) {
     let content = req.body;
     let user = req.user;
-    let id = req.params.id
-    console.log(id,'line86 oredere item router ===============');
-    
+    let id = req.params.id;
+    console.log(id, "line86 oredere item router ===============");
 
-    return this.orderedItemService.refund(user, content,id).then(data => {
+    return this.orderedItemService.refund(user, content, id).then(data => {
       console.log("line 90 orderItem router");
       res.json(data);
     });

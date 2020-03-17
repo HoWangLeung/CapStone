@@ -49,7 +49,7 @@ export default function CustomerPicture(props) {
 
           <CardContent className={classes.pointer}>
             <Typography gutterBottom variant="h5" component="h2">
-              Lizard
+              Welcome
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Thank you for your continuous support! Hope you have a nice day!

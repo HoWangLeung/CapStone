@@ -4,12 +4,9 @@
 import React from "react";
 import { CardElement } from "@stripe/react-stripe-js";
 import "../CSS/CardSection.css";
-import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
+ 
+ 
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
@@ -29,39 +26,21 @@ const CARD_ELEMENT_OPTIONS = {
 };
 
 function CardSection() {
-  const useStyles = makeStyles(theme => ({
-    margin: {
-      margin: theme.spacing(1)
-    }
-  }));
 
-  const classes = useStyles();
 
+ 
   return (
-    <Grid justify="center" align="center">
-      <Card>
-        <Grid md={6} align="left">
-          <img
-            src="https://freesvg.org/img/credit-card-front.png"
-            alt="card"
-          ></img>
-        </Grid>
-        <Grid md={6} align="left">
-          <TextField
-            className={classes.margin}
-            id="input-with-icon-textfield"
-            label="Card Holder Name"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountBoxIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-          <CardElement className="card-input" options={CARD_ELEMENT_OPTIONS} />
-        </Grid>
-      </Card>
+    <Grid direction="column" justify="center" align="center">
+      <Grid md={12} align="left">
+        <img
+          className="cardIMG"
+          src="https://freesvg.org/img/credit-card-front.png"
+          alt="card"
+        ></img>
+      </Grid>
+      <Grid md={12} align="center">
+        <CardElement className="card-input" options={CARD_ELEMENT_OPTIONS} />
+      </Grid>
     </Grid>
   );
 }

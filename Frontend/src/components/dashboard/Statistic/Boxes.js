@@ -70,9 +70,9 @@ export default function Boxes() {
       <Grid item xs={12} sm={4}>
         <Box
           boxShadow={3}
-          bgcolor="#32a852"
+          bgcolor="#f7f7f7"
           borderRadius={2}
-          color="primary.contrastText"
+          color="#00000"
           p={6}
           fontSize={{ xs: "h6.fontSize", sm: "h4.fontSize", md: "h5.fontSize" }}
         >
@@ -85,9 +85,9 @@ export default function Boxes() {
       <Grid item xs={12} sm={4}>
         <Box
           boxShadow={3}
-          bgcolor="#32a852"
+          bgcolor="#f7f7f7"
           borderRadius={2}
-          color="secondary.contrastText"
+          color="#00000"
           p={6}
           fontSize={{ xs: "h6.fontSize", sm: "h4.fontSize", md: "h5.fontSize" }}
         >
@@ -100,9 +100,9 @@ export default function Boxes() {
       <Grid item xs={12} sm={4}>
         <Box
           boxShadow={3}
-          bgcolor="#32a852"
+          bgcolor="#f7f7f7"
           borderRadius={2}
-          color="error.contrastText"
+          color="#00000"
           p={6}
           fontSize={{ xs: "h6.fontSize", sm: "h4.fontSize", md: "h5.fontSize" }}
         >

@@ -271,7 +271,8 @@ class Cart extends Component {
             </TableBody>
           </Table>
         </TableContainer>
-        <Grid container direction="row" justify="flex-end" alignItems="center">
+
+        {listItems.length === 0 ? ( null):(  <Grid container direction="row" justify="flex-end" alignItems="center">
           <Link className="myLink" to="/checkout">
             <Button
               className="confirm-btn"
@@ -281,7 +282,8 @@ class Cart extends Component {
               Confirm
             </Button>
           </Link>
-        </Grid>
+        </Grid>) }
+      
       </>
     );
   }

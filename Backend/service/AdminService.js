@@ -27,25 +27,26 @@ class AdminService {
       )
 
       .from("ordered_item")
-      .where(this.knex.raw("to_char(created_at, 'MM/YYYY')"), thisMonth);
+      .where(this.knex.raw("to_char(created_at, 'MM/YYYY')"), thisMonth)
+      .where("ordered_item_status", "paid");
 
     return query.then(income_thisMonth => {
+      console.log(income_thisMonth, "line33========>");
+
       let CostQuery = this.knex
         .select(
           // 'ordered_item.quantity',
           // 'product.product_cost',
-          this.knex.raw(
-            " sum(ordered_item.quantity*product.product_cost) as cost_thisMonth "
-          )
+          this.knex.raw(" sum(quantity*fixed_cost) as cost_thisMonth ")
         )
         .from("ordered_item")
-        .innerJoin("product", "product.id", "ordered_item.product_id")
-        .where(
-          this.knex.raw("to_char(ordered_item.created_at, 'MM/YYYY')"),
-          thisMonth
-        );
+        // .innerJoin("product", "product.id", "ordered_item.product_id")
+        .where(this.knex.raw("to_char(created_at, 'MM/YYYY')"), thisMonth)
+        .where("ordered_item_status", "paid");
 
       return CostQuery.then(cost_thisMonth => {
+        console.log(cost_thisMonth, "line51========>>>");
+
         console.log(income_thisMonth[0], cost_thisMonth[0]);
 
         let MonthlyIncome = income_thisMonth[0];
@@ -87,24 +88,43 @@ class AdminService {
 
     // let selected_year = content.year
     let query = this.knex
-      .select(
-        this.knex.raw("to_char(ordered_item.created_at, 'MM/YYYY')"),
-        "order.status"
-      )
+      .select(this.knex.raw("to_char(ordered_item.created_at, 'MM/YYYY')"))
       .from("ordered_item")
       .where(
         this.knex.raw("to_char(ordered_item.created_at, 'YYYY')"),
         selected_year
       )
+      .where("ordered_item.ordered_item_status", "paid")
+
       .sum("ordered_item.quantity as total_ordered_quantity")
-      .innerJoin("order", "order.id", "ordered_item.order_id")
-      .where("order.status", "paid")
-      .groupBy("order.status")
+
       .groupByRaw("to_char(ordered_item.created_at, 'MM/YYYY')");
 
     return query.then(data => {
       console.log(data);
       return data;
+    });
+  }
+
+  getChartDataYear() {
+    let date = new Date();
+    let currentYear = date.getFullYear();
+    console.log(currentYear);
+
+    let query = this.knex
+      .select(this.knex.raw("to_char(created_at, 'YYYY') as created_at"))
+      .from("ordered_item")
+      .where(
+        this.knex.raw("to_char(ordered_item.created_at, 'YYYY')"),
+        currentYear
+      )
+      .where("ordered_item.ordered_item_status", "paid")
+      .sum("quantity as total_ordered_quantity")
+      .groupByRaw("to_char(ordered_item.created_at, 'YYYY')");
+
+    return query.then(data => {
+      console.log(data);
+      return data
     });
   }
 
@@ -117,21 +137,20 @@ class AdminService {
       .select(
         "product.id as product_id",
         "product.product_name",
-        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),
-        "order.status"
-        // this.knex.datePart()
-        // 'ordered_item.created_at'
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
       )
       .from("ordered_item")
+      .where("ordered_item.ordered_item_status", "paid")
+
       .where(
         this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),
         selected_date
       )
       .sum("ordered_item.quantity as total_ordered_quantity")
       .innerJoin("product", "product.id", "ordered_item.product_id")
-      .innerJoin("order", "order.id", "ordered_item.order_id")
-      .where("order.status", "paid")
-      .groupBy("product.id", "product.product_name", "order.status")
+      // .innerJoin("order", "order.id", "ordered_item.order_id")
+      // .where("order.status", "paid")
+      .groupBy("product.id", "product.product_name")
       .groupByRaw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
       .orderBy("product.id");
 
@@ -163,20 +182,23 @@ class AdminService {
       .select(
         "product.id as product_id",
         "product.product_name",
-        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),
-        "order.status"
-        // 'ordered_item.created_at'
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
+        // "order.status",
+
+        // // 'ordered_item.created_at'
       )
       .from("ordered_item")
+      .where("ordered_item.ordered_item_status", "paid")
       .where(
         this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY')"),
         today
       )
       .sum("ordered_item.quantity as total_ordered_quantity")
       .innerJoin("product", "product.id", "ordered_item.product_id")
-      .innerJoin("order", "order.id", "ordered_item.order_id")
-      .where("order.status", "paid")
-      .groupBy("product.id", "product.product_name", "order.status")
+      // .innerJoin("order", "order.id", "ordered_item.order_id")
+      // .where("order.status", "paid")
+      // .orWhere("order.status", "partial refund")
+      .groupBy("product.id", "product.product_name")
       .groupByRaw("to_char(ordered_item.created_at, 'DD/MM/YYYY')")
       .orderBy("product.id");
 
@@ -185,6 +207,8 @@ class AdminService {
     // .innerJoin('product', 'product.id', 'ordered_item.product_id')
 
     return query.then(data => {
+      console.log(data, "line199=====================================");
+
       return data;
     });
   }
@@ -225,17 +249,24 @@ class AdminService {
     console.log("getting order");
     let query = this.knex
       .select(
+      
+        "ordered_item.ordered_item_status as ordered_item_status",
+        "ordered_item.quantity",
+        "ordered_item.price",
         "ordered_item.id as ordered_item_id",
+        this.knex.raw("to_char(ordered_item.created_at, 'DD/MM/YYYY HH24:MI') as created_at"),
         "order.id as order_id",
-        "users.id as user_id",
         "order.status as order_status",
-        "ordered_item.ordered_item_status as ordered_item_status"
+        "users.id as user_id",
+        "product.product_name"
       )
       .from("ordered_item")
       .innerJoin("order", "ordered_item.order_id", "order.id")
+      .orderBy("order.id")
       .innerJoin("users", "users.id", "order.user_id")
-      .innerJoin("customer_info", "customer_info.user_id", "users.id")
+      // .innerJoin("customer_info", "customer_info.user_id", "users.id")
       .innerJoin("product", "product.id", "ordered_item.product_id");
+   
 
     return query.then(data => {
       console.log(data);

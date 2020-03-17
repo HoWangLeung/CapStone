@@ -13,7 +13,7 @@ class OrderedItemService {
         "order.user_id",
         "order.status",
         this.knex.raw(
-          "to_char(ordered_item.created_at, 'DD/MM/YYYY') as orderedItem_created_at"
+          "to_char(ordered_item.created_at, 'DD/MM/YYYY HH24:MI') as orderedItem_created_at"
         ),
         "ordered_item.id as orderItemID",
         "ordered_item.product_id",
@@ -31,18 +31,19 @@ class OrderedItemService {
         "ordered_item.ordered_item_status as ordered_item_status"
       )
       .from("order")
-      .where("order.status", "paid")
-      .orWhere("order.status","full refund")
-      .orWhere("order.status","partial refund")
       .where("order.user_id", user_id.id)
+      .whereNot("order.status", "pending")
+
       .innerJoin("ordered_item", "ordered_item.order_id", "order.id")
-      .where("ordered_item.ordered_item_status","paid")
-      .orWhere("ordered_item.ordered_item_status","refunded")
+      .whereNot("ordered_item.ordered_item_status", "pending")
       .innerJoin("product", "product.id", "ordered_item.product_id")
       .orderBy("order.id", "asc");
 
     return query.then(rows => {
-      console.log(rows,'line42=====================================================');
+      console.log(
+        rows,
+        "line42====================================================="
+      );
 
       return rows;
     });
@@ -62,7 +63,7 @@ class OrderedItemService {
         "ordered_item.product_temperature",
         "ordered_item.special_instruction",
         this.knex.raw(
-          "to_char(ordered_item.created_at, 'DD/MM/YYYY') as created_at"
+          "to_char(ordered_item.created_at, 'DD/MM/YYYY HH24:MI') as created_at"
         ),
         "ordered_item.price",
         "product.genre_id",
@@ -87,6 +88,15 @@ class OrderedItemService {
   }
 
   add(user, order_content) {
+    if (order_content.product_size === "medium") {
+      console.log("this product +=4");
+      order_content.product_price += 4;
+    } else if (order_content.product_size === "large") {
+      order_content.product_price += 8;
+    } else {
+      console.log("nothing happens");
+    }
+
     console.log(order_content, "========================order_content");
 
     let query = this.knex
@@ -125,7 +135,8 @@ class OrderedItemService {
                 product_milk: order_content.product_milk,
                 product_temperature: order_content.product_temperature,
                 special_instruction: order_content.special_instruction,
-                price: order_content.product_price
+                price: order_content.product_price,
+                fixed_cost: order_content.fixed_cost
               })
               .into("ordered_item");
           });
@@ -147,7 +158,8 @@ class OrderedItemService {
               product_milk: order_content.product_milk,
               product_temperature: order_content.product_temperature,
               special_instruction: order_content.special_instruction,
-              price: order_content.product_price
+              price: order_content.product_price,
+              fixed_cost: order_content.fixed_cost
             })
             .into("ordered_item");
         });
@@ -159,7 +171,18 @@ class OrderedItemService {
     console.log(ordered_item_id, "sfsdfsdfsdfsdfsfsfsdfsdsfsdfsdfsdfsdfds");
     console.log(change);
 
-    return this.knex
+    // if(change.product_size === "medium"){
+    //   console.log('this product +=4');
+    //   change.product_price+=4
+
+    // }else if(change.product_size === "large"){
+
+    //   change.product_price+=8
+    // }else{
+    //   console.log('nothing happens');
+    // }
+
+    let query = this.knex
       .select(
         "ordered_item.id",
         "ordered_item.product_id",
@@ -167,17 +190,76 @@ class OrderedItemService {
         "ordered_item.product_size",
         "ordered_item.product_milk",
         "ordered_item.product_temperature",
+        "ordered_item.price",
         "ordered_item.special_instruction"
       )
       .from("ordered_item")
-      .where("ordered_item.id", ordered_item_id)
-      .update({
-        quantity: change.quantity,
-        product_temperature: change.product_temperature,
-        product_milk: change.product_milk,
-        product_size: change.product_size,
-        special_instruction: change.special_instruction
-      });
+      .where("ordered_item.id", ordered_item_id);
+
+    return query.then(data => {
+      let newPrice = data[0].price;
+      console.log(
+        data,
+        "line201 orderitemservice =xxxxxxxxxxxxxxxxxxxx=============================================================================================================================================================================================="
+      );
+      if (
+        data[0].product_size === "small" &&
+        change.product_size === "medium"
+      ) {
+        newPrice += 4;
+      } else if (
+        data[0].product_size === "small" &&
+        change.product_size === "large"
+      ) {
+        newPrice += 8;
+      } else if (
+        data[0].product_size === "medium" &&
+        change.product_size === "small"
+      ) {
+        newPrice -= 4;
+      } else if (
+        data[0].product_size === "medium" &&
+        change.product_size === "large"
+      ) {
+        console.log(
+          "helloxxxxxhelloxxxxxhelloxxxxxhelloxxxxxhelloxxxxxhelloxxxxxhelloxxxxx"
+        );
+
+        newPrice += 4;
+      } else if (
+        data[0].product_size === "large" &&
+        change.product_size === "small"
+      ) {
+        newPrice -= 8;
+      } else if (
+        data[0].product_size === "large" &&
+        change.product_size === "medium"
+      ) {
+        console.log("lmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlmlm");
+        newPrice -= 4;
+      }
+
+      return this.knex
+        .select(
+          "ordered_item.id",
+          "ordered_item.product_id",
+          "ordered_item.quantity",
+          "ordered_item.product_size",
+          "ordered_item.product_milk",
+          "ordered_item.product_temperature",
+          "ordered_item.special_instruction"
+        )
+        .from("ordered_item")
+        .where("ordered_item.id", ordered_item_id)
+        .update({
+          quantity: change.quantity,
+          product_temperature: change.product_temperature,
+          product_milk: change.product_milk,
+          product_size: change.product_size,
+          price: newPrice,
+          special_instruction: change.special_instruction
+        });
+    });
   }
 
   delete(order_item_id, remove) {
@@ -219,8 +301,8 @@ class OrderedItemService {
   changeStatus(content) {}
 
   refund(user, content, orderItemID) {
-    console.log(content,orderItemID,'content');
-    
+    console.log(content, orderItemID, "content");
+
     console.log("refund");
     // console.log(user, content, orderItemID);
 
@@ -233,10 +315,9 @@ class OrderedItemService {
       .orderBy("order.id", "asc");
 
     return query.then(data => {
-      console.log(data, '2229<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,');
-      
+      console.log(data, "2229<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,");
+
       if (data.length > 1) {
-        
         console.log(data.length, "229===================");
 
         console.log(data, "line227");
@@ -256,7 +337,7 @@ class OrderedItemService {
                 status: "partial refund"
               });
           });
-      } else if (data.length === 1  ) {
+      } else if (data.length === 1) {
         console.log(data.length, "252===================");
         console.log("data = 1 or 0");
         return this.knex

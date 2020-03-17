@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -21,19 +21,19 @@ class MyNavbar extends Component {
   constructor(props) {
     super(props)
 
-    this.toggle = this.toggle.bind(this)
+    this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
       navCollapsed: true,
       showNavbar: false
-    }
+    };
   }
   toggle() {
     console.log('clicked');
 
     this.setState({
       isOpen: !this.state.isOpen
-    })
+    });
   }
   render() {
 
@@ -56,14 +56,14 @@ class MyNavbar extends Component {
                   <NavLink><span className="nav-content">Home</span></NavLink>
                 </NavItem>
               </Link>
-              <Link to='/coffee_menu'>
+              <Link className="myLink" to="/coffee_menu">
                 <NavItem>
                   <NavLink><span className="nav-content">Menu</span></NavLink>
                 </NavItem>
               </Link>
 
               {this.props.isLoggedIn && this.props.is_admin === false ? (
-                <Link to='/profile'>
+                <Link className="myLink" to="/profile">
                   <NavItem>
                     <NavLink><span className="nav-content">Profile</span></NavLink>
                   </NavItem>
@@ -71,7 +71,7 @@ class MyNavbar extends Component {
               ) : null}
 
               {this.props.isLoggedIn && this.props.is_admin === true ? (
-                <Link to='/dashboard/statistic'>
+                <Link className="myLink" to="/dashboard/statistic">
                   <NavItem>
                     <NavLink><span className="nav-content">Dashboard</span></NavLink>
                   </NavItem>
@@ -79,23 +79,24 @@ class MyNavbar extends Component {
               ) : null}
 
               {this.props.isLoggedIn && this.props.is_admin === false ? (
-                <Link to='/cart'>
-                  {' '}
+                <Link className="myLink" to="/cart">
+                  {" "}
                   <NavItem>
                     <NavLink><span className="nav-content">Cart</span></NavLink>
                   </NavItem>
                 </Link>
               ) : null}
 
-              <Link>
+              <Link className="myLink">
                 <NavItem>
                   <NavLink
+                  className="fill"
                     onClick={() => {
                       if (this.props.isLoggedIn) {
-                        this.props.logoutDispatcher()
-                        this.props.history.push('/')
+                        this.props.logoutDispatcher();
+                        this.props.history.push("/");
                       } else {
-                        this.props.showLoginModalDispatcher()
+                        this.props.showLoginModalDispatcher();
                       }
                     }}
                   ><span className="nav-content">
@@ -109,7 +110,7 @@ class MyNavbar extends Component {
           </Collapse>
         </Navbar>
       </div>
-    )
+    );
   }
 }
 
@@ -119,19 +120,19 @@ const mapStateToProps = state => {
     is_admin: state.authReducer.is_admin,
     user_id: state.authReducer.user_id,
     isLoginModalOpen: state.uiReducer.isLoginModalOpen
-  }
-}
+  };
+};
 //
 const mapDispatchToProps = dispatch => {
   return {
     loginDispatch: (email, password) => {
-      dispatch(authAction.loginThunk(email, password))
+      dispatch(authAction.loginThunk(email, password));
     },
     logoutDispatcher: () => {
-      dispatch(authAction.logoutAction())
+      dispatch(authAction.logoutAction());
     },
     showLoginModalDispatcher: () => {
-      dispatch(uiActions.showLoginModalAction())
+      dispatch(uiActions.showLoginModalAction());
     }
   }
 }

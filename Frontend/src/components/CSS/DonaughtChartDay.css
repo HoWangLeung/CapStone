@@ -1,5 +1,5 @@
 .myDonaught{
-    /* max-width: 50% !important; */
+    background-color:#f7f7f7;
 }
 .myDonaughtCard{
     max-width: 99%;
@@ -7,7 +7,7 @@
     padding:10px;
     margin-left: 5px;
     margin-top: 10px;
- 
+    background-color:#f7f7f7 !important;
 }
 
  

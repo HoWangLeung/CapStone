@@ -22,7 +22,7 @@ exports.up = function (knex) {
       table.string('product_temperature')
       table.string('special_instruction')
       table.integer('price')
-      table.string('fixed_cost')
+      table.integer('fixed_cost')
       table.string('ordered_item_status').defaultTo('pending')
       table.timestamps(false, true)
     })
