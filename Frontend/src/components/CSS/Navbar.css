@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Philosopher|Shadows+Into+Light&display=swap');
+
+.nav-bg{
+background-color: #f2f3f7;
+}
+
+.logo{
+ margin-right: 10px;
+}
+
+.nav-content{
+    font-family: 'Philosopher', sans-serif;
+    font-size: 20px;
+    color: #000000;
+}
+
+

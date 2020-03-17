@@ -8,15 +8,17 @@ import {
   Nav,
   NavItem,
   NavLink,
-
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import * as authAction from '../stores/actions/authAction'
 import * as uiActions from '../stores/actions/uiAction'
 import LoginModal from './LoginModal'
 import { withRouter } from 'react-router-dom';
+import '../components/CSS/Navbar.css'
+import Logo from "./logo.png"
+
 class MyNavbar extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.toggle = this.toggle.bind(this)
@@ -26,37 +28,44 @@ class MyNavbar extends Component {
       showNavbar: false
     }
   }
-  toggle () {
+  toggle() {
     console.log('clicked');
-    
+
     this.setState({
       isOpen: !this.state.isOpen
     })
   }
-  render () {
-    
+  render() {
+
     return (
       <div>
-        <Navbar color='light' light expand='md'>
-          <NavbarBrand href='/'>Coffee</NavbarBrand>
-          <NavbarToggler onClick={()=>{this.toggle()}} />
+        <Navbar className="nav-bg" expand='md'>
+          <NavbarBrand href='/'><img
+            alt=""
+            src={Logo}
+            width="35"
+            height="30"
+            className="d-inline-block align-top logo"
+          />{' '}<span className="nav-content">Coffee Crave</span>
+    </NavbarBrand>
+          <NavbarToggler onClick={() => { this.toggle() }} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className='ml-auto' navbar>
+            <Nav className='ml-auto nav-content' navbar>
               <Link to='/'>
                 <NavItem>
-                  <NavLink>Home</NavLink>
+                  <NavLink><span className="nav-content">Home</span></NavLink>
                 </NavItem>
               </Link>
               <Link to='/coffee_menu'>
                 <NavItem>
-                  <NavLink>Menu</NavLink>
+                  <NavLink><span className="nav-content">Menu</span></NavLink>
                 </NavItem>
               </Link>
 
               {this.props.isLoggedIn && this.props.is_admin === false ? (
                 <Link to='/profile'>
                   <NavItem>
-                    <NavLink>Profile</NavLink>
+                    <NavLink><span className="nav-content">Profile</span></NavLink>
                   </NavItem>
                 </Link>
               ) : null}
@@ -64,7 +73,7 @@ class MyNavbar extends Component {
               {this.props.isLoggedIn && this.props.is_admin === true ? (
                 <Link to='/dashboard/statistic'>
                   <NavItem>
-                    <NavLink>Dashboard</NavLink>
+                    <NavLink><span className="nav-content">Dashboard</span></NavLink>
                   </NavItem>
                 </Link>
               ) : null}
@@ -73,7 +82,7 @@ class MyNavbar extends Component {
                 <Link to='/cart'>
                   {' '}
                   <NavItem>
-                    <NavLink>Cart</NavLink>
+                    <NavLink><span className="nav-content">Cart</span></NavLink>
                   </NavItem>
                 </Link>
               ) : null}
@@ -89,8 +98,9 @@ class MyNavbar extends Component {
                         this.props.showLoginModalDispatcher()
                       }
                     }}
-                  >
+                  ><span className="nav-content">
                     {this.props.isLoggedIn ? 'Logout' : 'Login'}
+                    </span>
                     <LoginModal />
                   </NavLink>
                 </NavItem>
@@ -125,4 +135,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-export default  withRouter (connect(mapStateToProps, mapDispatchToProps)(MyNavbar))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyNavbar))

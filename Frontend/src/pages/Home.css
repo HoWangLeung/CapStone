@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Philosopher|Shadows+Into+Light&display=swap');
+
 html, body {
 
     height: 100%;
@@ -7,24 +9,29 @@ html, body {
     margin: 0;
     
     }
-/*     
-    div {
-    
-    height: 100%;
-    
-    padding: 0;
-    
-    margin: 0;
-    
-    } */
 
 .gradient{
-    height: 100vh;
+    height: 92vh;
     width: 100%;
     background: 
     linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') ;
     background-size: cover;
 }
+
+#brand-name{
+    font-family: 'Philosopher', sans-serif;
+    font-size: 75px;
+    text-align: center;
+    color: whitesmoke;
+    margin-top: 45px;
+    }
+
+#brand-slogan{
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 28px;
+    text-align: center;
+    color: whitesmoke;
+    }
 
 @media only screen and (max-width: 750px) {
     .gradient{

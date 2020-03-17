@@ -17,6 +17,7 @@ import {
   ModalFooter,
   ModalHeader
 } from 'reactstrap'
+
 export class LoginModal extends React.Component {
   constructor (props) {
     super(props)

@@ -1,27 +1,39 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import Grid from "@material-ui/core/Grid";
 import "./Home.css";
-// import { makeStyles } from "@material-ui/core/styles";
-// const useStyles = makeStyles({
-//   root: {
-//     width: "100%",
-//     objectFit: "cover"
-//   },
-//   gradient: {
-//     height: "100vh",
-//     width: "100%",
-//     objectFit: "cover",
-//     backgroundSize: "cover",
-//     background:
-//       "linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60') "
-//   }
-// });
+import {TweenMax,TimelineLite,Power3} from "gsap";
+
 
 export default function Home(props) {
-  // const classes = useStyles(props);
+  let brandName = useRef(null)
+  let brandSlogan= useRef(null)
+  
+
+  let tl= new TimelineLite()
+
+  
+  useEffect(()=>{
+
+    tl.fromTo(brandName, {opacity: 0,x: -80}, {duration: 3,opacity: 1, x: 0});
+
+    tl.staggerFrom(brandSlogan.children,4,{
+      opacity: 0,
+      y:44,
+      ease: Power3.easeOut,
+    })
+  })
+
+
   return (
     <Grid container className="resize">
-      <div className="gradient"> </div>
+      <div className="gradient"><div>
+      <div ref={el => brandName = el}>
+        <h1 id="brand-name">Coffee Crave</h1>
+        </div>
+        <div ref={el => brandSlogan = el}>
+        <p id="brand-slogan">a paradise for coffee lovers</p>
+        </div>
+      </div></div>
     </Grid>
   );
 }
