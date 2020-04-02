@@ -11,7 +11,8 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles({
   root: {
     maxWidth: "99%",
-    Height: "100%"
+    Height: "100%",
+    marginTop: "15px"
   },
   inputFile: {
     display: "none"

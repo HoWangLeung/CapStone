@@ -17,14 +17,18 @@ export default function CartHeader() {
       transform: "scale(0.8)"
     },
     title: {
-      fontSize: 18,
-      marginBottom:"-18px"
+      fontSize: 30,
+      marginBottom:"-18px",
+      position:"relative",
+      left:"42%"
     },
     title2: {
       fontSize: 20,
-      color: "#dedede",
+      color: "#000000",
       marginTop: "-15px",
-      //   borderTop: "1px solid #b0b0b0"
+      position:"relative",
+      left: "60px"
+     
     },
     pos: {
       marginBottom: 12
@@ -38,24 +42,18 @@ export default function CartHeader() {
       "&:link": { textDecoration: "none" },
       "&:active": { textDecoration: "none" },
       "&:focus": { textDecoration: "none" },
-      borderRadius: "5px"
+      borderRadius: "5px",
+      position:"relative",
+      left: "60px"
     },
     Line: {
-      borderBottom: "1px solid #b3b3b3",
       width: "100%",
-      
-    },
-    Line2: {
-        borderBottom: "2px solid #737070",
-        width: "100%",
-        
-      },
+      color:"transparent"
+    }
+    ,
     basket: {
-      backgroundColor: "#696868",
-      border: "1px solid #696868",
       fontSize:"210%",
       position:"relative",
-      left:"5px"
      
     }
   });
@@ -63,10 +61,10 @@ export default function CartHeader() {
 
   return (
     <Grid container direction="row" spacing={0}>
-      <Typography className={classes.title} color="textSecondary" gutterBottom>
+      <Typography className={classes.title} gutterBottom>
         Shopping Cart
       </Typography>
-      <hr className={classes.Line}></hr>
+      <hr className={classes.Line}/>
 
       <Grid container direction="row" spacing={0}>
         <Link className={classes.button} to="/coffee_menu">
@@ -76,8 +74,8 @@ export default function CartHeader() {
           </Button>
         </Link>
       </Grid>
-      <hr className={classes.Line2}></hr>
-      <Typography className={classes.title2} color="textSecondary" gutterBottom>
+      <hr className={classes.Line}/>
+      <Typography className={classes.title2} gutterBottom>
         <ShoppingBasketIcon className={classes.basket} /> ITEMS ADDED
       </Typography>
     </Grid>

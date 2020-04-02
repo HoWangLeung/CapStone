@@ -36,7 +36,7 @@ class Menu extends Component {
     if (this.props.isLoggedIn) {
       this.props.showModalDispatcher(index);
     } else {
-      alert("no");
+      alert("You are not logged in! Please login or signup to select this product.");
     }
   };
 
@@ -48,12 +48,9 @@ class Menu extends Component {
             {this.props.items.map((item, index) => {
               return (
                 <Col md="3">
-                  <Card>
+                  <Card className="card-sizing">
                     <div className="hovereffect">
-                      <CardImg
-                        height="auto"
-                        top
-                        width="100%"
+                      <CardImg className="card-img-top"
                         src={item.product_img}
                         alt="Card image cap"
                       />
@@ -73,7 +70,7 @@ class Menu extends Component {
                         )}
                       </div>
                     </div>
-                    <CardBody>
+                    <CardBody className="card-title-box">
                       <CardTitle>
                         {item.product_name} ${item.product_price}
                       </CardTitle>

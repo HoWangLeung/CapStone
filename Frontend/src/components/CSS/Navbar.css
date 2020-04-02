@@ -2,6 +2,9 @@
 
 .nav-bg{
 background-color: #f2f3f7;
+-webkit-box-shadow: -1px 2px 2px 1px rgba(0,0,0,0.2);
+-moz-box-shadow: -1px 2px 2px 1px rgba(0,0,0,0.2);
+box-shadow: -1px 2px 2px 1px rgba(0,0,0,0.2);
 }
 
 .logo{
@@ -13,5 +16,12 @@ background-color: #f2f3f7;
     font-size: 20px;
     color: #000000;
 }
+
+.nav-content:hover{
+  color: sienna;
+  transition-duration: 0.5s;
+}
+
+
 
 

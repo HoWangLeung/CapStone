@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import Grid from "@material-ui/core/Grid";
 import "./Home.css";
-import {TweenMax,TimelineLite,Power3} from "gsap";
+import {TimelineLite,Power3} from "gsap";
 
 
 export default function Home(props) {

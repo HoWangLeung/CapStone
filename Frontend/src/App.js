@@ -32,16 +32,11 @@ export default class App extends Component {
               <Route path="/cart" component={Cart} />
               <Route path="/profile" component={Profile} />
               <Route path="/dashboard/statistic" render={() => <Statistic />} />
-              <Route
-                path="/dashboard/product Control"
-                render={() => <MaterialTableEditMenu />}
-              />
+              <Route path="/dashboard/product Control" render={() => <MaterialTableEditMenu />} />
               <Route path="/dashboard/Order Control" component={OrderControl} />
-
               <Route path="/signup" component={SignUp} />
               <Route path="/signUpSuccess" component={SignUpSuccess} />
               <Route path="/paymentSuccess" component={SuccessfulPayment} />
-
               <Elements stripe={stripePromise}>
                 <Route path="/checkout" component={Checkout} />
               </Elements>

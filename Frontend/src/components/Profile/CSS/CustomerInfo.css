@@ -1,0 +1,66 @@
+
+
+.info-box{
+    margin: 15px;
+}
+
+.info-box-edit{
+    margin: 15px;
+}
+
+.info-box-edit-pw{
+    margin: 0px;
+}
+
+.title{
+    color: #000000;
+}
+
+.input-pos{
+    margin: 10px;
+}
+
+input{
+    margin-left:5px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #CCC;
+    color: #555;
+    font-size: 16px;
+    height: 25px;
+    padding: 0px 0px;
+    position: relative;
+    margin-right: 10px;
+
+}
+
+input:focus {
+    outline: none;    
+}
+
+input::-webkit-input-placeholder {
+    color: #AAA;
+  }
+  
+  input:focus::-webkit-input-placeholder {
+    color: dodgerblue;
+  }
+  
+  .input:focus+.underline {
+    transform: scale(1);
+  }
+  
+  .underline {
+    background-color: dodgerblue;
+    display: inline-block;
+    height: 2px;
+    left: 50px;
+    margin-top: -4px;
+    position: absolute;
+    top: 185px;
+    -webkit-transform: scale(0, 1);
+    transform: scale(0, 1);
+    -webkit-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+    width: 202px;
+  }

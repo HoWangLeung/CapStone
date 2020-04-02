@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import Card from "@material-ui/core/Card";
+import Grid from '@material-ui/core/Grid';
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,6 +11,8 @@ import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
 import WcIcon from "@material-ui/icons/Wc";
 import MotorcycleOutlinedIcon from "@material-ui/icons/MotorcycleOutlined";
+import "./CSS/CustomerInfo.css";
+
 export default function CustomerInfo() {
   const [state, setState] = React.useState({ data: ["data"] });
   const useStyles = makeStyles({
@@ -63,24 +66,37 @@ export default function CustomerInfo() {
           color="textSecondary"
           gutterBottom
         >
-          Customer Detail
+          <span className="title">Customer Detail</span>
         </Typography>
 
         <Typography align="left" className={classes.pos} color="textSecondary">
-          <PermContactCalendarIcon /> Your ID: {user.user_id}
-          <br />
-          <LoyaltyIcon /> First Name: {user.first_name}
-          <br />
-          <LoyaltyIcon /> Last Name: {user.last_name}
-          <br />
-          <ContactPhoneIcon /> Phone: {user.phone}
-          <br />
-          <WcIcon /> Gender: {user.gender}
-          <br />
-          <MotorcycleOutlinedIcon /> Delivery Address: {user.address1},
+        <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <div className="info-box">
+          <PermContactCalendarIcon /> <span className="title">Your ID:</span> {user.user_id}
+          </div>
+          <div className="info-box">
+          <LoyaltyIcon /> <span className="title">First Name:</span> {user.first_name}
+          </div>
+          <div className="info-box">
+          <LoyaltyIcon /> <span className="title">Last Name:</span> {user.last_name}
+          </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <div className="info-box">
+          <ContactPhoneIcon /> <span className="title">Phone:</span> {user.phone}
+          </div>
+          <div className="info-box">
+          <WcIcon /> <span className="title">Gender:</span> {user.gender}
+          </div>
+          <div className="info-box">
+          <MotorcycleOutlinedIcon /> <span className="title">Delivery Address: </span>{user.address1},
           {user.address2},{user.district},{user.area}
-          <br />
+          </div>
+          </Grid>
+          </Grid>
         </Typography>
+      
       </CardContent>
     </Card>
   );

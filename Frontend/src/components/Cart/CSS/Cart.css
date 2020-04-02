@@ -1,36 +1,16 @@
-/* .MuiTable-root{
-    width: 80%;
-    display: table;
-    border-spacing: 0;
-    border-collapse: collapse;
-} */
-.myTable{
-    border-top: 1px rgb(172, 172, 172) solid;
-}
 
 .cart-item-container{
         border: 1px solid black;
 
 }
 
-/* .ShoppingCartIcon{
-  color: #7a7e85;
-} */
-
-#quantity{
-    
-}
 
 .cart_img{
     height: 100px;
     width: 100px;
     border-radius: 20px;
 }
-/* 
-.myTable{
-    width: 30px;
-  
-} */
+
 
 .icon{
     cursor: pointer;

@@ -227,7 +227,7 @@ class Cart extends Component {
       <>
         <CartHeader />
         <TableContainer component={Paper}>
-          <Table className="myTable" aria-label="spanning table">
+          <Table aria-label="spanning table">
             <TableHead></TableHead>
             <TableBody>
               {listItems.length === 0 ? (
@@ -237,6 +237,7 @@ class Cart extends Component {
                     direction="column"
                     justify="space-around"
                     alignItems="center"
+                    
                   >
                     <img
                       src="http://alhindmart.com/assets/front-end/img/empty-cart-icon.png"
@@ -257,7 +258,7 @@ class Cart extends Component {
                     <TableCell align="left">Product</TableCell>
                     <TableCell align="left">Item</TableCell>
                     <TableCell align="left">Item</TableCell>
-                    <TableCell align="left">quantity</TableCell>
+                    <TableCell align="left">Quantity</TableCell>
                     <TableCell align="left">Unit Price($)</TableCell>
                     <TableCell align="left"></TableCell>
                   </TableRow>

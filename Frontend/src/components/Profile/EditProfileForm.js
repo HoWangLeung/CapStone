@@ -11,6 +11,8 @@ import WcIcon from "@material-ui/icons/Wc";
 import MotorcycleOutlinedIcon from "@material-ui/icons/MotorcycleOutlined";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import CheckIcon from "@material-ui/icons/Check";
+import "./CSS/CustomerInfo.css";
+
 export default function EditProfileForm(props) {
   const [state] = React.useState({ data: ["data"] });
 
@@ -44,38 +46,45 @@ export default function EditProfileForm(props) {
           color="textSecondary"
           gutterBottom
         >
-          Customer Detail
+          <span className="title">Customer Detail</span>
         </Typography>
 
         <Typography align="left" className={classes.pos} color="textSecondary">
+          <div className="info-box-edit">
           <PermContactCalendarIcon /> Your ID: {user.user_id}
-          <br />
-          <LoyaltyIcon /> First Name:{" "}
+          </div>
+          <div className="info-box-edit">
+          <LoyaltyIcon /> <span className="title">First Name:</span>{" "}
           <input
             placeholder="Enter First Name"
             onChange={handleChange("firstName")}
           ></input>
-          <br />
-          <LoyaltyIcon /> Last Name:{" "}
+          </div>
+          <div className="info-box-edit">
+          <LoyaltyIcon /><span className="title"> Last Name:</span>{" "}
           <input
             placeholder="Enter Last Name"
             onChange={handleChange("lastName")}
           ></input>
-          <br />
-          <ContactPhoneIcon /> Phone:{" "}
+          </div>
+          <div className="info-box-edit">
+          <ContactPhoneIcon /> <span className="title">Phone:</span>{" "}
           <input
-            placeholder="Enter Phone number"
+            placeholder="Enter Phone Number"
             onChange={handleChange("phone")}
           ></input>
-          <br />
-          <WcIcon /> Gender:{" "}
+          </div>
+          <div className="info-box-edit">
+          <WcIcon /> <span className="title">Gender:</span>{" "}
           <select onChange={handleChange("gender")}>
             {" "}
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <br />
-          <MotorcycleOutlinedIcon /> Delivery Address:{" "}
+          </div>
+          <div className="info-box-edit">
+          <MotorcycleOutlinedIcon /> <span className="title">Delivery Address:</span>{" "}
+         <div className="input-pos">
           <input
             placeholder="Address Line 1"
             onChange={handleChange("address1")}
@@ -88,9 +97,12 @@ export default function EditProfileForm(props) {
             placeholder="District"
             onChange={handleChange("district")}
           ></input>{" "}
-          <input placeholder="Area" onChange={handleChange("area")}></input>
-          <br />
-          <VpnKeyIcon /> New Password:
+          <input placeholder="Area" onChange={handleChange("area")}>
+          </input>
+          </div>
+          <div className="info-box-edit-pw">
+          <VpnKeyIcon /> <span className="title">New Password:</span>
+          <div className="input-pos">
           <input
             placeholder="password"
             onChange={handleChange("password1")}
@@ -99,6 +111,10 @@ export default function EditProfileForm(props) {
             placeholder="confirm new password"
             onChange={handleChange("password2")}
           ></input>
+          </div>
+          </div>
+          </div>
+          
           <button onClick={handleSubmit}>Confirm</button>{" "}
           {props.success ? <CheckIcon style={{color:"green", fontSize:"210%"}} /> : props.loading && props.circular}
         </Typography>

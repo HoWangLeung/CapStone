@@ -8,14 +8,14 @@ import {
   Nav,
   NavItem,
   NavLink,
-} from 'reactstrap'
-import { connect } from 'react-redux'
-import * as authAction from '../stores/actions/authAction'
-import * as uiActions from '../stores/actions/uiAction'
-import LoginModal from './LoginModal'
+} from 'reactstrap';
+import { connect } from 'react-redux';
+import * as authAction from '../stores/actions/authAction';
+import * as uiActions from '../stores/actions/uiAction';
+import LoginModal from './LoginModal';
 import { withRouter } from 'react-router-dom';
-import '../components/CSS/Navbar.css'
-import Logo from "./logo.png"
+import '../components/CSS/Navbar.css';
+import Logo from "./logo.png";
 
 class MyNavbar extends Component {
   constructor(props) {
@@ -51,19 +51,19 @@ class MyNavbar extends Component {
           <NavbarToggler onClick={() => { this.toggle() }} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='ml-auto nav-content' navbar>
-              <Link to='/'>
+              <Link  className="myLink" to='/'>
                 <NavItem>
                   <NavLink><span className="nav-content">Home</span></NavLink>
                 </NavItem>
               </Link>
-              <Link className="myLink" to="/coffee_menu">
+              <Link  className="myLink" to="/coffee_menu">
                 <NavItem>
                   <NavLink><span className="nav-content">Menu</span></NavLink>
                 </NavItem>
               </Link>
 
               {this.props.isLoggedIn && this.props.is_admin === false ? (
-                <Link className="myLink" to="/profile">
+                <Link  className="myLink" to="/profile">
                   <NavItem>
                     <NavLink><span className="nav-content">Profile</span></NavLink>
                   </NavItem>
@@ -71,7 +71,7 @@ class MyNavbar extends Component {
               ) : null}
 
               {this.props.isLoggedIn && this.props.is_admin === true ? (
-                <Link className="myLink" to="/dashboard/statistic">
+                <Link  className="myLink" to="/dashboard/statistic">
                   <NavItem>
                     <NavLink><span className="nav-content">Dashboard</span></NavLink>
                   </NavItem>
@@ -79,7 +79,7 @@ class MyNavbar extends Component {
               ) : null}
 
               {this.props.isLoggedIn && this.props.is_admin === false ? (
-                <Link className="myLink" to="/cart">
+                <Link  className="myLink" to="/cart">
                   {" "}
                   <NavItem>
                     <NavLink><span className="nav-content">Cart</span></NavLink>
@@ -87,10 +87,9 @@ class MyNavbar extends Component {
                 </Link>
               ) : null}
 
-              <Link className="myLink">
+              <Link className="myLink" >
                 <NavItem>
                   <NavLink
-                  className="fill"
                     onClick={() => {
                       if (this.props.isLoggedIn) {
                         this.props.logoutDispatcher();
